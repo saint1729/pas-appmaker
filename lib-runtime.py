@@ -1,8 +1,45 @@
+#coding: utf-8
+
+'''
+© Copyright 2013 Altair Engineering, Inc. All rights reserved.
+This code is provided “as is” without any warranty, express or implied, or
+indemnification of any kind. All other terms and conditions are as specified
+in the Altair PBS Analytics EULA.
+'''
+
 import subprocess
 import zipfile
 import os
 import sys
-import time
+import datatime
+import signal
+
+__version__ = '12.0.0'
+
+
+
+if 'PAS_ACTION_SIGNAL' in os.environ:
+
+    pid_file = open('runtime.pid', 'r')
+    pid_num = int(pid_file.readline())
+    pid_file.close()
+
+    signal_name = os.environ['PAS_ACTION_SIGNAL']
+
+    if signal_name == 'Suspend':
+
+        os.kill(pid_num, signal.SIGTSTP)
+        sys.stdout.write('Suspend signal sent.')
+
+    elif signal_name == 'Resume':
+
+        os.kill(pid_num, signal.SIGCONT)
+        sys.stdout.write('Resume signal sent.')
+
+    elif signal_name == 'Terminate':
+
+        os.kill(pid_num, signal.SIGTERM)
+        sys.stdout.write('Terminate signal sent.')
 
 ''' Enable Logging '''
 
@@ -35,7 +72,7 @@ if 'PAS_INPUT_FILE' in os.environ:
         package = zipfile.ZipFile(input_file, 'r')
 
         if logging is True:
-            log.write('\n\tReading Input File (ZIP) archive: %s' % (input_file))
+            log.write('\n\tReading Input File ZIP archive: %s' % (input_file))
 
         for file in package.namelist():
 
@@ -101,16 +138,9 @@ if 'PAS_JOB_SCRIPT' in os.environ:
     job_script = os.path.basename(os.environ['PAS_JOB_SCRIPT'])
     job_script = job_script.replace('%20', ' ')
 
-    file = open(job_script, 'r')
-    line = file.readline()
-    file.close()
+    def run(interpreter):
 
-    def run_job_script():
-
-        if logging is True:
-            log.write('\n\tExecuting Job Script: %s' % (job_script))
-
-        runtime = subprocess.Popen([os.environ['PYTHONPATH'], job_script,
+        runtime = subprocess.Popen(interpreter, job_script,
                                     os.environ['PAS_JOB_ARGS']], stdout=subprocess.PIPE)
 
         if logging is True:
@@ -132,13 +162,13 @@ if 'PAS_JOB_SCRIPT' in os.environ:
             sys.stdout.write()
             sys.stdout.flush()
 
-        signal.signal(signal.SIGTSTP, trap_signal)
-        signal.signal(signal.SIGCONT, trap_signal)
-        signal.signal(signal.SIGTERM, trap_signal)
-
         ''' Standard Output '''
 
         for output in runtime.stdout.readlines():
+
+            signal.signal(signal.SIGTSTP, trap_signal)
+            signal.signal(signal.SIGCONT, trap_signal)
+            signal.signal(signal.SIGTERM, trap_signal)
 
             sys.stdout.write(output)
             sys.stdout.flush()
@@ -162,33 +192,15 @@ if 'PAS_JOB_SCRIPT' in os.environ:
         sys.stdout.flush()
         sys.exit(runtime.returncode)
 
+    file = open(job_script, 'r')
+    line = file.readline()
+    file.close()
+
     if line.startswith('#!'):
-
-        try:
-            interpreter = re.match('^#!(.*)', line).group(1)
-
-        except OSError, err:
-            sys.stderr.write('An error occurred while initiating the Job Script.')
+        run(re.match('^#!(.*)', line).group(1))
 
     else:
-
-        print "start.py: No #! line detected in Job Script, defaulting to Python."
-        try:
-            command = [python_path] + [job_script] + argsUnescaped
-            if Debug:
-                print "start.py: executing:"  
-                print command  
-    
-            sys.stdout.flush()            
-            sys.stderr.flush()            
-            res = subprocess.Popen(command, shell=False)
-            res.communicate()
-            sys.stdout.flush()            
-            sys.stderr.flush()            
-            rc = res.returncode
-
-        except OSError, err:
-            print >> sys.stderr, ('An error occurred while initiating the Job Script.')
+        run(os.environ['PAS_PYTHONPATH''])
 
 log.close()
 sys.stdout.flush()

@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+#coding: utf-8
+
+'''
+© Copyright 2013 Altair Engineering, Inc. All rights reserved.
+This code is provided “as is” without any warranty, express or implied, or
+indemnification of any kind. All other terms and conditions are as specified
+in the Altair PBS Analytics EULA.
+'''
+
 import re
 import os
 import zipfile
