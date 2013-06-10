@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TemplateApplicationInput xmlns="http://schemas.altair.com/pbs/2007/02/app-def" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ApplicationId>bySyntax</ApplicationId>
+  <ApplicationName>By Syntax</ApplicationName>
+  <ArgumentChoice>
+    <ArgumentStringEnumerated>
+      <Name>QUEUE</Name>
+      <Description>Specify your desired queue.</Description>
+      <DisplayName>Queue</DisplayName>
+      <InputRequired>false</InputRequired>
+      <Option>workq</Option>
+    </ArgumentStringEnumerated>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>RESOURCES</Name>
+      <Description>You can send additional options to qsub. "software=optistruct,GWU=71,select=1:mem=30mb:ncpus=2:pas_applications_enabled=optistruct"</Description>
+      <DisplayName>Resources</DisplayName>
+      <InputRequired>true</InputRequired>
+      <Value>select=1:ncpus=2:mem=10mb</Value>
+    </ArgumentString>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>ATTRIBUTES</Name>
+      <Description>You can attach additional attributes. For example, "software=optistruct,GWU=71,select=1:mem=30mb:ncpus=2:pas_applications_enabled=optistruct"</Description>
+      <DisplayName>Attributes</DisplayName>
+      <InputRequired>false</InputRequired>
+      <Value>software=bySyntax</Value>
+    </ArgumentString>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>JOB_NAME</Name>
+      <Description>Provide a name for this job.</Description>
+      <DisplayName>Job Name</DisplayName>
+      <InputRequired>true</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentFileName>
+      <Name>JOB_SCRIPT</Name>
+      <Description>The Job Script to run.</Description>
+      <DisplayName>Job Script</DisplayName>
+      <InputRequired>true</InputRequired>
+    </ArgumentFileName>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>JOB_ARGS</Name>
+      <Description>Pass specific arguments to the Job Script.</Description>
+      <DisplayName>Job Script Arguments</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentFileName>
+      <Name>INPUT_FILE</Name>
+      <Description>
+        A standalone input file or ZIP archive. This option supports the automatic detection of master, starter and engine files.
+      </Description>
+      <DisplayName>Input File</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentFileName>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentFileNameMulti>
+      <Name>INCLUDE_FILES</Name>
+      <Description>Additionl files to include with this job.</Description>
+      <DisplayName>Include Files</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentFileNameMulti>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentDirectoryName>
+      <Name>SUBMISSION_DIRECTORY</Name>
+      <Description>Where your job files will initially be staged, and results will be returned upon job completion.</Description>
+      <DisplayName>Staging Directory</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentDirectoryName>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentBooleanWithDescription>
+      <Name>ENABLE_LOGGING</Name>
+      <Description>Enable logging. Useful for development and debugging.</Description>
+      <DisplayName>Enable Logging</DisplayName>
+      <InputRequired>false</InputRequired>
+      <FeatureEnabled>true</FeatureEnabled>
+    </ArgumentBooleanWithDescription>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentBooleanWithDescription>
+      <Name>COMPRESS_RESULTS</Name>
+      <Description>Compress job results into a single ZIP file.</Description>
+      <DisplayName>Compress Results</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentBooleanWithDescription>
+  </ArgumentChoice>
+</TemplateApplicationInput>

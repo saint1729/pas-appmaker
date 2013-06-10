@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApplicationActions xmlns="http://schemas.altair.com/pbs/2009/01/app-actions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:schemaLocation="http://schemas.altair.com/pbs/2009/01/app-actions ../../app-actions.xsd">
+  <ApplicationId>byDirective</ApplicationId>
+  <ApplicationName>By Directive</ApplicationName>
+  <CustomAction>
+    <JobStates>
+      <JobState>RUNNING</JobState>
+    </JobStates>
+    <Name>SIGNALS</Name>
+    <DisplayName>Send Signals</DisplayName>
+    <Description>Send UNIX signals to the job process.</Description>
+    <ArgumentChoice>
+      <ArgumentStringEnumerated>
+        <Name>SIGNAL</Name>
+        <Description>Select which signal to send.</Description>
+        <DisplayName>Signal</DisplayName>
+        <InputRequired>true</InputRequired>
+        <Option>Suspend</Option>
+        <Option>Resume</Option>
+        <Option default="true">Terminate</Option>
+      </ArgumentStringEnumerated>
+    </ArgumentChoice>
+    <Executable>
+      <Language>PYTHON</Language>
+      <Name>actions.py</Name>
+    </Executable>
+    <ShowOutput>true</ShowOutput>
+  </CustomAction>
+</ApplicationActions>
