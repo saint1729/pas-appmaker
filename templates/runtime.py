@@ -12,34 +12,9 @@ import zipfile
 import os
 import sys
 import datatime
-import signal
+import shutil
 
 __version__ = '12.0.0'
-
-
-
-if 'PAS_ACTION_SIGNAL' in os.environ:
-
-    pid_file = open('runtime.pid', 'r')
-    pid_num = int(pid_file.readline())
-    pid_file.close()
-
-    signal_name = os.environ['PAS_ACTION_SIGNAL']
-
-    if signal_name == 'Suspend':
-
-        os.kill(pid_num, signal.SIGTSTP)
-        sys.stdout.write('Suspend signal sent.')
-
-    elif signal_name == 'Resume':
-
-        os.kill(pid_num, signal.SIGCONT)
-        sys.stdout.write('Resume signal sent.')
-
-    elif signal_name == 'Terminate':
-
-        os.kill(pid_num, signal.SIGTERM)
-        sys.stdout.write('Terminate signal sent.')
 
 ''' Enable Logging '''
 
@@ -59,6 +34,25 @@ if 'PAS_ENABLE_LOGGING' in os.environ:
 
             log.write('\n\t%s = %s' % (key, value))
 
+''' Hook Execution '''
+
+if os.path.exists('execution.hook'):
+
+    hook = subprocess.Popen('execution.hook', stdout=subprocess.PIPE)
+
+    if logging is True:
+
+        log.write('\n\nExecution Hook Found\n')
+        log.write('\n\tExecution Hook PID: %s' % (str(hook.pid)))
+
+    for output in hook.stdout.readlines():
+
+        if logging is True:
+            log.write(output)
+
+    if logging is True:
+        log.write('\n\tExecution Hook PID: %s' % (str(hook.pid)))
+
 ''' Input File Processing '''
 
 if 'PAS_INPUT_FILE' in os.environ:
@@ -72,7 +66,7 @@ if 'PAS_INPUT_FILE' in os.environ:
         package = zipfile.ZipFile(input_file, 'r')
 
         if logging is True:
-            log.write('\n\tReading Input File ZIP archive: %s' % (input_file))
+            log.write('\n\tReading Input File ZIP Archive: %s' % (input_file))
 
         for file in package.namelist():
 
