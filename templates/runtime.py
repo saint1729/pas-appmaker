@@ -51,7 +51,7 @@ if os.path.exists('execution.hook'):
             log.write(output)
 
     if logging is True:
-        log.write('\n\tExecution Hook PID: %s' % (str(hook.pid)))
+        log.write('\n\tExecution Hook Return Code: %s' % (str(hook.returncode)))
 
 ''' Input File Processing '''
 
@@ -106,7 +106,7 @@ if 'PAS_INPUT_FILE' in os.environ:
 
 ''' Job Argument Processing '''
 
-if 'PAS_JOB_ARGS' in os.environ:
+if 'PAS_JOB_ARGUMENTS' in os.environ:
 
     if logging is True:
         log.write('\n\nProcessing Job Arguments\n')
@@ -135,7 +135,7 @@ if 'PAS_JOB_SCRIPT' in os.environ:
     def run(interpreter):
 
         runtime = subprocess.Popen(interpreter, job_script,
-                                    os.environ['PAS_JOB_ARGS']], stdout=subprocess.PIPE)
+                                    os.environ['PAS_JOB_ARGUMENTS']], stdout=subprocess.PIPE)
 
         if logging is True:
             log.write('\n\tJob Script PID: %s' % (str(runtime.pid)))

@@ -10,8 +10,28 @@ in the Altair PBS Analytics EULA.
 import os
 import sys
 import signal
+import subprocess
 
 __version__ = '12.0.0'
+
+''' Hook Execution '''
+
+if os.path.exists('actions.hook'):
+
+    hook = subprocess.Popen('actions.hook', stdout=subprocess.PIPE)
+
+    if logging is True:
+
+        log.write('\n\nActions Hook Found\n')
+        log.write('\n\tActions Hook PID: %s' % (str(hook.pid)))
+
+    for output in hook.stdout.readlines():
+
+        if logging is True:
+            log.write(output)
+
+    if logging is True:
+        log.write('\n\tActions Hook Return Code: %s' % (str(hook.returncode)))
 
 ''' Send Signal '''
 
