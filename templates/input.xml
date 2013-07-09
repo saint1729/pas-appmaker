@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TemplateApplicationInput xmlns="http://schemas.altair.com/pbs/2007/02/app-def" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <ApplicationId>APPLICATION_ID</ApplicationId>
-    <ApplicationName>APPLICATION_NAME</ApplicationName>
+    <ApplicationId>APPLICATION</ApplicationId>
+    <ApplicationName>APPLICATION</ApplicationName>
 
     <ArgumentChoice>
         <ArgumentString>
@@ -23,20 +23,20 @@
         </ArgumentStringEnumerated>
     </ArgumentChoice>
 
-    <!-- PAS_RESOURCE_SELECT BEGIN -->
+    <!-- PAS_SELECT BEGIN -->
     <ArgumentChoice>
         <ArgumentInt>
             <Name>SELECT</Name>
-            <Description>The total number of processors.</Description>
+            <Description>The number of chunks or nodes.</Description>
             <DisplayName>Select</DisplayName>
             <InputRequired>true</InputRequired>
             <LowerBound>1</LowerBound>
             <Value>1</Value>
         </ArgumentInt>
     </ArgumentChoice>
-    <!-- PAS_RESOURCE_SELECT END -->
+    <!-- PAS_SELECT END -->
 
-    <!-- PAS_RESOURCE_NCPUS BEGIN -->
+    <!-- PAS_NCPUS BEGIN -->
     <ArgumentChoice>
         <ArgumentInt>
             <Name>NCPUS</Name>
@@ -47,22 +47,33 @@
             <Value>1</Value>
         </ArgumentInt>
     </ArgumentChoice>
-    <!-- PAS_RESOURCE_NCPUS END -->
+    <!-- PAS_NCPUS END -->
 
-    <!-- PAS_RESOURCE_MEM BEGIN -->
+    <!-- PAS_MEM BEGIN -->
     <ArgumentChoice>
         <ArgumentInt>
             <Name>MEM</Name>
-            <Description>The total number of processors.</Description>
+            <Description>The physical memory to use.</Description>
             <DisplayName>Memory</DisplayName>
             <InputRequired>true</InputRequired>
             <LowerBound>1</LowerBound>
             <Value>1</Value>
         </ArgumentInt>
     </ArgumentChoice>
-    <!-- PAS_RESOURCE_MEM END -->
+    <!-- PAS_MEM END -->
 
-    <!-- PAS_RESOURCE_PLACE BEGIN -->
+    <!-- PAS_WALLTIME BEGIN -->
+    <ArgumentChoice>
+        <ArgumentString>
+            <Name>WALLTIME</Name>
+            <Description>The desired walltime (length) of the job duration.</Description>
+            <DisplayName>Walltime</DisplayName>
+            <InputRequired>false</InputRequired>
+        </ArgumentString>
+    </ArgumentChoice>
+    <!-- PAS_WALLTIME END -->
+
+    <!-- PAS_PLACE BEGIN -->
     <ArgumentChoice>
         <ArgumentStringEnumerated>
             <Name>PLACE</Name>
@@ -75,65 +86,52 @@
             <Value>free</Value>
         </ArgumentStringEnumerated>
     </ArgumentChoice>
-    <!-- PAS_RESOURCE_PLACE END -->
-
-    <!-- PAS_ATTRIBUTE_DEPEND BEGIN -->
-    <ArgumentChoice>
-        <ArgumentStringEnumerated>
-            <Name>DEPEND</Name>
-            <Description>Specify your desired queue.</Description>
-            <DisplayName>Dependencies</DisplayName>
-            <InputRequired>false</InputRequired>
-            <Option>workq</Option>
-        </ArgumentStringEnumerated>
-    </ArgumentChoice>
-    <!-- PAS_ATTRIBUTE_DEPEND END -->
-
-    <!-- PAS_ATTRIBUTE_ADVANCED BEGIN -->
-    <ArgumentChoice>
-        <ArgumentStringEnumerated>
-            <Name>DEPEND</Name>
-            <Description>Specify your desired queue.</Description>
-            <DisplayName>Dependencies</DisplayName>
-            <InputRequired>false</InputRequired>
-            <Option>workq</Option>
-        </ArgumentStringEnumerated>
-    </ArgumentChoice>
-    <!-- PAS_ATTRIBUTE_ADVANCED END -->
+    <!-- PAS_PLACE END -->
 
     <!-- PAS_ENVIRONMENT BEGIN -->
     <ArgumentChoice>
-        <ArgumentStringEnumerated>
+        <ArgumentStringMulti>
             <Name>ENVIRONMENT</Name>
-            <Description>The placement of job chunks.</Description>
+            <Description>A comma separated list of environment variables to make available to the job.</Description>
             <DisplayName>Environment</DisplayName>
             <InputRequired>false</InputRequired>
             <Value>JOB_DIR=PBS_O_WORKDIR</Value>
-        </ArgumentStringEnumerated>
+        </ArgumentStringMulti>
     </ArgumentChoice>
     <!-- PAS_ENVIRONMENT END -->
+
+    <!-- PAS_EXECUTABLE BEGIN -->
+    <ArgumentChoice>
+        <ArgumentFileName>
+            <Name>EXECUTABLE</Name>
+            <Description>A remote executable to run instead of a user supplied job script.</Description>
+            <DisplayName>Executable</DisplayName>
+            <InputRequired>true</InputRequired>
+        </ArgumentFileName>
+    </ArgumentChoice>
+    <!-- PAS_EXECUTABLE END -->
     
     <!-- PAS_SCRIPT BEGIN -->
     <ArgumentChoice>
         <ArgumentFileName>
             <Name>SCRIPT</Name>
-            <Description>The Job Script to run.</Description>
-            <DisplayName>Executable</DisplayName>
+            <Description>A job script to run instead of a remote executable.</Description>
+            <DisplayName>SCRIPT</DisplayName>
             <InputRequired>true</InputRequired>
         </ArgumentFileName>
     </ArgumentChoice>
     <!-- PAS_SCRIPT END -->
   
-    <!-- PAS_ARGUMENTS -->
+    <!-- PAS_ARGUMENTS BEGIN -->
     <ArgumentChoice>
         <ArgumentString>
             <Name>ARGUMENTS</Name>
-            <Description>Pass specific arguments to the Job Script.</Description>
+            <Description>Pass specific arguments to the job script or remote executable.</Description>
             <DisplayName>Arguments</DisplayName>
             <InputRequired>false</InputRequired>
         </ArgumentString>
     </ArgumentChoice>
-    <!-- PAS_ARGUMENTS -->
+    <!-- PAS_ARGUMENTS END -->
   
     <!-- PAS_INPUT_FILE BEGIN -->
     <ArgumentChoice>
@@ -168,31 +166,19 @@
         </ArgumentDirectoryName>
     </ArgumentChoice>
 
-    <!-- PAS_ENABLE_PRE_STAGING BEGIN -->
+    <!-- PAS_PRE_STAGING BEGIN -->
     <ArgumentChoice>
         <ArgumentBooleanWithDescription>
-            <Name>ENABLE_PRE_STAGING</Name>
-            <Description>Enable logging. Useful for development and debugging.</Description>
-            <DisplayName>Enable Pre-Staging</DisplayName>
+            <Name>PRE_STAGING</Name>
+            <Description>Copy all remote include files to the staging area prior to job submission.</Description>
+            <DisplayName>Pre-Staging</DisplayName>
             <InputRequired>false</InputRequired>
             <FeatureEnabled>true</FeatureEnabled>
         </ArgumentBooleanWithDescription>
     </ArgumentChoice>
-    <!-- PAS_ENABLE_PRE_STAGING END -->
+    <!-- PAS_PRE_STAGING END -->
   
-    <!-- PAS_ENABLE_LOGGING BEGIN -->
-    <ArgumentChoice>
-        <ArgumentBooleanWithDescription>
-            <Name>ENABLE_LOGGING</Name>
-            <Description>Enable logging. Useful for development and debugging.</Description>
-            <DisplayName>Enable Logging</DisplayName>
-            <InputRequired>false</InputRequired>
-            <FeatureEnabled>true</FeatureEnabled>
-        </ArgumentBooleanWithDescription>
-    </ArgumentChoice>
-    <!-- PAS_ENABLE_LOGGING END -->
-
-    <!-- PAS_ENABLE_COMPRESS_RESULTS BEGIN -->
+    <!-- PAS_COMPRESS_RESULTS BEGIN -->
     <ArgumentChoice>
         <ArgumentBooleanWithDescription>
             <Name>COMPRESS_RESULTS</Name>
@@ -201,6 +187,18 @@
             <InputRequired>false</InputRequired>
         </ArgumentBooleanWithDescription>
     </ArgumentChoice>
-    <!-- PAS_ENABLE_COMPRESS_RESULTS BEGIN -->
+    <!-- PAS_COMPRESS_RESULTS BEGIN -->
+
+    <!-- PAS_LOGGING BEGIN -->
+    <ArgumentChoice>
+        <ArgumentBooleanWithDescription>
+            <Name>LOGGING</Name>
+            <Description>Enable logging. Useful for development and debugging.</Description>
+            <DisplayName>Logging</DisplayName>
+            <InputRequired>false</InputRequired>
+            <FeatureEnabled>true</FeatureEnabled>
+        </ArgumentBooleanWithDescription>
+    </ArgumentChoice>
+    <!-- PAS_LOGGING END -->
     
 </TemplateApplicationInput>

@@ -1,0 +1,481 @@
+#!/usr/bin/env python
+#coding: utf-8
+
+'''
+© Copyright 2013 Altair Engineering, Inc. All rights reserved.
+This code is provided “as is” without any warranty, express or implied, or
+indemnification of any kind. All other terms and conditions are as specified
+in the Altair PBS Analytics EULA.
+'''
+
+import os
+import sys
+import re
+
+from optparse import OptionParser
+from optparse import OptionGroup
+
+import datetime
+
+__version__ = '12.0.0'
+
+parser = OptionParser(usage='%prog <ApplicationName> [Options]',
+                      version='%prog ' + __version__,
+                      description='PAS Application Maker - The Application Definition Development Framework')
+
+parser.add_option('--select',
+                  dest='select',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--ncpus',
+                  dest='ncpus',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--mem',
+                  dest='mem',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--walltime',
+                  dest='walltime',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--place',
+                  dest='place',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--environment',
+                  dest='environment',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--executable',
+                  dest='executable',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--script',
+                  dest='script',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--arguments',
+                  dest='arguments',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--input-file',
+                  dest='input_file',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--include-files',
+                  dest='include_files',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--pre-staging',
+                  dest='pre_staging',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--logging',
+                  dest='logging',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--compress-results',
+                  dest='compress_results',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--action-send-signals',
+                  dest='show',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+''' Broken Below '''
+
+parser.add_option('--action-compress-results',
+                  dest='show',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--action-execute-commands',
+                  dest='show',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+''' Hooks Group '''
+
+parser.add_option('--hook-submission',
+                  dest='show',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--hook-runtime',
+                  dest='show',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--hook-actions',
+                  dest='show',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--hook-exit',
+                  dest='show',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+(options, args) = parser.parse_args()
+
+if len(args) == 1:
+
+    application = args[0]
+
+    template_input = open('templates/input.xml', 'r')
+    template_converter = open('templates/converter.xml', 'r')
+
+    os.system('mkdir -p /var/spool/pas/repository/applications/%s' % (application))
+    os.system('mkdir -p /var/spool/pas/repository/applications/%s/runtime' % (application))
+    os.system('mkdir -p /var/spool/pas/repository/applications/%s/submittime' % (application))
+    os.system('cp templates/presubmit.py /var/spool/pas/repository/applications/%s/submittime' % (application))
+    os.system('cp templates/start.py /var/spool/pas/repository/applications/%s/runtime' % (application))
+
+    application_input = open('/var/spool/pas/repository/applications/%s/app-inp-%s.xml' % (application, application), 'w')
+    application_converter = open('/var/spool/pas/repository/applications/%s/app-conv-%s.xml' % (application, application),'w')
+
+    ''' Generate Input File '''
+
+    enabled = True
+
+    for line in template_input.readlines():
+
+        string = re.compile('<ApplicationId>(.*)</ApplicationId')
+        re.sub(string, application, line)
+
+        ''' Select '''
+
+        if re.match('.*PAS_SELECT BEGIN', line):
+
+            if options.select is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_SELECT END', line):
+
+            if options.select is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Ncpus '''
+
+        if re.match('.*PAS_NCPUS BEGIN', line):
+
+            if options.ncpus is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_NCPUS END', line):
+
+            if options.ncpus is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Mem '''
+
+        if re.match('.*PAS_MEM BEGIN', line):
+
+            if options.mem is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_MEM END', line):
+
+            if options.mem is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Walltime '''
+
+        if re.match('.*PAS_WALLTIME BEGIN', line):
+
+            if options.walltime is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_WALLTIME END', line):
+
+            if options.walltime is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Place '''
+
+        if re.match('.*PAS_PLACE BEGIN', line):
+
+            if options.place is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_PLACE END', line):
+
+            if options.place is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Environment '''
+
+        if re.match('.*PAS_ENVIRONMENT BEGIN', line):
+
+            if options.environment is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_ENVIRONMENT END', line):
+
+            if options.environment is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Executable '''
+
+        if re.match('.*PAS_EXECUTABLE BEGIN', line):
+
+            if options.executable is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_EXECUTABLE END', line):
+
+            if options.executable is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Script '''
+
+        if re.match('.*PAS_SCRIPT BEGIN', line):
+
+            if options.script is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_SCRIPT END', line):
+
+            if options.script is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Arguments '''
+
+        if re.match('.*PAS_ARGUMENTS BEGIN', line):
+
+            if options.arguments is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_ARGUMENTS END', line):
+
+            if options.arguments is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Input File '''
+
+        if re.match('.*PAS_INPUT_FILE BEGIN', line):
+
+            if options.input_file is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_INPUT_FILE END', line):
+
+            if options.input_file is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Include Files '''
+
+        if re.match('.*PAS_INCLUDE_FILES BEGIN', line):
+
+            if options.include_files is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_INCLUDE_FILES END', line):
+
+            if options.include_files is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Pre Staging '''
+
+        if re.match('.*PAS_PRE_STAGING BEGIN', line):
+
+            if options.pre_staging is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_PRE_STAGING END', line):
+
+            if options.pre_staging is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Compress Results '''
+
+        if re.match('.*PAS_COMPRESS_RESULTS BEGIN', line):
+
+            if options.compress_results is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_COMPRESS_RESULTS END', line):
+
+            if options.compress_results is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Logging '''
+
+        if re.match('.*PAS_LOGGING BEGIN', line):
+
+            if options.logging is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_LOGGING END', line):
+
+            if options.logging is True:
+                pass
+            else:
+                enabled = True
+
+        if enabled is True:
+
+            if not re.search('.*<!-- .* -->.*', line):
+                application_input.write(line)
+
+    ''' Generate Convereter File '''
+
+    enabled = True
+
+    for line in template_converter.readlines():
+
+        line.replace('APPLICATION', application)
+        line.replace('APPLICATION', application)
+
+        ''' Script '''
+
+        if re.match('.*PAS_SCRIPT BEGIN', line):
+
+            if options.script is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_SCRIPT END', line):
+
+            if options.script is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Input File '''
+
+        if re.match('.*PAS_INPUT_FILE BEGIN', line):
+
+            if options.input_file is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_INPUT_FILE END', line):
+
+            if options.input_file is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Include Files '''
+
+        if re.match('.*PAS_INCLUDE_FILES BEGIN', line):
+
+            if options.include_files is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_INCLUDE_FILES END', line):
+
+            if options.include_files is True:
+                pass
+            else:
+                enabled = True
+
+        if enabled is True:
+
+            if not re.search('.*<!-- .* -->.*', line):
+                application_converter.write(line)
+
+    sys.exit(0)
+
+else:
+
+    sys.stderr.write('Incorrect number of arguments. '
+                     'Try pas-app-engine --help.\n')
+    sys.exit(1)
+
