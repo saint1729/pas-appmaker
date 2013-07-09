@@ -93,7 +93,7 @@
         <ArgumentStringMulti>
             <Name>ENVIRONMENT</Name>
             <Description>A comma separated list of environment variables to make available to the job.</Description>
-            <DisplayName>Environment</DisplayName>
+            <DisplayName>Job Environment</DisplayName>
             <InputRequired>false</InputRequired>
             <Value>JOB_DIR=PBS_O_WORKDIR</Value>
         </ArgumentStringMulti>
@@ -102,12 +102,12 @@
 
     <!-- PAS_EXECUTABLE BEGIN -->
     <ArgumentChoice>
-        <ArgumentFileName>
+        <ArgumentString>
             <Name>EXECUTABLE</Name>
             <Description>A remote executable to run instead of a user supplied job script.</Description>
-            <DisplayName>Executable</DisplayName>
+            <DisplayName>Job Executable</DisplayName>
             <InputRequired>true</InputRequired>
-        </ArgumentFileName>
+        </ArgumentString>
     </ArgumentChoice>
     <!-- PAS_EXECUTABLE END -->
     
@@ -116,7 +116,7 @@
         <ArgumentFileName>
             <Name>SCRIPT</Name>
             <Description>A job script to run instead of a remote executable.</Description>
-            <DisplayName>SCRIPT</DisplayName>
+            <DisplayName>Job Script</DisplayName>
             <InputRequired>true</InputRequired>
         </ArgumentFileName>
     </ArgumentChoice>

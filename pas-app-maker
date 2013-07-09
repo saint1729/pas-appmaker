@@ -177,10 +177,9 @@ if len(args) == 1:
 
     for line in template_input.readlines():
 
-        string = re.compile('<ApplicationId>(.*)</ApplicationId')
-        re.sub(string, application, line)
+        line = re.sub('APPLICATION', application, line)
 
-        ''' Select '''
+	''' Select '''
 
         if re.match('.*PAS_SELECT BEGIN', line):
 
@@ -415,8 +414,7 @@ if len(args) == 1:
 
     for line in template_converter.readlines():
 
-        line.replace('APPLICATION', application)
-        line.replace('APPLICATION', application)
+        line = re.sub('APPLICATION', application, line)
 
         ''' Script '''
 
