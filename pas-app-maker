@@ -474,6 +474,6 @@ if len(args) == 1:
 else:
 
     sys.stderr.write('Incorrect number of arguments. '
-                     'Try pas-app-engine --help.\n')
+                     'Try pas-app-maker: --help.\n')
     sys.exit(1)
 
