@@ -35,8 +35,32 @@ parser.add_option('--ncpus',
                   default=False,
                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
+parser.add_option('--ncpus-lead-node',
+                  dest='ncpus_lead_node',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--ncpus-per-node',
+                  dest='ncpus_per_node',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
 parser.add_option('--mem',
                   dest='mem',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--mem-lead-node',
+                  dest='mem_lead_node',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option('--mem-per-node',
+                  dest='mem_per_node',
                   action='store_true',
                   default=False,
                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -113,23 +137,7 @@ parser.add_option('--action-send-signals',
                   default=False,
                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-''' Broken Below '''
-
-parser.add_option('--action-compress-results',
-                  dest='show',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
-
-parser.add_option('--action-execute-commands',
-                  dest='show',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
-
-''' Hooks Group '''
-
-parser.add_option('--hook-submission',
+parser.add_option('--hook-submittime',
                   dest='show',
                   action='store_true',
                   default=False,
@@ -159,17 +167,19 @@ if len(args) == 1:
 
     application = args[0]
 
-    template_input = open('templates/input.xml', 'r')
-    template_converter = open('templates/converter.xml', 'r')
+    templates = os.environ['PAS_TEMPLATES']
+    applications = os.environ['PAS_APPLICATIONS']
+    template_input = open('%s/app-inp.xml' % (templates), 'r')
+    template_converter = open('%s/app-conv.xml' % (templates), 'r')
 
-    os.system('mkdir -p /var/spool/pas/repository/applications/%s' % (application))
-    os.system('mkdir -p /var/spool/pas/repository/applications/%s/runtime' % (application))
-    os.system('mkdir -p /var/spool/pas/repository/applications/%s/submittime' % (application))
-    os.system('cp templates/presubmit.py /var/spool/pas/repository/applications/%s/submittime' % (application))
-    os.system('cp templates/start.py /var/spool/pas/repository/applications/%s/runtime' % (application))
+    os.system('mkdir -p %s/%s' % (applications, application))
+    os.system('mkdir -p %s/%s/runtime' % (applications, application))
+    os.system('mkdir -p %s/%s/submittime' % (applications, application))
+    os.system('cp %s/presubmit.py %s/%s/submittime' % (templates, applications, application))
+    os.system('cp %s/start.py %s/%s/runtime' % (templates, applications, application))
 
-    application_input = open('/var/spool/pas/repository/applications/%s/app-inp-%s.xml' % (application, application), 'w')
-    application_converter = open('/var/spool/pas/repository/applications/%s/app-conv-%s.xml' % (application, application),'w')
+    application_input = open('%s/%s/app-inp-%s.xml' % (applications, application, application), 'w')
+    application_converter = open('%s/%s/app-conv-%s.xml' % (applications, application, application),'w')
 
     ''' Generate Input File '''
 
@@ -211,6 +221,38 @@ if len(args) == 1:
             else:
                 enabled = True
 
+        ''' Ncpus Lead Node '''
+
+        if re.match('.*PAS_NCPUS_LEAD_NODE BEGIN', line):
+
+            if options.ncpus_lead_node is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_NCPUS_LEAD_NODE END', line):
+
+            if options.ncpus_lead_node is True:
+                pass
+            else:
+                enabled = True
+
+		''' Ncpus Per Node '''
+
+        if re.match('.*PAS_NCPUS_PER_NODE BEGIN', line):
+
+            if options.ncpus_per_node is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_NCPUS_PER_NODE END', line):
+
+            if options.ncpus_per_node is True:
+                pass
+            else:
+                enabled = True
+
         ''' Mem '''
 
         if re.match('.*PAS_MEM BEGIN', line):
@@ -226,6 +268,39 @@ if len(args) == 1:
                 pass
             else:
                 enabled = True
+
+        ''' Mem Lead Node '''
+
+        if re.match('.*PAS_MEM_LEAD_NODE BEGIN', line):
+
+            if options.mem_lead_node is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_MEM_LEAD_NODE END', line):
+
+            if options.mem_lead_node is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Mem Per Node '''
+
+        if re.match('.*PAS_MEM_PER_NODE BEGIN', line):
+
+            if options.mem_per_node is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_MEM_PER_NODE END', line):
+
+            if options.mem_per_node is True:
+                pass
+            else:
+                enabled = True
+
 
         ''' Walltime '''
 
@@ -474,6 +549,6 @@ if len(args) == 1:
 else:
 
     sys.stderr.write('Incorrect number of arguments. '
-                     'Try pas-app-maker: --help.\n')
+                     'Try pas-app-maker --help.\n')
     sys.exit(1)
 

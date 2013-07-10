@@ -49,6 +49,32 @@
     </ArgumentChoice>
     <!-- PAS_NCPUS END -->
 
+    <!-- PAS_NCPUS_LEAD_NODE BEGIN -->
+    <ArgumentChoice>
+        <ArgumentInt>
+            <Name>NCPUS_LEAD_NODE</Name>
+            <Description>The total number of processors on the lead node of a mult-node job.</Description>
+            <DisplayName>NCPUS on Lead Node</DisplayName>
+            <InputRequired>true</InputRequired>
+            <LowerBound>1</LowerBound>
+            <Value>1</Value>
+        </ArgumentInt>
+    </ArgumentChoice>
+    <!-- PAS_NCPUS_LEAD_NODE END -->
+
+    <!-- PAS_NCPUS_PER_NODE BEGIN -->
+    <ArgumentChoice>
+        <ArgumentInt>
+            <Name>NCPUS_PER_NODE</Name>
+            <Description>The total number of processors on the lead node of a mult-node job.</Description>
+            <DisplayName>NCPUS Per Node</DisplayName>
+            <InputRequired>true</InputRequired>
+            <LowerBound>1</LowerBound>
+            <Value>1</Value>
+        </ArgumentInt>
+    </ArgumentChoice>
+    <!-- PAS_NCPUS_PER_NODE END -->
+
     <!-- PAS_MEM BEGIN -->
     <ArgumentChoice>
         <ArgumentInt>
@@ -62,7 +88,40 @@
     </ArgumentChoice>
     <!-- PAS_MEM END -->
 
+    <!-- PAS_MEM_LEAD_NODE BEGIN -->
+
+    <ArgumentChoice>
+        <ArgumentStringEnumerated>
+            <Name>MEM_LEAD_NODE</Name>
+            <Description>Select the amount of memory on the lead node in gigabytes.</Description>
+            <DisplayName>Memory on Lead Node (GB)</DisplayName>
+            <InputRequired>false</InputRequired>
+            <Option>19</Option>
+            <Option>42</Option>            
+	    <Option>89</Option>
+        </ArgumentStringEnumerated>
+    </ArgumentChoice>
+
+    <!-- PAS_MEM_LEAD_NODE END -->
+
+    <!-- PAS_MEM_PER_NODE BEGIN -->
+
+    <ArgumentChoice>
+        <ArgumentIntEnumerated>
+            <Name>MEM_PER_NODE</Name>
+            <Description>Select the amount of memory per compute node in gigabytes.</Description>
+            <DisplayName>Memory Per Node (GB)</DisplayName>
+            <InputRequired>true</InputRequired>
+            <Option default="true">19</Option>
+            <Option>42</Option>
+            <Option>89</Option>
+        </ArgumentIntEnumerated>
+    </ArgumentChoice>
+
+    <!-- PAS_MEM_PER_NODE END -->
+
     <!-- PAS_WALLTIME BEGIN -->
+    
     <ArgumentChoice>
         <ArgumentString>
             <Name>WALLTIME</Name>
