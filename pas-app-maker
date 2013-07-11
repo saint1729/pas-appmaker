@@ -29,6 +29,12 @@ parser.add_option('--select',
                   default=False,
                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
+parser.add_option('--chunks',
+                  dest='chunks',
+                  action='store_true',
+                  default=False,
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
 parser.add_option('--ncpus',
                   dest='ncpus',
                   action='store_true',
@@ -189,7 +195,7 @@ if len(args) == 1:
 
         line = re.sub('APPLICATION', application, line)
 
-	''' Select '''
+        ''' Select '''
 
         if re.match('.*PAS_SELECT BEGIN', line):
 
@@ -201,6 +207,22 @@ if len(args) == 1:
         if re.match('.*PAS_SELECT END', line):
 
             if options.select is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Chunks '''
+
+        if re.match('.*PAS_CHUNKS BEGIN', line):
+
+            if options.chunks is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_CHUNKS END', line):
+
+            if options.chunks is True:
                 pass
             else:
                 enabled = True
@@ -237,7 +259,7 @@ if len(args) == 1:
             else:
                 enabled = True
 
-		''' Ncpus Per Node '''
+        ''' Ncpus Per Node '''
 
         if re.match('.*PAS_NCPUS_PER_NODE BEGIN', line):
 
@@ -300,7 +322,6 @@ if len(args) == 1:
                 pass
             else:
                 enabled = True
-
 
         ''' Walltime '''
 

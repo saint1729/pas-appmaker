@@ -1,263 +1,247 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TemplateApplicationInput xmlns="http://schemas.altair.com/pbs/2007/02/app-def" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
-    <ApplicationId>APPLICATION</ApplicationId>
-    <ApplicationName>APPLICATION</ApplicationName>
-
-    <ArgumentChoice>
-        <ArgumentString>
-            <Name>JOB_NAME</Name>
-            <Description>The name of the job.</Description>
-            <DisplayName>Job Name</DisplayName>
-            <InputRequired>true</InputRequired>
-        </ArgumentString>
-    </ArgumentChoice>
-    
-    <ArgumentChoice>
-        <ArgumentStringEnumerated>
-            <Name>QUEUE</Name>
-            <Description>Specify your desired queue.</Description>
-            <DisplayName>Queue</DisplayName>
-            <InputRequired>false</InputRequired>
-            <Option>workq</Option>
-        </ArgumentStringEnumerated>
-    </ArgumentChoice>
-
-    <!-- PAS_SELECT BEGIN -->
-    <ArgumentChoice>
-        <ArgumentInt>
-            <Name>SELECT</Name>
-            <Description>The number of chunks or nodes.</Description>
-            <DisplayName>Select</DisplayName>
-            <InputRequired>true</InputRequired>
-            <LowerBound>1</LowerBound>
-            <Value>1</Value>
-        </ArgumentInt>
-    </ArgumentChoice>
-    <!-- PAS_SELECT END -->
-
-    <!-- PAS_NCPUS BEGIN -->
-    <ArgumentChoice>
-        <ArgumentInt>
-            <Name>NCPUS</Name>
-            <Description>The total number of processors.</Description>
-            <DisplayName>Number of Processors</DisplayName>
-            <InputRequired>true</InputRequired>
-            <LowerBound>1</LowerBound>
-            <Value>1</Value>
-        </ArgumentInt>
-    </ArgumentChoice>
-    <!-- PAS_NCPUS END -->
-
-    <!-- PAS_NCPUS_LEAD_NODE BEGIN -->
-    <ArgumentChoice>
-        <ArgumentInt>
-            <Name>NCPUS_LEAD_NODE</Name>
-            <Description>The total number of processors on the lead node of a mult-node job.</Description>
-            <DisplayName>NCPUS on Lead Node</DisplayName>
-            <InputRequired>true</InputRequired>
-            <LowerBound>1</LowerBound>
-            <Value>1</Value>
-        </ArgumentInt>
-    </ArgumentChoice>
-    <!-- PAS_NCPUS_LEAD_NODE END -->
-
-    <!-- PAS_NCPUS_PER_NODE BEGIN -->
-    <ArgumentChoice>
-        <ArgumentInt>
-            <Name>NCPUS_PER_NODE</Name>
-            <Description>The total number of processors on the lead node of a mult-node job.</Description>
-            <DisplayName>NCPUS Per Node</DisplayName>
-            <InputRequired>true</InputRequired>
-            <LowerBound>1</LowerBound>
-            <Value>1</Value>
-        </ArgumentInt>
-    </ArgumentChoice>
-    <!-- PAS_NCPUS_PER_NODE END -->
-
-    <!-- PAS_MEM BEGIN -->
-    <ArgumentChoice>
-        <ArgumentInt>
-            <Name>MEM</Name>
-            <Description>The physical memory to use.</Description>
-            <DisplayName>Memory</DisplayName>
-            <InputRequired>true</InputRequired>
-            <LowerBound>1</LowerBound>
-            <Value>1</Value>
-        </ArgumentInt>
-    </ArgumentChoice>
-    <!-- PAS_MEM END -->
-
-    <!-- PAS_MEM_LEAD_NODE BEGIN -->
-
-    <ArgumentChoice>
-        <ArgumentStringEnumerated>
-            <Name>MEM_LEAD_NODE</Name>
-            <Description>Select the amount of memory on the lead node in gigabytes.</Description>
-            <DisplayName>Memory on Lead Node (GB)</DisplayName>
-            <InputRequired>false</InputRequired>
-            <Option>19</Option>
-            <Option>42</Option>            
-	    <Option>89</Option>
-        </ArgumentStringEnumerated>
-    </ArgumentChoice>
-
-    <!-- PAS_MEM_LEAD_NODE END -->
-
-    <!-- PAS_MEM_PER_NODE BEGIN -->
-
-    <ArgumentChoice>
-        <ArgumentIntEnumerated>
-            <Name>MEM_PER_NODE</Name>
-            <Description>Select the amount of memory per compute node in gigabytes.</Description>
-            <DisplayName>Memory Per Node (GB)</DisplayName>
-            <InputRequired>true</InputRequired>
-            <Option default="true">19</Option>
-            <Option>42</Option>
-            <Option>89</Option>
-        </ArgumentIntEnumerated>
-    </ArgumentChoice>
-
-    <!-- PAS_MEM_PER_NODE END -->
-
-    <!-- PAS_WALLTIME BEGIN -->
-    
-    <ArgumentChoice>
-        <ArgumentString>
-            <Name>WALLTIME</Name>
-            <Description>The desired walltime (length) of the job duration.</Description>
-            <DisplayName>Walltime</DisplayName>
-            <InputRequired>false</InputRequired>
-        </ArgumentString>
-    </ArgumentChoice>
-    <!-- PAS_WALLTIME END -->
-
-    <!-- PAS_PLACE BEGIN -->
-    <ArgumentChoice>
-        <ArgumentStringEnumerated>
-            <Name>PLACE</Name>
-            <Description>The placement of job chunks.</Description>
-            <DisplayName>Placement of Chunks</DisplayName>
-            <InputRequired>false</InputRequired>
-            <Option>pack</Option>
-            <Option>free</Option>
-            <Option>scatter</Option>
-            <Value>free</Value>
-        </ArgumentStringEnumerated>
-    </ArgumentChoice>
-    <!-- PAS_PLACE END -->
-
-    <!-- PAS_ENVIRONMENT BEGIN -->
-    <ArgumentChoice>
-        <ArgumentStringMulti>
-            <Name>ENVIRONMENT</Name>
-            <Description>A comma separated list of environment variables to make available to the job.</Description>
-            <DisplayName>Job Environment</DisplayName>
-            <InputRequired>false</InputRequired>
-            <Value>JOB_DIR=PBS_O_WORKDIR</Value>
-        </ArgumentStringMulti>
-    </ArgumentChoice>
-    <!-- PAS_ENVIRONMENT END -->
-
-    <!-- PAS_EXECUTABLE BEGIN -->
-    <ArgumentChoice>
-        <ArgumentString>
-            <Name>EXECUTABLE</Name>
-            <Description>A remote executable to run instead of a user supplied job script.</Description>
-            <DisplayName>Job Executable</DisplayName>
-            <InputRequired>true</InputRequired>
-        </ArgumentString>
-    </ArgumentChoice>
-    <!-- PAS_EXECUTABLE END -->
-    
-    <!-- PAS_SCRIPT BEGIN -->
-    <ArgumentChoice>
-        <ArgumentFileName>
-            <Name>SCRIPT</Name>
-            <Description>A job script to run instead of a remote executable.</Description>
-            <DisplayName>Job Script</DisplayName>
-            <InputRequired>true</InputRequired>
-        </ArgumentFileName>
-    </ArgumentChoice>
-    <!-- PAS_SCRIPT END -->
-  
-    <!-- PAS_ARGUMENTS BEGIN -->
-    <ArgumentChoice>
-        <ArgumentString>
-            <Name>ARGUMENTS</Name>
-            <Description>Pass specific arguments to the job script or remote executable.</Description>
-            <DisplayName>Arguments</DisplayName>
-            <InputRequired>false</InputRequired>
-        </ArgumentString>
-    </ArgumentChoice>
-    <!-- PAS_ARGUMENTS END -->
-  
-    <!-- PAS_INPUT_FILE BEGIN -->
-    <ArgumentChoice>
-        <ArgumentFileName>
-            <Name>INPUT_FILE</Name>
-            <Description>
+  <ApplicationId>APPLICATION</ApplicationId>
+  <ApplicationName>APPLICATION</ApplicationName>
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>JOB_NAME</Name>
+      <Description>The name of the job.</Description>
+      <DisplayName>Job Name</DisplayName>
+      <InputRequired>true</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentStringEnumerated>
+      <Name>QUEUE</Name>
+      <Description>Specify your desired queue.</Description>
+      <DisplayName>Queue</DisplayName>
+      <InputRequired>false</InputRequired>
+      <Option>workq</Option>
+    </ArgumentStringEnumerated>
+  </ArgumentChoice>
+  <!-- PAS_SELECT BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>SELECT</Name>
+      <Description>Provide qsub select statement.</Description>
+      <DisplayName>Select Statement</DisplayName>
+      <InputRequired>true</InputRequired>
+      <Value>select=1:ncpus=2:mem=1gb</Value>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_SELECT END -->
+  <!-- PAS_CHUNKS BEGIN -->
+  <ArgumentChoice>
+    <ArgumentInt>
+      <Name>CHUNKS</Name>
+      <Description>The number of chunks (nodes)</Description>
+      <DisplayName>Chunks (Nodes)</DisplayName>
+      <InputRequired>false</InputRequired>
+      <LowerBound>1</LowerBound>
+      <Value>1</Value>
+    </ArgumentInt>
+  </ArgumentChoice>
+  <!-- PAS_NCPUS END -->
+  <!-- PAS_NCPUS BEGIN -->
+  <ArgumentChoice>
+    <ArgumentInt>
+      <Name>NCPUS</Name>
+      <Description>The total number of processors.</Description>
+      <DisplayName>Number of Processors</DisplayName>
+      <InputRequired>true</InputRequired>
+      <LowerBound>1</LowerBound>
+      <Value>1</Value>
+    </ArgumentInt>
+  </ArgumentChoice>
+  <!-- PAS_NCPUS END -->
+  <!-- PAS_NCPUS_LEAD_NODE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentInt>
+      <Name>NCPUS_LEAD_NODE</Name>
+      <Description>The total number of processors on the lead node of a mult-node job.</Description>
+      <DisplayName>NCPUS on Lead Node</DisplayName>
+      <InputRequired>true</InputRequired>
+      <LowerBound>1</LowerBound>
+      <Value>1</Value>
+    </ArgumentInt>
+  </ArgumentChoice>
+  <!-- PAS_NCPUS_LEAD_NODE END -->
+  <!-- PAS_NCPUS_PER_NODE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentInt>
+      <Name>NCPUS_PER_NODE</Name>
+      <Description>The total number of processors on the lead node of a mult-node job.</Description>
+      <DisplayName>NCPUS Per Node</DisplayName>
+      <InputRequired>true</InputRequired>
+      <LowerBound>1</LowerBound>
+      <Value>1</Value>
+    </ArgumentInt>
+  </ArgumentChoice>
+  <!-- PAS_NCPUS_PER_NODE END -->
+  <!-- PAS_MEM BEGIN -->
+  <ArgumentChoice>
+    <ArgumentInt>
+      <Name>MEM</Name>
+      <Description>The physical memory to use.</Description>
+      <DisplayName>Memory</DisplayName>
+      <InputRequired>true</InputRequired>
+      <LowerBound>1</LowerBound>
+      <Value>1</Value>
+    </ArgumentInt>
+  </ArgumentChoice>
+  <!-- PAS_MEM END -->
+  <!-- PAS_MEM_LEAD_NODE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentStringEnumerated>
+      <Name>MEM_LEAD_NODE</Name>
+      <Description>Select the amount of memory on the lead node in gigabytes.</Description>
+      <DisplayName>Memory on Lead Node (GB)</DisplayName>
+      <InputRequired>false</InputRequired>
+      <Option>19</Option>
+      <Option>42</Option>
+      <Option>89</Option>
+    </ArgumentStringEnumerated>
+  </ArgumentChoice>
+  <!-- PAS_MEM_LEAD_NODE END -->
+  <!-- PAS_MEM_PER_NODE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentIntEnumerated>
+      <Name>MEM_PER_NODE</Name>
+      <Description>Select the amount of memory per compute node in gigabytes.</Description>
+      <DisplayName>Memory Per Node (GB)</DisplayName>
+      <InputRequired>true</InputRequired>
+      <Option default="true">19</Option>
+      <Option>42</Option>
+      <Option>89</Option>
+    </ArgumentIntEnumerated>
+  </ArgumentChoice>
+  <!-- PAS_MEM_PER_NODE END -->
+  <!-- PAS_WALLTIME BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>WALLTIME</Name>
+      <Description>The desired walltime (length) of the job duration.</Description>
+      <DisplayName>Walltime</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_WALLTIME END -->
+  <!-- PAS_PLACE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentStringEnumerated>
+      <Name>PLACE</Name>
+      <Description>The placement of job chunks.</Description>
+      <DisplayName>Placement of Chunks</DisplayName>
+      <InputRequired>false</InputRequired>
+      <Option>pack</Option>
+      <Option>free</Option>
+      <Option>scatter</Option>
+      <Option>shared</Option>
+      <Value>free</Value>
+    </ArgumentStringEnumerated>
+  </ArgumentChoice>
+  <!-- PAS_PLACE END -->
+  <!-- PAS_ENVIRONMENT BEGIN -->
+  <ArgumentChoice>
+    <ArgumentStringMulti>
+      <Name>ENVIRONMENT</Name>
+      <Description>A comma separated list of environment variables to make available to the job.</Description>
+      <DisplayName>Job Environment</DisplayName>
+      <InputRequired>false</InputRequired>
+      <Value>JOB_DIR=PBS_O_WORKDIR</Value>
+    </ArgumentStringMulti>
+  </ArgumentChoice>
+  <!-- PAS_ENVIRONMENT END -->
+  <!-- PAS_EXECUTABLE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>EXECUTABLE</Name>
+      <Description>A remote executable to run instead of a user supplied job script.</Description>
+      <DisplayName>Job Executable</DisplayName>
+      <InputRequired>true</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_EXECUTABLE END -->
+  <!-- PAS_SCRIPT BEGIN -->
+  <ArgumentChoice>
+    <ArgumentFileName>
+      <Name>SCRIPT</Name>
+      <Description>A job script to run instead of a remote executable.</Description>
+      <DisplayName>Job Script</DisplayName>
+      <InputRequired>true</InputRequired>
+    </ArgumentFileName>
+  </ArgumentChoice>
+  <!-- PAS_SCRIPT END -->
+  <!-- PAS_ARGUMENTS BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>ARGUMENTS</Name>
+      <Description>Pass specific arguments to the job script or remote executable.</Description>
+      <DisplayName>Arguments</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_ARGUMENTS END -->
+  <!-- PAS_INPUT_FILE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentFileName>
+      <Name>INPUT_FILE</Name>
+      <Description>
                 A standalone input file or ZIP archive. This option supports the automatic detection of master, starter and engine files.
             </Description>
-            <DisplayName>Input File</DisplayName>
-            <InputRequired>false</InputRequired>
-        </ArgumentFileName>
-    </ArgumentChoice>
-    <!-- PAS_INPUT_FILE END -->
-  
-    <!-- PAS_INCLUDE_FILES BEGIN -->  
-    <ArgumentChoice>
-        <ArgumentFileNameMulti>
-            <Name>INCLUDE_FILES</Name>
-            <Description>Files to be included with the Job Script.</Description>
-            <DisplayName>Include Files</DisplayName>
-            <InputRequired>false</InputRequired>
-        </ArgumentFileNameMulti>
-    </ArgumentChoice>
-    <!-- PAS_INCLUDE_FILES END -->
-
-    <ArgumentChoice>
-        <ArgumentDirectoryName>
-            <Name>SUBMISSION_DIRECTORY</Name>
-            <Description>Where your job files will initially be staged, and results will be returned upon job completion.</Description>
-            <DisplayName>Staging Directory</DisplayName>
-            <InputRequired>false</InputRequired>
-        </ArgumentDirectoryName>
-    </ArgumentChoice>
-
-    <!-- PAS_PRE_STAGING BEGIN -->
-    <ArgumentChoice>
-        <ArgumentBooleanWithDescription>
-            <Name>PRE_STAGING</Name>
-            <Description>Copy all remote include files to the staging area prior to job submission.</Description>
-            <DisplayName>Pre-Staging</DisplayName>
-            <InputRequired>false</InputRequired>
-            <FeatureEnabled>true</FeatureEnabled>
-        </ArgumentBooleanWithDescription>
-    </ArgumentChoice>
-    <!-- PAS_PRE_STAGING END -->
-  
-    <!-- PAS_COMPRESS_RESULTS BEGIN -->
-    <ArgumentChoice>
-        <ArgumentBooleanWithDescription>
-            <Name>COMPRESS_RESULTS</Name>
-            <Description>Compress job results into a single ZIP file.</Description>
-            <DisplayName>Compress Results</DisplayName>
-            <InputRequired>false</InputRequired>
-        </ArgumentBooleanWithDescription>
-    </ArgumentChoice>
-    <!-- PAS_COMPRESS_RESULTS BEGIN -->
-
-    <!-- PAS_LOGGING BEGIN -->
-    <ArgumentChoice>
-        <ArgumentBooleanWithDescription>
-            <Name>LOGGING</Name>
-            <Description>Enable logging. Useful for development and debugging.</Description>
-            <DisplayName>Logging</DisplayName>
-            <InputRequired>false</InputRequired>
-            <FeatureEnabled>true</FeatureEnabled>
-        </ArgumentBooleanWithDescription>
-    </ArgumentChoice>
-    <!-- PAS_LOGGING END -->
-    
+      <DisplayName>Input File</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentFileName>
+  </ArgumentChoice>
+  <!-- PAS_INPUT_FILE END -->
+  <!-- PAS_INCLUDE_FILES BEGIN -->
+  <ArgumentChoice>
+    <ArgumentFileNameMulti>
+      <Name>INCLUDE_FILES</Name>
+      <Description>Files to be included with the Job Script.</Description>
+      <DisplayName>Include Files</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentFileNameMulti>
+  </ArgumentChoice>
+  <!-- PAS_INCLUDE_FILES END -->
+  <ArgumentChoice>
+    <ArgumentDirectoryName>
+      <Name>SUBMISSION_DIRECTORY</Name>
+      <Description>Where your job files will initially be staged, and results will be returned upon job completion.</Description>
+      <DisplayName>Staging Directory</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentDirectoryName>
+  </ArgumentChoice>
+  <!-- PAS_PRE_STAGING BEGIN -->
+  <ArgumentChoice>
+    <ArgumentBooleanWithDescription>
+      <Name>PRE_STAGING</Name>
+      <Description>Copy all remote include files to the staging area prior to job submission.</Description>
+      <DisplayName>Pre-Staging</DisplayName>
+      <InputRequired>false</InputRequired>
+      <FeatureEnabled>true</FeatureEnabled>
+    </ArgumentBooleanWithDescription>
+  </ArgumentChoice>
+  <!-- PAS_PRE_STAGING END -->
+  <!-- PAS_COMPRESS_RESULTS BEGIN -->
+  <ArgumentChoice>
+    <ArgumentBooleanWithDescription>
+      <Name>COMPRESS_RESULTS</Name>
+      <Description>Compress job results into a single ZIP file.</Description>
+      <DisplayName>Compress Results</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentBooleanWithDescription>
+  </ArgumentChoice>
+  <!-- PAS_COMPRESS_RESULTS BEGIN -->
+  <!-- PAS_LOGGING BEGIN -->
+  <ArgumentChoice>
+    <ArgumentBooleanWithDescription>
+      <Name>LOGGING</Name>
+      <Description>Enable logging. Useful for development and debugging.</Description>
+      <DisplayName>Logging</DisplayName>
+      <InputRequired>false</InputRequired>
+      <FeatureEnabled>true</FeatureEnabled>
+    </ArgumentBooleanWithDescription>
+  </ArgumentChoice>
+  <!-- PAS_LOGGING END -->
 </TemplateApplicationInput>

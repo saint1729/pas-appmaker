@@ -43,7 +43,7 @@ os.chdir(os.environ['PAS_STAGE_DIRECTORY'])
 
 ''' Enable Logging '''
 
-log = open('submission.log', 'w')
+log = open('submittime.log', 'w')
 
 logging = False
 
@@ -60,14 +60,14 @@ if re.search('PAS_ENABLE_LOGGING', variable):
 
 ''' Hook Execution '''
 
-if os.path.exists('submission.hook'):
+if os.path.exists('submittime.hook'):
 
-    hook = subprocess.Popen('submission.hook', stdout=subprocess.PIPE)
+    hook = subprocess.Popen('submittime.hook', stdout=subprocess.PIPE)
 
     if logging is True:
 
-        log.write('\n\nSubmission Hook Found\n')
-        log.write('\n\tSubmission Hook PID: %s' % (str(hook.pid)))
+        log.write('\n\nSubmittime Hook Found\n')
+        log.write('\n\tSubmittime Hook PID: %s' % (str(hook.pid)))
 
     for output in hook.stdout.readlines():
 
@@ -75,7 +75,7 @@ if os.path.exists('submission.hook'):
             log.write(output)
 
     if logging is True:
-        log.write('\n\tSubmission Hook PID: %s' % (str(hook.pid)))
+        log.write('\n\tSubmittime Hook PID: %s' % (str(hook.pid)))
 
 
 ''' Queue Options '''
@@ -96,10 +96,23 @@ if userInputs['MAIL_POINTS']:
     if re.match(r"[abe]", mail_points):
         job.attr_mail_options = mail_points
 
-''' Resources & Attributes '''
+''' Select and Resource Builder '''
 
-job.attr_resource = userInputs['RESOURCES']
-job.attr_additional_attrs = userInputs['ATTRIBUTES']
+select = ''
 
+if userInputs['SELECT']:
+    select = ('%s;' % (userInputs['SELECT']))
+
+if userInputs['NCPUS']:
+    select = ('%s:%s' % (select, userInputs['NCPUS']))
+
+if userInputs['MEM']:
+    select = ('%s:%s' % (ncpus, userInputs['MEM']))
+
+if userInputs['MEM']:
+    select = ('%s:%s' % (ncpus, userInputs['MEM']))
+
+job.attr_resource = select
+#job.attr_additional_attrs = userInputs['ATTRIBUTES']
 
 log.close()
