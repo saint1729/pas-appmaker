@@ -21,7 +21,8 @@ __version__ = '12.0.0'
 
 parser = OptionParser(usage='%prog <ApplicationName> [Options]',
                       version='%prog ' + __version__,
-                      description='PAS Application Maker - The Application Definition Development Framework')
+                      description='PAS Application Maker - A simple framework '
+                      'for creating powerful application definitions.')
 
 parser.add_option('--select',
                   dest='select',
@@ -570,6 +571,6 @@ if len(args) == 1:
 else:
 
     sys.stderr.write('Incorrect number of arguments. '
-                     'Try pas-app-maker --help.\n')
+                     'Try pas-appmaker --help to learn more.\n')
     sys.exit(1)
 
