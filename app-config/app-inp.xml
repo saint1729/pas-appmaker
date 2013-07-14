@@ -2,6 +2,7 @@
 <TemplateApplicationInput xmlns="http://schemas.altair.com/pbs/2007/02/app-def" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ApplicationId>APPLICATION</ApplicationId>
   <ApplicationName>APPLICATION</ApplicationName>
+  <!-- Resource &amp; Attribute Options -->
   <ArgumentChoice>
     <ArgumentString>
       <Name>JOB_NAME</Name>
@@ -19,29 +20,29 @@
       <Option>workq</Option>
     </ArgumentStringEnumerated>
   </ArgumentChoice>
-  <!-- PAS_SELECT BEGIN -->
+  <!-- PAS_STATEMENT BEGIN -->
   <ArgumentChoice>
     <ArgumentString>
-      <Name>SELECT</Name>
+      <Name>STATEMENT</Name>
       <Description>Provide qsub select statement.</Description>
       <DisplayName>Select Statement</DisplayName>
       <InputRequired>true</InputRequired>
       <Value>select=1:ncpus=2:mem=1gb</Value>
     </ArgumentString>
   </ArgumentChoice>
-  <!-- PAS_SELECT END -->
-  <!-- PAS_CHUNKS BEGIN -->
+  <!-- PAS_STATEMENT END -->
+  <!-- PAS_SELECT BEGIN -->
   <ArgumentChoice>
     <ArgumentInt>
-      <Name>CHUNKS</Name>
+      <Name>SELECT</Name>
       <Description>The number of chunks (nodes)</Description>
-      <DisplayName>Chunks (Nodes)</DisplayName>
+      <DisplayName>Select (Nodes)</DisplayName>
       <InputRequired>false</InputRequired>
       <LowerBound>1</LowerBound>
       <Value>1</Value>
     </ArgumentInt>
   </ArgumentChoice>
-  <!-- PAS_NCPUS END -->
+  <!-- PAS_SELECT END -->
   <!-- PAS_NCPUS BEGIN -->
   <ArgumentChoice>
     <ArgumentInt>
@@ -141,6 +142,7 @@
     </ArgumentStringEnumerated>
   </ArgumentChoice>
   <!-- PAS_PLACE END -->
+  <!-- Execution Options -->
   <!-- PAS_ENVIRONMENT BEGIN -->
   <ArgumentChoice>
     <ArgumentStringMulti>
@@ -182,6 +184,7 @@
     </ArgumentString>
   </ArgumentChoice>
   <!-- PAS_ARGUMENTS END -->
+  <!-- File Handling Options -->
   <!-- PAS_INPUT_FILE BEGIN -->
   <ArgumentChoice>
     <ArgumentFileName>
@@ -233,6 +236,7 @@
     </ArgumentBooleanWithDescription>
   </ArgumentChoice>
   <!-- PAS_COMPRESS_RESULTS BEGIN -->
+  <!-- Developer Options -->
   <!-- PAS_LOGGING BEGIN -->
   <ArgumentChoice>
     <ArgumentBooleanWithDescription>
