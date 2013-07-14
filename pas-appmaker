@@ -22,7 +22,7 @@ __version__ = '12.0.0'
 
 parser = OptionParser(usage='%prog <App_nameName> [Options]',
                       version='%prog ' + __version__,
-                      description='A simple framework for creating powerful app_name definitions.')
+                      description='A simple framework for creating powerful application definitions.')
 
 resources = OptionGroup(parser, "Resource & Attribute Options",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
