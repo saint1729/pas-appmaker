@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApplicationActions xmlns="http://schemas.altair.com/pbs/2009/01/app-actions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:schemaLocation="http://schemas.altair.com/pbs/2009/01/app-actions ../../app-actions.xsd">
-  <ApplicationId>APPLICATION_ID</ApplicationId>
-  <ApplicationName>APPLICATION_NAME</ApplicationName>
+  <ApplicationId>APPLICATION</ApplicationId>
+  <ApplicationName>APPLICATION</ApplicationName>
   <CustomAction>
     <JobStates>
       <JobState>RUNNING</JobState>
     </JobStates>
+    <!-- PAS_SEND_SIGNALS BEGIN -->
     <Name>SIGNALS</Name>
     <DisplayName>Send Signals</DisplayName>
     <Description>Send UNIX signals to the job process.</Description>
@@ -20,6 +21,7 @@
         <Option default="true">Terminate</Option>
       </ArgumentStringEnumerated>
     </ArgumentChoice>
+    <!-- PAS_SEND_SIGNALS END -->
     <Executable>
       <Language>PYTHON</Language>
       <Name>actions.py</Name>

@@ -92,6 +92,18 @@ parser.add_option_group(resources)
 execution = OptionGroup(parser, "Execution Options",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
+execution.add_option('--site-config-executables',
+                     dest='site_config_executables',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+execution.add_option('--site-config-versions',
+                     dest='site_config_versions',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
 execution.add_option('--environment',
                      dest='environment',
                      action='store_true',
@@ -202,8 +214,11 @@ if len(args) == 1:
     app_config = os.environ['PAS_APP_CONFIG']
     app_home = os.environ['PAS_APP_HOME']
 
+    ''' Initial App Setup '''
+
     app_input = open('%s/app-inp.xml' % (app_config), 'r')
     app_converter = open('%s/app-conv.xml' % (app_config), 'r')
+    app_actions = open('%s/app-actions.xml' % (app_config), 'r')
 
     os.system('mkdir -p %s/%s' % (app_home, app_name))
     os.system('mkdir -p %s/%s/runtime' % (app_home, app_name))
@@ -214,6 +229,7 @@ if len(args) == 1:
 
     app_name_input = open('%s/%s/app-inp-%s.xml' % (app_home, app_name, app_name), 'w')
     app_name_converter = open('%s/%s/app-conv-%s.xml' % (app_home, app_name, app_name), 'w')
+    app_name_actions = open('%s/%s/app-actions-%s.xml' % (app_home, app_name, app_name), 'w')
 
     ''' Generate Input File '''
 
@@ -221,7 +237,7 @@ if len(args) == 1:
 
     for line in app_input.readlines():
 
-        line = re.sub('APP_NAME', app_name, line)
+        line = re.sub('APPLICATION', app_name, line)
 
         ''' Statement '''
 
@@ -383,6 +399,22 @@ if len(args) == 1:
             else:
                 enabled = True
 
+        ''' Site Config Versions '''
+
+        if re.match('.*PAS_SITE_CONFIG_VERSIONS BEGIN', line):
+
+            if options.site_config_versions is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_SITE_CONFIG_VERSIONS END', line):
+
+            if options.site_config_versions is True:
+                pass
+            else:
+                enabled = True
+
         ''' Environment '''
 
         if re.match('.*PAS_ENVIRONMENT BEGIN', line):
@@ -538,7 +570,7 @@ if len(args) == 1:
 
     for line in app_converter.readlines():
 
-        line = re.sub('APP_NAME', app_name, line)
+        line = re.sub('APPLICATION', app_name, line)
 
         ''' Script '''
 
@@ -593,7 +625,36 @@ if len(args) == 1:
             if not re.search('.*<!-- .* -->.*', line):
                 app_name_converter.write(line)
 
-    ''' Hook Processing '''
+    ''' Generate Actions File '''
+
+    enabled = True
+
+    for line in app_actions.readlines():
+
+        line = re.sub('APPLICATON', app_name, line)
+
+        ''' Send Signals '''
+
+        if re.match('.*PAS_SEND_SIGNALS BEGIN', line):
+
+            if options.send_signals is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_SEND_SIGNALS END', line):
+
+            if options.send_signals is True:
+                pass
+            else:
+                enabled = True
+
+        if enabled is True:
+
+            if not re.search('.*<!-- .* -->.*', line):
+                app_name_actions.write(line)
+
+    ''' Generate Hooks '''
 
     if not options.hook_submittime == 'none':
 
@@ -619,7 +680,7 @@ if len(args) == 1:
 
 else:
 
-    sys.stderr.write('Incorrect number of arguments. '
-                     'Try pas-appmaker --help to learn more.\n')
+    sys.stderr.write('Incorrect number of arguments. Try pas-appmaker --help '
+                     'to learn how to make application definitions.\n')
     sys.exit(1)
 
