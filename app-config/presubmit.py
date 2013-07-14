@@ -13,106 +13,119 @@ import zipfile
 import time
 import datetime
 import shutil
+import subprocess
 
 
-''' Submittime Setup '''
+''' Exporting All Options to Environment '''
 
 for variable in job.attr_export_env_to_job.split(','):
 
-    ''' Export ALL Options to Environment '''
+    (key, value) = variable.split('=', 1)
+    os.environ[key.strip()] = value.strip()
 
-    key = re.match('(.*)=(.*)', variable).group(1)
-    value = re.match('(.*)=(.*)', variable).group(2)
-    os.environ[key] = value
+''' Change Location to User Stage '''
 
-    ''' Determine Stage Directory '''
+if 'PAS_SUBMISSION_DIRECTORY' in os.environ:
 
-    if re.search('PAS_SUBMISSION_DIRECTORY', variable):
+    elements = os.environ['PAS_SUBMISSION_DIRECTORY'].split('/', 3)
+    os.chdir(elements[3])
 
-        value = re.match('(.*)=(.*)', variable).group(2)
-        server = os.popen('hostname').read()
-        regex = re.compile('^pbscp://%s(/.*)' % (server.strip()))
-        stage = regex.match(value).group(1)
-
-        os.environ['PAS_STAGE_DIRECTORY'] = stage
-
-if os.path.exists('submittime/submission.hook'):
-    shutil.copy2('submittime/submission.hook', os.environ['PAS_STAGE_DIRECTORY'])
-
-os.chdir(os.environ['PAS_STAGE_DIRECTORY'])
-
-''' Enable Logging '''
+''' Logging '''
 
 log = open('submittime.log', 'w')
 
 logging = False
 
-if re.search('PAS_ENABLE_LOGGING', variable):
+if 'PAS_LOGGING' in os.environ:
 
     logging = True
 
     log.write('\nExported Environment Variables\n')
 
-    for variable in job.attr_export_env_to_job.split(','):
-        (key, value) = re.match('(.*)=(.*)', variable).group()
+    for key, value in os.environ.items():
+        log.write('\n\t%s = %s' % (key.strip(), value.strip()))
 
-        log.write('\n\t%s = %s' % (key, value))
+''' Processing PAS Configuration '''
 
-''' Hook Execution '''
+if os.path.exists('/etc/pas.conf'):
 
-if os.path.exists('submittime.hook'):
+    conf = open('/etc/pas.conf', 'r')
 
-    hook = subprocess.Popen('submittime.hook', stdout=subprocess.PIPE)
+    for line in conf.readlines():
 
-    if logging is True:
+        if re.match('PAS_HOME', line):
 
-        log.write('\n\nSubmittime Hook Found\n')
-        log.write('\n\tSubmittime Hook PID: %s' % (str(hook.pid)))
+            (key, value) = line.split('=')
 
-    for output in hook.stdout.readlines():
+            if logging is True:
+                log.write('\n\nFound PAS Home: %s\n' % (value.strip()))
 
-        if logging is True:
-            log.write(output)
+            application_home = ('%s/repository/applications/%s'
+                                % (value.strip(), os.environ['PAS_APPLICATION']))
 
-    if logging is True:
-        log.write('\n\tSubmittime Hook PID: %s' % (str(hook.pid)))
+            if logging is True:
+                log.write('\n\nFound Application Home: %s\n' % (application_home))
 
+            ''' Hook Execution '''
 
-''' Queue Options '''
+            if os.path.exists('%s/submittime/submittime.hook' % (application_home)):
 
-job.attr_destination = userInputs['QUEUE']
+                path = ('%s/submittime/submittime.hook' % (application_home))
+
+                if logging is True:
+                    log.write('\n\nFound Submission Hook: %s\n' % (path))
+
+                # temporary way to execute hooks...
+                #os.system('%s' % (path))
+
+                #hook = subprocess.Popen(path, stdout=subprocess.PIPE)
+
+                #if logging is True:
+                #    log.write('\n\tSubmittime Hook PID: %s\n\n' % (str(hook.pid)))
+                #
+                #for output in hook.stdout.readlines():
+                #
+                #    if logging is True:
+                #        log.write(output)
+
+            else:
+
+                if logging is True:
+                    log.write('\n\nNo Submission Hook Found\n')
+    conf.close()
+
+''' Processing Resources & Attribuets '''
 
 if logging is True:
-    log.write('\n' % (userInputs['QUEUE']))
+    log.write('\n\nProcessing Resources & Attributes\n')
 
-''' Compute Manager Mail Options '''
+if 'PAS_QUEUE' in os.environ:
 
-if userInputs['MAIL_USERS']:
-    job.attr_mail_list = userInputs['MAIL_USERS']
+    job.attr_destination = os.environ['PAS_QUEUE']
 
-if userInputs['MAIL_POINTS']:
-    mail_points = userInputs['MAIL_POINTS']
-
-    if re.match(r"[abe]", mail_points):
-        job.attr_mail_options = mail_points
+    if logging is True:
+        log.write('\n\tQueue = %s' % (os.environ['PAS_QUEUE']))
 
 ''' Select and Resource Builder '''
 
 select = ''
 
-if userInputs['SELECT']:
-    select = ('%s;' % (userInputs['SELECT']))
+if 'PAS_STATEMENT' in os.environ:
 
-if userInputs['NCPUS']:
-    select = ('%s:%s' % (select, userInputs['NCPUS']))
+    select = ('%s;' % (os.environ['PAS_STATEMENT']))
 
-if userInputs['MEM']:
-    select = ('%s:%s' % (ncpus, userInputs['MEM']))
+    if logging is True:
+        log.write('\n\tStatement = %s' % (os.environ['PAS_STATEMENT']))
 
-if userInputs['MEM']:
-    select = ('%s:%s' % (ncpus, userInputs['MEM']))
+if 'PAS_SELECT' in os.environ:
+    select = ('%s:%s' % (select, os.environ['PAS_SELECT']))
+
+#if userInputs['MEM']:
+#    select = ('%s:%s' % (ncpus, userInputs['MEM']))
+
+#if userInputs['MEM']:
+#    select = ('%s:%s' % (ncpus, userInputs['MEM']))
 
 job.attr_resource = select
-#job.attr_additional_attrs = userInputs['ATTRIBUTES']
 
 log.close()
