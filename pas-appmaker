@@ -20,7 +20,7 @@ import datetime
 
 __version__ = '12.0.0'
 
-parser = OptionParser(usage='%prog <App_nameName> [Options]',
+parser = OptionParser(usage='%prog <APPLICATION> [Options]',
                       version='%prog ' + __version__,
                       description='A simple framework for creating powerful application definitions.')
 
@@ -199,6 +199,12 @@ developer.add_option('--hook-action',
 
 developer.add_option('--hook-exit',
                      dest='hook_exit',
+                     action='store',
+                     default='none',
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--import-environment',
+                     dest='import_environment',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -680,7 +686,6 @@ if len(args) == 1:
 
 else:
 
-    sys.stderr.write('Incorrect number of arguments. Try pas-appmaker --help '
-                     'to learn how to make application definitions.\n')
+    sys.stderr.write('Incorrect number of arguments. Try pas-appmaker --help for more information.\n')
     sys.exit(1)
 
