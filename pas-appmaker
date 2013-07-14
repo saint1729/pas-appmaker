@@ -11,6 +11,7 @@ in the Altair PBS Analytics EULA.
 import os
 import sys
 import re
+import shutil
 
 from optparse import OptionParser
 from optparse import OptionGroup
@@ -19,182 +20,224 @@ import datetime
 
 __version__ = '12.0.0'
 
-parser = OptionParser(usage='%prog <ApplicationName> [Options]',
+parser = OptionParser(usage='%prog <App_nameName> [Options]',
                       version='%prog ' + __version__,
-                      description='PAS Application Maker - A simple framework '
-                      'for creating powerful application definitions.')
+                      description='A simple framework for creating powerful app_name definitions.')
 
-parser.add_option('--select',
-                  dest='select',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources = OptionGroup(parser, "Resource & Attribute Options",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-parser.add_option('--chunks',
-                  dest='chunks',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--statement',
+                     dest='statement',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--ncpus',
-                  dest='ncpus',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--select',
+                     dest='select',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--ncpus-lead-node',
-                  dest='ncpus_lead_node',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--ncpus',
+                     dest='ncpus',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--ncpus-per-node',
-                  dest='ncpus_per_node',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--ncpus-lead-node',
+                     dest='ncpus_lead_node',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--mem',
-                  dest='mem',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--ncpus-per-node',
+                     dest='ncpus_per_node',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--mem-lead-node',
-                  dest='mem_lead_node',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--mem',
+                     dest='mem',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--mem-per-node',
-                  dest='mem_per_node',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--mem-lead-node',
+                     dest='mem_lead_node',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--walltime',
-                  dest='walltime',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--mem-per-node',
+                     dest='mem_per_node',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--place',
-                  dest='place',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--walltime',
+                     dest='walltime',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--environment',
-                  dest='environment',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+resources.add_option('--place',
+                     dest='place',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--executable',
-                  dest='executable',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+parser.add_option_group(resources)
 
-parser.add_option('--script',
-                  dest='script',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+execution = OptionGroup(parser, "Execution Options",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-parser.add_option('--arguments',
-                  dest='arguments',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+execution.add_option('--environment',
+                     dest='environment',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--input-file',
-                  dest='input_file',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+execution.add_option('--executable',
+                     dest='executable',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--include-files',
-                  dest='include_files',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+execution.add_option('--script',
+                     dest='script',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--pre-staging',
-                  dest='pre_staging',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+execution.add_option('--arguments',
+                     dest='arguments',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--logging',
-                  dest='logging',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+parser.add_option_group(execution)
 
-parser.add_option('--compress-results',
-                  dest='compress_results',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+file_handling = OptionGroup(parser, "File Handling Options",
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-parser.add_option('--action-send-signals',
-                  dest='show',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+file_handling.add_option('--input-file',
+                         dest='input_file',
+                         action='store_true',
+                         default=False,
+                         help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--hook-submittime',
-                  dest='show',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+file_handling.add_option('--include-files',
+                         dest='include_files',
+                         action='store_true',
+                         default=False,
+                         help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--hook-runtime',
-                  dest='show',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+file_handling.add_option('--pre-staging',
+                         dest='pre_staging',
+                         action='store_true',
+                         default=False,
+                         help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--hook-actions',
-                  dest='show',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+file_handling.add_option('--compress-results',
+                         dest='compress_results',
+                         action='store_true',
+                         default=False,
+                         help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-parser.add_option('--hook-exit',
-                  dest='show',
-                  action='store_true',
-                  default=False,
-                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+parser.add_option_group(file_handling)
+
+actions = OptionGroup(parser, "Runtime Action Options",
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
+
+actions.add_option('--send-signals',
+                   dest='show',
+                   action='store_true',
+                   default=False,
+                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option_group(actions)
+
+developer = OptionGroup(parser, "Developer Options",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
+
+developer.add_option('--logging',
+                     dest='logging',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--hook-submittime',
+                     dest='hook_submittime',
+                     action='store',
+                     default='none',
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--hook-runtime',
+                     dest='hook_runtime',
+                     action='store',
+                     default='none',
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--hook-action',
+                     dest='hook_action',
+                     action='store',
+                     default='none',
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--hook-exit',
+                     dest='hook_exit',
+                     action='store',
+                     default='none',
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+parser.add_option_group(developer)
 
 (options, args) = parser.parse_args()
 
 if len(args) == 1:
 
-    application = args[0]
+    app_name = args[0]
 
-    templates = os.environ['PAS_TEMPLATES']
-    applications = os.environ['PAS_APPLICATIONS']
-    template_input = open('%s/app-inp.xml' % (templates), 'r')
-    template_converter = open('%s/app-conv.xml' % (templates), 'r')
+    app_config = os.environ['PAS_APP_CONFIG']
+    app_home = os.environ['PAS_APP_HOME']
 
-    os.system('mkdir -p %s/%s' % (applications, application))
-    os.system('mkdir -p %s/%s/runtime' % (applications, application))
-    os.system('mkdir -p %s/%s/submittime' % (applications, application))
-    os.system('cp %s/presubmit.py %s/%s/submittime' % (templates, applications, application))
-    os.system('cp %s/start.py %s/%s/runtime' % (templates, applications, application))
+    app_input = open('%s/app-inp.xml' % (app_config), 'r')
+    app_converter = open('%s/app-conv.xml' % (app_config), 'r')
 
-    application_input = open('%s/%s/app-inp-%s.xml' % (applications, application, application), 'w')
-    application_converter = open('%s/%s/app-conv-%s.xml' % (applications, application, application),'w')
+    os.system('mkdir -p %s/%s' % (app_home, app_name))
+    os.system('mkdir -p %s/%s/runtime' % (app_home, app_name))
+    os.system('mkdir -p %s/%s/submittime' % (app_home, app_name))
+    os.system('cp %s/presubmit.py %s/%s/submittime' % (app_config, app_home, app_name))
+    os.system('cp %s/start.py %s/%s/runtime' % (app_config, app_home, app_name))
+    os.system('cp %s/actions.py %s/%s/runtime' % (app_config, app_home, app_name))
+
+    app_name_input = open('%s/%s/app-inp-%s.xml' % (app_home, app_name, app_name), 'w')
+    app_name_converter = open('%s/%s/app-conv-%s.xml' % (app_home, app_name, app_name), 'w')
 
     ''' Generate Input File '''
 
     enabled = True
 
-    for line in template_input.readlines():
+    for line in app_input.readlines():
 
-        line = re.sub('APPLICATION', application, line)
+        line = re.sub('APP_NAME', app_name, line)
+
+        ''' Statement '''
+
+        if re.match('.*PAS_STATEMENT BEGIN', line):
+
+            if options.statement is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_STATEMENT END', line):
+
+            if options.statement is True:
+                pass
+            else:
+                enabled = True
 
         ''' Select '''
 
@@ -208,22 +251,6 @@ if len(args) == 1:
         if re.match('.*PAS_SELECT END', line):
 
             if options.select is True:
-                pass
-            else:
-                enabled = True
-
-        ''' Chunks '''
-
-        if re.match('.*PAS_CHUNKS BEGIN', line):
-
-            if options.chunks is True:
-                enabled = True
-            else:
-                enabled = False
-
-        if re.match('.*PAS_CHUNKS END', line):
-
-            if options.chunks is True:
                 pass
             else:
                 enabled = True
@@ -503,15 +530,15 @@ if len(args) == 1:
         if enabled is True:
 
             if not re.search('.*<!-- .* -->.*', line):
-                application_input.write(line)
+                app_name_input.write(line)
 
     ''' Generate Convereter File '''
 
     enabled = True
 
-    for line in template_converter.readlines():
+    for line in app_converter.readlines():
 
-        line = re.sub('APPLICATION', application, line)
+        line = re.sub('APP_NAME', app_name, line)
 
         ''' Script '''
 
@@ -564,7 +591,29 @@ if len(args) == 1:
         if enabled is True:
 
             if not re.search('.*<!-- .* -->.*', line):
-                application_converter.write(line)
+                app_name_converter.write(line)
+
+    ''' Hook Processing '''
+
+    if not options.hook_submittime == 'none':
+
+        if os.path.exists(options.hook_submittime):
+            shutil.copy2(options.hook_submittime, '%s/%s/submittime/submittime.hook' % (app_home, app_name))
+
+    if not options.hook_runtime == 'none':
+
+        if os.path.exists(options.hook_runtime):
+            shutil.copy2(options.hook_runtime, '%s/%s/runtime/runtime.hook' % (app_home, app_name))
+
+    if not options.hook_action == 'none':
+
+        if os.path.exists(options.hook_action):
+            shutil.copy2(options.hook_action, '%s/%s/runtime/action.hook' % (app_home, app_name))
+
+    if not options.hook_exit == 'none':
+
+        if os.path.exists(options.hook_exit):
+            shutil.copy2(options.hook_exit, '%s/%s/runtime/exit.hook' % (app_home, app_name))
 
     sys.exit(0)
 
