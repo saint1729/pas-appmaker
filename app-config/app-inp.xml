@@ -225,17 +225,6 @@
       <InputRequired>false</InputRequired>
     </ArgumentDirectoryName>
   </ArgumentChoice>
-  <!-- PAS_PRE_STAGING BEGIN -->
-  <ArgumentChoice>
-    <ArgumentBooleanWithDescription>
-      <Name>PRE_STAGING</Name>
-      <Description>Copy all remote include files to the staging area prior to job submission.</Description>
-      <DisplayName>Pre-Staging</DisplayName>
-      <InputRequired>false</InputRequired>
-      <FeatureEnabled>true</FeatureEnabled>
-    </ArgumentBooleanWithDescription>
-  </ArgumentChoice>
-  <!-- PAS_PRE_STAGING END -->
   <!-- PAS_COMPRESS_RESULTS BEGIN -->
   <ArgumentChoice>
     <ArgumentBooleanWithDescription>

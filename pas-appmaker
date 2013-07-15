@@ -163,7 +163,7 @@ actions = OptionGroup(parser, "Runtime Action Options",
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
 actions.add_option('--send-signals',
-                   dest='show',
+                   dest='send_signals',
                    action='store_true',
                    default=False,
                    help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -173,8 +173,26 @@ parser.add_option_group(actions)
 developer = OptionGroup(parser, "Developer Options",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-developer.add_option('--import-environment',
-                     dest='import_environment',
+developer.add_option('--import-submittime',
+                     dest='import_submittime',
+                     action='store',
+                     default='none',
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--import-runtime',
+                     dest='import_runtime',
+                     action='store',
+                     default='none',
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--import-actions',
+                     dest='import_actions',
+                     action='store',
+                     default='none',
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--import-exit',
+                     dest='import_exit',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -191,8 +209,8 @@ developer.add_option('--hook-runtime',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-developer.add_option('--hook-action',
-                     dest='hook_action',
+developer.add_option('--hook-actions',
+                     dest='hook_actions',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -517,22 +535,6 @@ if len(args) == 1:
             else:
                 enabled = True
 
-        ''' Pre Staging '''
-
-        if re.match('.*PAS_PRE_STAGING BEGIN', line):
-
-            if options.pre_staging is True:
-                enabled = True
-            else:
-                enabled = False
-
-        if re.match('.*PAS_PRE_STAGING END', line):
-
-            if options.pre_staging is True:
-                pass
-            else:
-                enabled = True
-
         ''' Compress Results '''
 
         if re.match('.*PAS_COMPRESS_RESULTS BEGIN', line):
@@ -660,6 +662,44 @@ if len(args) == 1:
             if not re.search('.*<!-- .* -->.*', line):
                 app_name_actions.write(line)
 
+    ''' Generate Imports '''
+
+    if not options.import_submittime == 'none':
+
+        submittime_import = open('%s/%s/submittime/submittime.import' % (app_home, app_name))
+
+        for variable in options.import_submittime.split(','):
+            submittime_import.write('%s\n' % (variable))
+
+        submittime_import.close()
+
+    if not options.import_runtime == 'none':
+
+        runtime_import = open('%s/%s/runtime/runtime.import' % (app_home, app_name), 'w')
+
+        for variable in options.import_runtime.split(','):
+            runtime_import.write('%s\n' % (variable))
+
+        runtime_import.close()
+
+    if not options.import_actions == 'none':
+
+        actions_import = open('%s/%s/runtime/actions.import' % (app_home, app_name))
+
+        for variable in options.import_actions.split(','):
+            actions_import.write('%s\n' % (variable))
+
+        actions_import.close()
+
+    if not options.import_exit == 'none':
+
+        exit_import = open('%s/%s/runtime/exit.import' % (app_home, app_name))
+
+        for variable in options.import_exit.split(','):
+            exit_import.write('%s\n' % (variable))
+
+        exit_import.close()
+
     ''' Generate Hooks '''
 
     if not options.hook_submittime == 'none':
@@ -672,10 +712,10 @@ if len(args) == 1:
         if os.path.exists(options.hook_runtime):
             shutil.copy2(options.hook_runtime, '%s/%s/runtime/runtime.hook' % (app_home, app_name))
 
-    if not options.hook_action == 'none':
+    if not options.hook_actions == 'none':
 
-        if os.path.exists(options.hook_action):
-            shutil.copy2(options.hook_action, '%s/%s/runtime/action.hook' % (app_home, app_name))
+        if os.path.exists(options.hook_actions):
+            shutil.copy2(options.hook_actions, '%s/%s/runtime/actions.hook' % (app_home, app_name))
 
     if not options.hook_exit == 'none':
 
