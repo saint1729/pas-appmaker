@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApplicationActions xmlns="http://schemas.altair.com/pbs/2009/01/app-actions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:schemaLocation="http://schemas.altair.com/pbs/2009/01/app-actions ../../app-actions.xsd">
-  <ApplicationId>APPLICATION</ApplicationId>
-  <ApplicationName>APPLICATION</ApplicationName>
+  <ApplicationId>APP_NAME</ApplicationId>
+  <ApplicationName>APP_NAME</ApplicationName>
   <CustomAction>
     <JobStates>
       <JobState>RUNNING</JobState>

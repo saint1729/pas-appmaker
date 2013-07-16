@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TemplateApplicationInput xmlns="http://schemas.altair.com/pbs/2007/02/app-def" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <ApplicationId>APPLICATION</ApplicationId>
-  <ApplicationName>APPLICATION</ApplicationName>
+  <ApplicationId>APP_NAME</ApplicationId>
+  <ApplicationName>APP_NAME</ApplicationName>
   <!-- Resource &amp; Attribute Options -->
   <ArgumentChoice>
     <ArgumentString>
@@ -36,87 +36,103 @@
     <ArgumentInt>
       <Name>SELECT</Name>
       <Description>The number of chunks (nodes)</Description>
-      <DisplayName>Select (Nodes)</DisplayName>
-      <InputRequired>false</InputRequired>
+      <DisplayName>Select (Nodes/Chunks)</DisplayName>
+      <InputRequired>true</InputRequired>
       <LowerBound>1</LowerBound>
+      <UpperBound>256</UpperBound>
       <Value>1</Value>
     </ArgumentInt>
   </ArgumentChoice>
   <!-- PAS_SELECT END -->
   <!-- PAS_NCPUS BEGIN -->
   <ArgumentChoice>
-    <ArgumentInt>
+    <ArgumentIntEnumerated>
       <Name>NCPUS</Name>
       <Description>The total number of processors.</Description>
       <DisplayName>Number of Processors</DisplayName>
       <InputRequired>true</InputRequired>
-      <LowerBound>1</LowerBound>
-      <Value>1</Value>
-    </ArgumentInt>
+      <Option default="true">2</Option>
+      <Option>4</Option>
+      <Option>6</Option>
+      <Option>8</Option>
+      <Option>10</Option>
+      <Option>12</Option>
+    </ArgumentIntEnumerated>
   </ArgumentChoice>
   <!-- PAS_NCPUS END -->
-  <!-- PAS_NCPUS_LEAD_NODE BEGIN -->
+  <!-- PAS_PCPUS BEGIN -->
   <ArgumentChoice>
-    <ArgumentInt>
-      <Name>NCPUS_LEAD_NODE</Name>
-      <Description>The total number of processors on the lead node of a mult-node job.</Description>
-      <DisplayName>NCPUS on Lead Node</DisplayName>
+    <ArgumentIntEnumerated>
+      <Name>PCPUS</Name>
+      <Description>The total number of physical processors.</Description>
+      <DisplayName>Number of Processors</DisplayName>
       <InputRequired>true</InputRequired>
-      <LowerBound>1</LowerBound>
-      <Value>1</Value>
-    </ArgumentInt>
+      <Option default="true">2</Option>
+      <Option>4</Option>
+      <Option>6</Option>
+      <Option>8</Option>
+      <Option>10</Option>
+      <Option>12</Option>
+    </ArgumentIntEnumerated>
   </ArgumentChoice>
-  <!-- PAS_NCPUS_LEAD_NODE END -->
-  <!-- PAS_NCPUS_PER_NODE BEGIN -->
+  <!-- PAS_PCPUS END -->
+  <!-- PAS_MPIPROCS BEGIN -->
   <ArgumentChoice>
-    <ArgumentInt>
-      <Name>NCPUS_PER_NODE</Name>
-      <Description>The total number of processors on the lead node of a mult-node job.</Description>
-      <DisplayName>NCPUS Per Node</DisplayName>
+    <ArgumentIntEnumerated>
+      <Name>MPIPROCS</Name>
+      <Description>The total number of parallel processes.</Description>
+      <DisplayName>MPI Processors</DisplayName>
+      <InputRequired>false</InputRequired>
       <InputRequired>true</InputRequired>
-      <LowerBound>1</LowerBound>
-      <Value>1</Value>
-    </ArgumentInt>
+      <Option default="true">2</Option>
+      <Option>4</Option>
+      <Option>6</Option>
+      <Option>8</Option>
+      <Option>10</Option>
+      <Option>12</Option>
+    </ArgumentIntEnumerated>
   </ArgumentChoice>
-  <!-- PAS_NCPUS_PER_NODE END -->
+  <!-- PAS_MPIPROCS END -->
+  <!-- PAS_OMPTHREADS BEGIN -->
+  <ArgumentChoice>
+    <ArgumentIntEnumerated>
+      <Name>OMPTHREADS</Name>
+      <Description>The total number of parallel processes.</Description>
+      <DisplayName>OMP Threads</DisplayName>
+      <InputRequired>false</InputRequired>
+      <Option default="true">2</Option>
+      <Option>4</Option>
+      <Option>6</Option>
+      <Option>8</Option>
+      <Option>10</Option>
+      <Option>12</Option>
+    </ArgumentIntEnumerated>
+  </ArgumentChoice>
+  <!-- PAS_OMPTHREADS END -->
   <!-- PAS_MEM BEGIN -->
   <ArgumentChoice>
     <ArgumentInt>
       <Name>MEM</Name>
-      <Description>The physical memory to use.</Description>
-      <DisplayName>Memory</DisplayName>
+      <Description>The physical memory to request in gigabytes.</Description>
+      <DisplayName>Physical Memory (GB)</DisplayName>
       <InputRequired>true</InputRequired>
       <LowerBound>1</LowerBound>
       <Value>1</Value>
     </ArgumentInt>
   </ArgumentChoice>
   <!-- PAS_MEM END -->
-  <!-- PAS_MEM_LEAD_NODE BEGIN -->
+  <!-- PAS_VMEM BEGIN -->
   <ArgumentChoice>
-    <ArgumentStringEnumerated>
-      <Name>MEM_LEAD_NODE</Name>
-      <Description>Select the amount of memory on the lead node in gigabytes.</Description>
-      <DisplayName>Memory on Lead Node (GB)</DisplayName>
+    <ArgumentInt>
+      <Name>VMEM</Name>
+      <Description>The virtual memory to use.</Description>
+      <DisplayName>Virtual Memory</DisplayName>
       <InputRequired>false</InputRequired>
-      <Option>19</Option>
-      <Option>42</Option>
-      <Option>89</Option>
-    </ArgumentStringEnumerated>
+      <LowerBound>1</LowerBound>
+      <Value>1</Value>
+    </ArgumentInt>
   </ArgumentChoice>
-  <!-- PAS_MEM_LEAD_NODE END -->
-  <!-- PAS_MEM_PER_NODE BEGIN -->
-  <ArgumentChoice>
-    <ArgumentIntEnumerated>
-      <Name>MEM_PER_NODE</Name>
-      <Description>Select the amount of memory per compute node in gigabytes.</Description>
-      <DisplayName>Memory Per Node (GB)</DisplayName>
-      <InputRequired>true</InputRequired>
-      <Option default="true">19</Option>
-      <Option>42</Option>
-      <Option>89</Option>
-    </ArgumentIntEnumerated>
-  </ArgumentChoice>
-  <!-- PAS_MEM_PER_NODE END -->
+  <!-- PAS_MEM END -->
   <!-- PAS_WALLTIME BEGIN -->
   <ArgumentChoice>
     <ArgumentString>
@@ -127,18 +143,27 @@
     </ArgumentString>
   </ArgumentChoice>
   <!-- PAS_WALLTIME END -->
+  <!-- PAS_ARCH BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>ARCH</Name>
+      <Description>Specify which system architecture to run your job on.</Description>
+      <DisplayName>Architecture</DisplayName>
+      <InputRequired>true</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_ARCH END -->
   <!-- PAS_PLACE BEGIN -->
   <ArgumentChoice>
     <ArgumentStringEnumerated>
       <Name>PLACE</Name>
-      <Description>The placement of job chunks.</Description>
-      <DisplayName>Placement of Chunks</DisplayName>
+      <Description>The placement of job resources.</Description>
+      <DisplayName>Placement of Resources</DisplayName>
       <InputRequired>false</InputRequired>
-      <Option>pack</Option>
+      <Option default="true">pack</Option>
       <Option>free</Option>
       <Option>scatter</Option>
       <Option>shared</Option>
-      <Value>free</Value>
     </ArgumentStringEnumerated>
   </ArgumentChoice>
   <!-- PAS_PLACE END -->
@@ -150,7 +175,7 @@
       <Description>Version of application to use.</Description>
       <DisplayName>Version</DisplayName>
       <InputRequired>true</InputRequired>
-      <xi:include href="site-config.xml" xpointer="xpath1(//Application[@id='APPLICATION']/ApplicationVersions//Option)"/>
+      <xi:include href="site-config.xml" xpointer="xpath1(//Application[@id='APP_NAME']/ApplicationVersions//Option)"/>
     </ArgumentStringEnumerated>
   </ArgumentChoice>
   <!-- PAS_SITE_CONFIG_VERSIONS END -->
@@ -164,12 +189,23 @@
     </ArgumentStringMulti>
   </ArgumentChoice>
   <!-- PAS_ENVIRONMENT END -->
+  <!-- PAS_APPLICATION_NAME BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>APPLICATION_NAME</Name>
+      <Description>The name of your application.</Description>
+      <DisplayName>Application Name</DisplayName>
+      <InputRequired>true</InputRequired>
+      <Value>APP_NAME</Value>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_APPLICATION_NAME END -->
   <!-- PAS_EXECUTABLE BEGIN -->
   <ArgumentChoice>
     <ArgumentString>
       <Name>EXECUTABLE</Name>
       <Description>A remote executable to run instead of a user supplied job script.</Description>
-      <DisplayName>Job Executable</DisplayName>
+      <DisplayName>Application Executable</DisplayName>
       <InputRequired>true</InputRequired>
     </ArgumentString>
   </ArgumentChoice>

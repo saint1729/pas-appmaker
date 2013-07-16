@@ -24,7 +24,7 @@ parser = OptionParser(usage='%prog <APPLICATION> [Options]',
                       version='%prog ' + __version__,
                       description='A simple framework for creating powerful application definitions.')
 
-resources = OptionGroup(parser, "Resource & Attribute Options",
+resources = OptionGroup(parser, "Resource Options",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
 resources.add_option('--statement',
@@ -45,14 +45,20 @@ resources.add_option('--ncpus',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-resources.add_option('--ncpus-lead-node',
-                     dest='ncpus_lead_node',
+resources.add_option('--pcpus',
+                     dest='pcpus',
                      action='store_true',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-resources.add_option('--ncpus-per-node',
-                     dest='ncpus_per_node',
+resources.add_option('--mpiprocs',
+                     dest='mpiprocs',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+resources.add_option('--ompthreads',
+                     dest='ompthreads',
                      action='store_true',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -63,20 +69,20 @@ resources.add_option('--mem',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-resources.add_option('--mem-lead-node',
-                     dest='mem_lead_node',
-                     action='store_true',
-                     default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
-
-resources.add_option('--mem-per-node',
-                     dest='mem_per_node',
+resources.add_option('--vmem',
+                     dest='vmem',
                      action='store_true',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
 resources.add_option('--walltime',
                      dest='walltime',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+resources.add_option('--arch',
+                     dest='arch',
                      action='store_true',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -92,12 +98,6 @@ parser.add_option_group(resources)
 execution = OptionGroup(parser, "Execution Options",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-execution.add_option('--site-config-executables',
-                     dest='site_config_executables',
-                     action='store_true',
-                     default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
-
 execution.add_option('--site-config-versions',
                      dest='site_config_versions',
                      action='store_true',
@@ -110,8 +110,14 @@ execution.add_option('--environment',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-execution.add_option('--executable',
-                     dest='executable',
+execution.add_option('--application-name',
+                     dest='application_name',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+execution.add_option('--application-executable',
+                     dest='application_executable',
                      action='store_true',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -173,26 +179,26 @@ parser.add_option_group(actions)
 developer = OptionGroup(parser, "Developer Options",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-developer.add_option('--import-submittime',
-                     dest='import_submittime',
+developer.add_option('--environment-submittime',
+                     dest='environment_submittime',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-developer.add_option('--import-runtime',
-                     dest='import_runtime',
+developer.add_option('--environment-runtime',
+                     dest='environment_runtime',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-developer.add_option('--import-actions',
-                     dest='import_actions',
+developer.add_option('--environment-actions',
+                     dest='environment_actions',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-developer.add_option('--import-exit',
-                     dest='import_exit',
+developer.add_option('--environment-exit',
+                     dest='environment_exit',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -261,7 +267,9 @@ if len(args) == 1:
 
     for line in app_input.readlines():
 
-        line = re.sub('APPLICATION', app_name, line)
+        line = re.sub('APP_NAME', app_name, line)
+        line = re.sub('APP_HOME', app_home, line)
+        line = re.sub('APP_CONFIG', app_config, line)
 
         ''' Statement '''
 
@@ -311,34 +319,50 @@ if len(args) == 1:
             else:
                 enabled = True
 
-        ''' Ncpus Lead Node '''
+        ''' Pcpus '''
 
-        if re.match('.*PAS_NCPUS_LEAD_NODE BEGIN', line):
+        if re.match('.*PAS_PCPUS BEGIN', line):
 
-            if options.ncpus_lead_node is True:
+            if options.pcpus is True:
                 enabled = True
             else:
                 enabled = False
 
-        if re.match('.*PAS_NCPUS_LEAD_NODE END', line):
+        if re.match('.*PAS_PCPUS END', line):
 
-            if options.ncpus_lead_node is True:
+            if options.pcpus is True:
                 pass
             else:
                 enabled = True
 
-        ''' Ncpus Per Node '''
+        ''' Mpiprocs '''
 
-        if re.match('.*PAS_NCPUS_PER_NODE BEGIN', line):
+        if re.match('.*PAS_MPIPROCS BEGIN', line):
 
-            if options.ncpus_per_node is True:
+            if options.mpiprocs is True:
                 enabled = True
             else:
                 enabled = False
 
-        if re.match('.*PAS_NCPUS_PER_NODE END', line):
+        if re.match('.*PAS_MPIPROCS END', line):
 
-            if options.ncpus_per_node is True:
+            if options.mpiprocs is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Ompthreads '''
+
+        if re.match('.*PAS_OMPTHREADS BEGIN', line):
+
+            if options.ompthreads is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_OMPTHREADS END', line):
+
+            if options.ompthreads is True:
                 pass
             else:
                 enabled = True
@@ -359,34 +383,18 @@ if len(args) == 1:
             else:
                 enabled = True
 
-        ''' Mem Lead Node '''
+        ''' Vmem '''
 
-        if re.match('.*PAS_MEM_LEAD_NODE BEGIN', line):
+        if re.match('.*PAS_VMEM BEGIN', line):
 
-            if options.mem_lead_node is True:
+            if options.vmem is True:
                 enabled = True
             else:
                 enabled = False
 
-        if re.match('.*PAS_MEM_LEAD_NODE END', line):
+        if re.match('.*PAS_VMEM END', line):
 
-            if options.mem_lead_node is True:
-                pass
-            else:
-                enabled = True
-
-        ''' Mem Per Node '''
-
-        if re.match('.*PAS_MEM_PER_NODE BEGIN', line):
-
-            if options.mem_per_node is True:
-                enabled = True
-            else:
-                enabled = False
-
-        if re.match('.*PAS_MEM_PER_NODE END', line):
-
-            if options.mem_per_node is True:
+            if options.vmem is True:
                 pass
             else:
                 enabled = True
@@ -403,6 +411,22 @@ if len(args) == 1:
         if re.match('.*PAS_WALLTIME END', line):
 
             if options.walltime is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Arch '''
+
+        if re.match('.*PAS_ARCH BEGIN', line):
+
+            if options.arch is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_ARCH END', line):
+
+            if options.arch is True:
                 pass
             else:
                 enabled = True
@@ -455,18 +479,34 @@ if len(args) == 1:
             else:
                 enabled = True
 
-        ''' Executable '''
+        ''' Application Name '''
 
-        if re.match('.*PAS_EXECUTABLE BEGIN', line):
+        if re.match('.*PAS_APPLICATION_NAME BEGIN', line):
 
-            if options.executable is True:
+            if options.application_name is True:
                 enabled = True
             else:
                 enabled = False
 
-        if re.match('.*PAS_EXECUTABLE END', line):
+        if re.match('.*PAS_APPLICATION_NAME END', line):
 
-            if options.executable is True:
+            if options.application_name is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Application Executable '''
+
+        if re.match('.*PAS_APPLICATION_EXECUTABLE BEGIN', line):
+
+            if options.application_executable is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_APPLICATION_EXECUTABLE END', line):
+
+            if options.application_executable is True:
                 pass
             else:
                 enabled = True
@@ -578,7 +618,9 @@ if len(args) == 1:
 
     for line in app_converter.readlines():
 
-        line = re.sub('APPLICATION', app_name, line)
+        line = re.sub('APP_NAME', app_name, line)
+        line = re.sub('APP_HOME', app_home, line)
+        line = re.sub('APP_CONFIG', app_config, line)
 
         ''' Script '''
 
@@ -639,7 +681,9 @@ if len(args) == 1:
 
     for line in app_actions.readlines():
 
-        line = re.sub('APPLICATON', app_name, line)
+        line = re.sub('APP_NAME', app_name, line)
+        line = re.sub('APP_HOME', app_home, line)
+        line = re.sub('APP_CONFIG', app_config, line)
 
         ''' Send Signals '''
 
@@ -662,43 +706,43 @@ if len(args) == 1:
             if not re.search('.*<!-- .* -->.*', line):
                 app_name_actions.write(line)
 
-    ''' Generate Imports '''
+    ''' Generate Environments '''
 
-    if not options.import_submittime == 'none':
+    if not options.environment_submittime == 'none':
 
-        submittime_import = open('%s/%s/submittime/submittime.import' % (app_home, app_name))
+        submittime_environment = open('%s/%s/submittime/submittime.environment' % (app_home, app_name), 'w')
 
-        for variable in options.import_submittime.split(','):
-            submittime_import.write('%s\n' % (variable))
+        for variable in options.environment_submittime.split(','):
+            submittime_environment.write('%s\n' % (variable))
 
-        submittime_import.close()
+        submittime_environment.close()
 
-    if not options.import_runtime == 'none':
+    if not options.environment_runtime == 'none':
 
-        runtime_import = open('%s/%s/runtime/runtime.import' % (app_home, app_name), 'w')
+        runtime_environment = open('%s/%s/runtime/runtime.environment' % (app_home, app_name), 'w')
 
-        for variable in options.import_runtime.split(','):
-            runtime_import.write('%s\n' % (variable))
+        for variable in options.environment_runtime.split(','):
+            runtime_environment.write('%s\n' % (variable))
 
-        runtime_import.close()
+        runtime_environment.close()
 
-    if not options.import_actions == 'none':
+    if not options.environment_actions == 'none':
 
-        actions_import = open('%s/%s/runtime/actions.import' % (app_home, app_name))
+        actions_environment = open('%s/%s/runtime/actions.environment' % (app_home, app_name), 'w')
 
-        for variable in options.import_actions.split(','):
-            actions_import.write('%s\n' % (variable))
+        for variable in options.environment_actions.split(','):
+            actions_environment.write('%s\n' % (variable))
 
-        actions_import.close()
+        actions_environment.close()
 
-    if not options.import_exit == 'none':
+    if not options.environment_exit == 'none':
 
-        exit_import = open('%s/%s/runtime/exit.import' % (app_home, app_name))
+        exit_environment = open('%s/%s/runtime/exit.environment' % (app_home, app_name), 'w')
 
-        for variable in options.import_exit.split(','):
-            exit_import.write('%s\n' % (variable))
+        for variable in options.environment_exit.split(','):
+            exit_environment.write('%s\n' % (variable))
 
-        exit_import.close()
+        exit_environment.close()
 
     ''' Generate Hooks '''
 
