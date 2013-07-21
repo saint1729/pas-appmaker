@@ -154,6 +154,13 @@ parser.add_option_group(attributes)
 options = OptionGroup(parser, "Options",
                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
+options.add_option('--account',
+                   dest='account',
+                   action='store_true',
+                   default=False,
+                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                   'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
 options.add_option('--queue',
                    dest='queue',
                    action='store_true',
@@ -595,6 +602,22 @@ if len(args) == 1:
             else:
                 enabled = True
 
+        ''' Account '''
+
+        if re.match('.*PAS_ACCOUNT BEGIN', line):
+
+            if options.account is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_ACCOUNT END', line):
+
+            if options.account is True:
+                pass
+            else:
+                enabled = True
+
         ''' Queue '''
 
         if re.match('.*PAS_QUEUE BEGIN', line):
@@ -623,6 +646,22 @@ if len(args) == 1:
         if re.match('.*PAS_MAIL END', line):
 
             if options.mail is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Job Arrays '''
+
+        if re.match('.*PAS_JOB_ARRAYS BEGIN', line):
+
+            if options.job_arrays is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_JOB_ARRAYS END', line):
+
+            if options.job_arrays is True:
                 pass
             else:
                 enabled = True
@@ -787,6 +826,22 @@ if len(args) == 1:
         line = re.sub('APP_NAME', app_name, line)
         line = re.sub('APP_HOME', app_home, line)
         line = re.sub('APP_CONFIG', app_config, line)
+
+        ''' Job Arrays '''
+
+        if re.match('.*PAS_JOB_ARRAYS BEGIN', line):
+
+            if options.job_arrays is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_JOB_ARRAYS END', line):
+
+            if options.job_arrays is True:
+                pass
+            else:
+                enabled = True
 
         ''' Script '''
 

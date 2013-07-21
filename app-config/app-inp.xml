@@ -197,6 +197,16 @@
     </ArgumentString>
   </ArgumentChoice>
   <!-- PAS_ADDITONAL_ATTRIBUTES END -->
+  <!-- PAS_ACCOUNT BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>ACCOUNT</Name>
+      <Description>Specify the name of an account to associate with this job.</Description>
+      <DisplayName>Account</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_ACCOUNT END -->
   <!-- PAS_QUEUE BEGIN -->
   <ArgumentChoice>
     <ArgumentStringEnumerated>
