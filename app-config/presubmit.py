@@ -4,16 +4,19 @@
 © Copyright 2013 Altair Engineering, Inc. All rights reserved.
 This code is provided “as is” without any warranty, express or implied, or
 indemnification of any kind. All other terms and conditions are as specified
-in the Altair PBS Analytics EULA.
+in the Altair PBS Application Services EULA.
 '''
 
 import re
 import os
+import sys
 import zipfile
 import time
 import datetime
 import shutil
 import subprocess
+
+__version__ = '13.0.0-beta1'
 
 
 ''' Exporting All Options to Environment '''
@@ -31,6 +34,12 @@ for variable in job.attr_export_env_to_job.split(','):
     (key, value) = variable.split('=', 1)
     os.environ[key.strip()] = value.strip()
 
+if 'PAS_APPLICATION_NAME' in os.environ:
+    os.environ['PAS_APPLICATION'] = os.environ['PAS_APPLICATION_NAME']
+
+if 'PAS_EXECUTABLE_NAME' in os.environ:
+    os.environ['PAS_EXECUTABLE'] = os.environ['PAS_EXECUTABLE_NAME']
+
 ''' Change Location to User Stage '''
 
 if 'PAS_SUBMISSION_DIRECTORY' in os.environ:
@@ -38,9 +47,10 @@ if 'PAS_SUBMISSION_DIRECTORY' in os.environ:
     elements = os.environ['PAS_SUBMISSION_DIRECTORY'].split('/', 3)
     os.chdir('/%s' % (elements[3]))
 
+
 ''' Logging '''
 
-log = open('submittime.log', 'w')
+log = open('submit.log', 'w')
 
 logging = False
 
@@ -48,6 +58,7 @@ if 'PAS_LOGGING' in os.environ:
 
     if os.environ['PAS_LOGGING'] == 'true':
         logging = True
+
 
 ''' Processing PAS Configuration '''
 
@@ -70,18 +81,18 @@ if os.path.exists('/etc/pas.conf'):
             if logging is True:
                 log.write('\n\nFound Application Home: %s\n' % (application_home))
 
-            ''' Importing Environment '''
+            ''' Exporting Submit Environment '''
 
-            if os.path.exists('%s/submittime/submittime.environment' % (application_home)):
+            if os.path.exists('%s/submittime/environment.submit' % (application_home)):
 
-                path = ('%s/submittime/submittime.environment' % (application_home))
+                path = ('%s/submittime/environment.submit' % (application_home))
 
                 if logging is True:
-                    log.write('\n\nFound Submission Environment to Import: %s\n' % (path))
+                    log.write('\n\nFound Environment Submit: %s\n' % (path))
 
-                submittime_import = open(path, 'r')
+                environment_submit = open(path, 'r')
 
-                for variable in submittime_import.readlines():
+                for variable in environment_submit.readlines():
 
                     (key, value) = variable.split('=', 1)
                     os.environ[key.strip()] = value.strip()
@@ -89,7 +100,7 @@ if os.path.exists('/etc/pas.conf'):
             else:
 
                 if logging is True:
-                    log.write('\n\nNo Submission Environment to Import Found\n')
+                    log.write('\n\nNo Environment Submit Found\n')
 
             ''' Environment Variable Parser '''
 
@@ -100,155 +111,228 @@ if os.path.exists('/etc/pas.conf'):
 
                 if re.search('PAS_', value):
 
-                    for key_parser, value_parser in os.environ.items():
+                    for k, v in os.environ.items():
 
-                        if re.search('PAS_', key_parser):
+                        if re.search('PAS_', k):
 
-                            if re.match(key_parser, value):
+                            pattern = re.compile(k, re.UNICODE)
 
-                                value = re.sub(key_parser, value_parser, value)
+                            for match in pattern.findall(value):
+
+                                value = re.sub(match, v, value)
                                 os.environ[key.strip()] = value.strip()
 
             ''' Export All Options and Environment Variables '''
 
             if logging is True:
-
                 log.write('\nExported Options and Environment Variables\n')
 
                 for key, value in os.environ.items():
                     log.write('\n\t%s = %s' % (key.strip(), value.strip()))
 
-            ''' Hook Execution '''
-
-            if os.path.exists('%s/submittime/submittime.hook' % (application_home)):
-
-                path = ('%s/submittime/submittime.hook' % (application_home))
-
-                if logging is True:
-                    log.write('\n\nFound Submission Hook Import: %s\n' % (path))
-
-                #hook = subprocess.Popen(path, stdout=PIPE).communicate()[0]
-
-            #    if logging is True:
-            #        log.write('\n\tSubmittime Hook PID: %s\n\n' % (str(hook.pid)))
-            #
-            #    for output in hook.stdout.readlines():
-            #
-            #        if logging is True:
-            #            log.write(output)
-            #else:
-            #
-            #    if logging is True:
-            #        log.write('\n\nNo Submission Hook Import Found\n')
-
     conf.close()
 
-''' Processing Resource Requests '''
+
+''' Processing Resources '''
 
 if logging is True:
     log.write('\n\nProcessing Resource Requests\n')
 
-statement = ('software=%s' % (os.environ['PAS_APPLICATION'].strip()))
+resources = ('software=%s' % (os.environ['PAS_APPLICATION'].strip()))
 
-if 'PAS_STATEMENT' in os.environ:
+if 'PAS_SELECT_STATEMENT' in os.environ:
 
-    statement = ('%s %s' % (statement, os.environ['PAS_STATEMENT'].strip()))
+    resources = ('%s %s' % (resources, os.environ['PAS_SELECT_STATEMENT'].strip()))
 
     if logging is True:
-        log.write('\n\tStatement = %s' % (os.environ['PAS_STATEMENT'].strip()))
-
-if not 'PAS_SELECT' in os.environ:
-    os.environ['PAS_SELECT'] = '1'
+        log.write('\n\tSelect Statement = %s' % (os.environ['PAS_SELECT_STATEMENT'].strip()))
 
 if 'PAS_SELECT' in os.environ:
 
-    if 'PAS_STATEMENT' in os.environ:
-        statement = ('%s+%s' % (statement, os.environ['PAS_SELECT'].strip()))
+    if 'PAS_SELECT_STATEMENT' in os.environ:
+        resources = ('%s+%s' % (resources, os.environ['PAS_SELECT'].strip()))
 
     else:
-        statement = ('%s select=%s' % (statement, os.environ['PAS_SELECT'].strip()))
+        resources = ('%s select=%s' % (resources, os.environ['PAS_SELECT'].strip()))
 
     if logging is True:
-        log.write('\n\tSelect = %s' % (os.environ['PAS_SELECT'].strip()))
+
+        log.write('\n\tSelect = %s'
+                  % (os.environ['PAS_SELECT'].strip()))
 
 if 'PAS_NCPUS' in os.environ:
 
-    statement = ('%s:ncpus=%s' % (statement, os.environ['PAS_NCPUS'].strip()))
+    resources = ('%s:ncpus=%s' % (resources, os.environ['PAS_NCPUS'].strip()))
 
     if logging is True:
         log.write('\n\tNcpus = %s' % (os.environ['PAS_NCPUS'].strip()))
 
 if 'PAS_PCPUS' in os.environ:
 
-    statement = ('%s:pcpus=%s' % (statement, os.environ['PAS_PCPUS'].strip()))
+    resources = ('%s:pcpus=%s' % (resources, os.environ['PAS_PCPUS'].strip()))
 
     if logging is True:
         log.write('\n\tPcpus = %s' % (os.environ['PAS_PCPUS'].strip()))
 
 if 'PAS_MPIPROCS' in os.environ:
 
-    statement = ('%s:mpiprocs=%s' % (statement, os.environ['PAS_MPIPROCS'].strip()))
+    resources = ('%s:mpiprocs=%s' % (resources, os.environ['PAS_MPIPROCS'].strip()))
 
     if logging is True:
         log.write('\n\tMpiprocs = %s' % (os.environ['PAS_MPIPROCS'].strip()))
 
 if 'PAS_OMPTHREADS' in os.environ:
 
-    statement = ('%s:ompthreads=%s' % (statement, os.environ['PAS_OMPTHREADS'].strip()))
+    resources = ('%s:ompthreads=%s' % (resources, os.environ['PAS_OMPTHREADS'].strip()))
 
     if logging is True:
         log.write('\n\tOmpthreads = %s' % (os.environ['PAS_OMPTHREADS'].strip()))
 
 if 'PAS_MEM' in os.environ:
 
-    statement = ('%s:mem=%s' % (statement, os.environ['PAS_MEM'].strip()))
+    resources = ('%s:mem=%s' % (resources, os.environ['PAS_MEM'].strip()))
 
     if logging is True:
-        log.write('\n\tMem = %s' % (os.environ['PAS_MEM'].strip()))
+
+        log.write('\n\tMem = %s'
+                  % (os.environ['PAS_MEM'].strip()))
 
 if 'PAS_VMEM' in os.environ:
 
-    statement = ('%s:vmem=%s' % (statement, os.environ['PAS_VMEM'].strip()))
+    resources = ('%s:vmem=%s' % (resources, os.environ['PAS_VMEM'].strip()))
 
     if logging is True:
-        log.write('\n\tVmem = %s' % (os.environ['PAS_VMEM'].strip()))
+
+        log.write('\n\tVmem = %s'
+                  % (os.environ['PAS_VMEM'].strip()))
 
 if 'PAS_WALLTIME' in os.environ:
 
-    statement = ('%s:walltime=%s' % (statement, os.environ['PAS_WALLTIME'].strip()))
+    resources = ('%s:walltime=%s' % (resources, os.environ['PAS_WALLTIME'].strip()))
 
     if logging is True:
-        log.write('\n\tWalltime = %s' % (os.environ['PAS_WALLTIME'].strip()))
+
+        log.write('\n\tWalltime = %s'
+                  % (os.environ['PAS_WALLTIME'].strip()))
 
 if 'PAS_ARCH' in os.environ:
 
-    statement = ('%s:arch=%s' % (statement, os.environ['PAS_ARCH'].strip()))
+    resources = ('%s:arch=%s' % (resources, os.environ['PAS_ARCH'].strip()))
 
     if logging is True:
-        log.write('\n\tArch = %s' % (os.environ['PAS_ARCH'].strip()))
+
+        log.write('\n\tArch = %s'
+                  % (os.environ['PAS_ARCH'].strip()))
 
 if 'PAS_PLACE' in os.environ:
 
-    statement = ('%s place=%s' % (statement, os.environ['PAS_PLACE']))
+    resources = ('%s place=%s' % (resources, os.environ['PAS_PLACE']))
 
     if logging is True:
-        log.write('\n\tPlace = %s' % (os.environ['PAS_PLACE'].strip()))
+
+        log.write('\n\tPlace = %s'
+                  % (os.environ['PAS_PLACE'].strip()))
 
 if logging is True:
-    log.write('\n\nFinal Resource Request = %s\n' % (statement.strip()))
+    log.write('\n\nFinal Resource Request = %s\n' % (resources.strip()))
 
-job.attr_resource = statement.strip()
+job.attr_resource = resources.strip()
 
-''' Processing Attribute Requests '''
 
+''' Processing Attributes '''
+
+if logging is True:
+    log.write('\n\nProcessing Attributes\n')
+
+attributes = []
+
+if 'PAS_DEPEND' in os.environ:
+
+    if re.search('\w+', os.environ['PAS_DEPEND']):
+
+        attributes.append('depend=%s'
+                          % (os.environ['PAS_DEPEND'].strip()))
+
+        if logging is True:
+
+            log.write('\n\tDependancy = %s'
+                      % (os.environ['PAS_DEPEND'].strip()))
+
+if 'PAS_GROUP_LIST' in os.environ:
+
+    if re.search('\w+', os.environ['PAS_GROUP_LIST']):
+
+        attributes.append('group_list=%s'
+                          % (os.environ['PAS_GROUP_LIST'].strip()))
+
+        if logging is True:
+
+            log.write('\n\tGroup List = %s'
+                      % (os.environ['PAS_GROUP_LIST'].strip()))
+
+if 'PAS_ADDITIONAL_ATTRIBUTES' in os.environ:
+
+    if re.search('\w+', os.environ['PAS_ADDITIONAL_ATTRIBUTES']):
+
+        for attribute in os.environ['PAS_ADDITIONAL_ATTRIBUTES'].split(','):
+            attributes.append(attribute)
+
+        if logging is True:
+
+            log.write('\n\tAdditional Attributes = %s'
+                      % (os.environ['PAS_ADDITIONAL_ATTRIBUTES'].strip()))
+
+if logging is True:
+    log.write('\n\nFinal Attribute Request = %s\n' % (','.join(a for a in attributes)))
+
+job.attr_additional_attrs = ','.join(a for a in attributes)
+
+
+''' Processing Options '''
+
+# Queues
 if 'PAS_QUEUE' in os.environ:
 
     job.attr_destination = os.environ['PAS_QUEUE']
 
     if logging is True:
-        log.write('\n\tQueue = %s' % (os.environ['PAS_QUEUE']))
 
-''' Importing Environment to Runtime '''
+        log.write('\n\tQueue = %s'
+                  % (os.environ['PAS_QUEUE']))
+
+# Mail Handling (Compute Manager)
+if 'MAIL_POINTS' in os.environ:
+
+    if re.match(r"[abe]", os.environ['MAIL_POINTS']):
+        job.attr_mail_options = os.environ['MAIL_POINTS'].strip()
+
+if 'MAIL_USERS' in os.environ:
+    job.attr_mail_list = os.environ['MAIL_USER'].strip()
+
+# Mail Handling (Application)
+if 'MAIL_OPTIONS' in os.environ:
+
+    if re.match(r"[abe]", os.environ['MAIL_OPTIONS']):
+        job.attr_mail_options = os.environ['MAIL_OPTIONS']
+
+if 'MAIL_EMAILS' in os.environ:
+
+    if re.match('@', os.environ['MAIL_EMAILS']):
+        job.attr_mail_list = os.environ['MAIL_EMAILS'].strip()
+
+
+''' Importing Environment (and cleaning up our mess) '''
+
 job.attr_export_env_to_job = ','.join(n for n in os.environ)
 
+for key, value in os.environ.items():
+
+    if re.match('PAS_', key):
+        del os.environ[key]
+
+    elif re.match('PAS_', value):
+        del os.environ[key]
+
 log.close()
+sys.stdout.flush()
+sys.exit(0)

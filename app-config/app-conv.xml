@@ -7,6 +7,13 @@
     <jsdl-hpcp:Argument>runtime/start.py</jsdl-hpcp:Argument>
   </HPCProfileApplication>
   <jsdl:Resources/>
+  <!-- PAS_JOB_ARRAYS BEGIN -->
+  <jsdl:JobArrayAttributes>
+    <jsdl:StartIndex>$JOB_ARRAY_START_INDEX</jsdl:StartIndex>
+    <jsdl:EndIndex>$JOB_ARRAY_END_INDEX</jsdl:EndIndex>
+    <jsdl:SteppingFactor>$JOB_ARRAY_STEPPING_FACTOR</jsdl:SteppingFactor>
+  </jsdl:JobArrayAttributes>
+  <!-- PAS_JOB_ARRAYS END -->
   <!-- PAS_SCRIPT BEGIN -->
   <jsdl:DataStaging>
     <jsdl:FileName>name($SCRIPT)</jsdl:FileName>

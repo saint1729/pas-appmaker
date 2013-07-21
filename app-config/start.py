@@ -4,7 +4,7 @@
 © Copyright 2013 Altair Engineering, Inc. All rights reserved.
 This code is provided “as is” without any warranty, express or implied, or
 indemnification of any kind. All other terms and conditions are as specified
-in the Altair PBS Analytics EULA.
+in the Altair PBS Application Services EULA.
 '''
 
 import subprocess
@@ -13,37 +13,33 @@ import os
 import sys
 import datatime
 import shutil
+import shlex
 
-__version__ = '12.0.0'
+__version__ = '13.0.0-beta1'
 
-''' Enable Logging '''
 
-log = open('runtime.log', 'w')
+''' Logging '''
+
+log = open('start.log', 'w')
 
 logging = False
 
-if 'PAS_ENABLE_LOGGING' in os.environ:
-    if os.environ['PAS_ENABLE_LOGGING'] == 'true':
+if 'PAS_LOGGING' in os.environ:
 
+    if os.environ['PAS_LOGGING'] == 'true':
         logging = True
 
-        log.write('\nRuntime Environment Variables\n')
-
-        for variable in os.environ.split(';'):
-            (key, value) = re.match('(.*)=(.*)', variable).group()
-
-            log.write('\n\t%s = %s' % (key, value))
 
 ''' Hook Execution '''
 
-if os.path.exists('execution.hook'):
+if os.path.exists('hook.start'):
 
-    hook = subprocess.Popen('execution.hook', stdout=subprocess.PIPE)
+    hook = subprocess.Popen('hook.start', stdout=subprocess.PIPE)
 
     if logging is True:
 
-        log.write('\n\nExecution Hook Found\n')
-        log.write('\n\tExecution Hook PID: %s' % (str(hook.pid)))
+        log.write('\n\nStart Hook Found\n')
+        log.write('\n\tStart Hook PID: %s' % (str(hook.pid)))
 
     for output in hook.stdout.readlines():
 
@@ -51,7 +47,8 @@ if os.path.exists('execution.hook'):
             log.write(output)
 
     if logging is True:
-        log.write('\n\tExecution Hook Return Code: %s' % (str(hook.returncode)))
+        log.write('\n\tStart Hook Return Code: %s' % (str(hook.returncode)))
+
 
 ''' Input File Processing '''
 
@@ -103,6 +100,7 @@ if 'PAS_INPUT_FILE' in os.environ:
             log.write('\n\tUsing Input File: %s' % (input_file))
 
     sys.stdout.flush()
+
 
 ''' Job Argument Processing '''
 

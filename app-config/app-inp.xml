@@ -2,7 +2,6 @@
 <TemplateApplicationInput xmlns="http://schemas.altair.com/pbs/2007/02/app-def" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ApplicationId>APP_NAME</ApplicationId>
   <ApplicationName>APP_NAME</ApplicationName>
-  <!-- Resource &amp; Attribute Options -->
   <ArgumentChoice>
     <ArgumentString>
       <Name>JOB_NAME</Name>
@@ -11,26 +10,17 @@
       <InputRequired>true</InputRequired>
     </ArgumentString>
   </ArgumentChoice>
-  <ArgumentChoice>
-    <ArgumentStringEnumerated>
-      <Name>QUEUE</Name>
-      <Description>Specify your desired queue.</Description>
-      <DisplayName>Queue</DisplayName>
-      <InputRequired>false</InputRequired>
-      <Option>workq</Option>
-    </ArgumentStringEnumerated>
-  </ArgumentChoice>
-  <!-- PAS_STATEMENT BEGIN -->
+  <!-- PAS_SELECT_STATEMENT BEGIN -->
   <ArgumentChoice>
     <ArgumentString>
-      <Name>STATEMENT</Name>
+      <Name>SELECT_STATEMENT</Name>
       <Description>Provide qsub select statement.</Description>
       <DisplayName>Select Statement</DisplayName>
       <InputRequired>true</InputRequired>
       <Value>select=1:ncpus=2:mem=1gb</Value>
     </ArgumentString>
   </ArgumentChoice>
-  <!-- PAS_STATEMENT END -->
+  <!-- PAS_SELECT_STATEMENT END -->
   <!-- PAS_SELECT BEGIN -->
   <ArgumentChoice>
     <ArgumentInt>
@@ -167,28 +157,107 @@
     </ArgumentStringEnumerated>
   </ArgumentChoice>
   <!-- PAS_PLACE END -->
-  <!-- Execution Options -->
-  <!-- PAS_SITE_CONFIG_VERSIONS BEGIN -->
+  <!-- PAS_ADDITIONAL_RESOURCES BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>ADDITIONAL_RESOURCES</Name>
+      <Description>Automatically include any of these ':' separted list of key/value resource pairs.</Description>
+      <DisplayName>Additional Resources</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_ADDITONAL_RESOURCES END -->
+  <!-- PAS_DEPEND BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>DEPEND</Name>
+      <Description>Specify which job ID this job will depend on and how.</Description>
+      <DisplayName>Dependancy</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_DEPEND END -->
+  <!-- PAS_GROUP_LIST BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>GROUP_LIST</Name>
+      <Description>Automatically include any of these ',' separted list of groups to run under this job.</Description>
+      <DisplayName>Group List</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_GROUP_LIST END -->
+  <!-- PAS_ADDITIONAL_ATTRIBUTES BEGIN -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>ADDITIONAL_ATTRIBUTES</Name>
+      <Description>Automatically include any of these ':' separted list of key/value attribute pairs.</Description>
+      <DisplayName>Additional Attributes</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_ADDITONAL_ATTRIBUTES END -->
+  <!-- PAS_QUEUE BEGIN -->
   <ArgumentChoice>
     <ArgumentStringEnumerated>
-      <Name>VERSION</Name>
-      <Description>Version of application to use.</Description>
-      <DisplayName>Version</DisplayName>
-      <InputRequired>true</InputRequired>
-      <xi:include href="site-config.xml" xpointer="xpath1(//Application[@id='APP_NAME']/ApplicationVersions//Option)"/>
+      <Name>QUEUE</Name>
+      <Description>Specify your desired queue.</Description>
+      <DisplayName>Queue</DisplayName>
+      <InputRequired>false</InputRequired>
+      <Option>workq</Option>
     </ArgumentStringEnumerated>
   </ArgumentChoice>
-  <!-- PAS_SITE_CONFIG_VERSIONS END -->
-  <!-- PAS_ENVIRONMENT BEGIN -->
+  <!-- PAS_QUEUE END -->
+  <!-- PAS_MAIL BEGIN -->
   <ArgumentChoice>
     <ArgumentStringMulti>
-      <Name>ENVIRONMENT</Name>
-      <Description>A comma separated list of environment variables to make available to the job.</Description>
-      <DisplayName>Job Environment</DisplayName>
+      <Name>MAIL_EMAILS</Name>
+      <Description>Enter a ',' separated list of email addresses to send notifications to. Example: sam@altair.com,bill@altair.com</Description>
+      <DisplayName>Email Notifications</DisplayName>
       <InputRequired>false</InputRequired>
     </ArgumentStringMulti>
   </ArgumentChoice>
-  <!-- PAS_ENVIRONMENT END -->
+  <ArgumentChoice>
+    <ArgumentString>
+      <Name>MAIL_OPTIONS</Name>
+      <Description>Select when you would like to be notified of job activity. Either 'a' if the job has aborted, 'b' for before the job starts or 'e' when the job exits. Example: 'abe'.</Description>
+      <DisplayName>Notification Options</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentString>
+  </ArgumentChoice>
+  <!-- PAS_MAIL END -->
+  <!-- PAS_JOB_ARRAYS BEGIN -->
+  <ArgumentChoice>
+    <ArgumentInt>
+      <Name>JOB_ARRAY_START_INDEX</Name>
+      <Description>The start index of a job array.</Description>
+      <DisplayName>Job Array Start Index</DisplayName>
+      <InputRequired>false</InputRequired>
+      <LowerBound>0</LowerBound>
+      <Value>0</Value>
+    </ArgumentInt>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentInt>
+      <Name>JOB_ARRAY_END_INDEX</Name>
+      <Description>The end index of a job array.</Description>
+      <DisplayName>Job Array End Index</DisplayName>
+      <InputRequired>false</InputRequired>
+      <LowerBound>1</LowerBound>
+      <Value>1</Value>
+    </ArgumentInt>
+  </ArgumentChoice>
+  <ArgumentChoice>
+    <ArgumentInt>
+      <Name>JOB_ARRAY_STEPPING_FACTOR</Name>
+      <Description>The stepping factor of job array.</Description>
+      <DisplayName>Job Array Stepping Factor</DisplayName>
+      <InputRequired>false</InputRequired>
+      <LowerBound>1</LowerBound>
+      <Value>1</Value>
+    </ArgumentInt>
+  </ArgumentChoice>
+  <!-- PAS_JOB_ARRAYS END -->
   <!-- PAS_APPLICATION_NAME BEGIN -->
   <ArgumentChoice>
     <ArgumentString>
@@ -200,16 +269,27 @@
     </ArgumentString>
   </ArgumentChoice>
   <!-- PAS_APPLICATION_NAME END -->
-  <!-- PAS_EXECUTABLE BEGIN -->
+  <!-- PAS_ENVIRONMENT BEGIN -->
+  <ArgumentChoice>
+    <ArgumentStringMulti>
+      <Name>ENVIRONMENT</Name>
+      <Description>A comma separated list of environment variables to make available to the job.</Description>
+      <DisplayName>Job Environment</DisplayName>
+      <InputRequired>false</InputRequired>
+    </ArgumentStringMulti>
+  </ArgumentChoice>
+  <!-- PAS_ENVIRONMENT END -->
+  <!-- PAS_EXECUTABLE_NAME BEGIN -->
   <ArgumentChoice>
     <ArgumentString>
-      <Name>EXECUTABLE</Name>
+      <Name>EXECUTABLE_NAME</Name>
       <Description>A remote executable to run instead of a user supplied job script.</Description>
-      <DisplayName>Application Executable</DisplayName>
+      <DisplayName>Executable Path</DisplayName>
       <InputRequired>true</InputRequired>
+      <Value>/bin/sleep</Value>
     </ArgumentString>
   </ArgumentChoice>
-  <!-- PAS_EXECUTABLE END -->
+  <!-- PAS_EXECUTABLE_NAME END -->
   <!-- PAS_SCRIPT BEGIN -->
   <ArgumentChoice>
     <ArgumentFileName>
@@ -230,7 +310,6 @@
     </ArgumentString>
   </ArgumentChoice>
   <!-- PAS_ARGUMENTS END -->
-  <!-- File Handling Options -->
   <!-- PAS_INPUT_FILE BEGIN -->
   <ArgumentChoice>
     <ArgumentFileName>
@@ -271,7 +350,6 @@
     </ArgumentBooleanWithDescription>
   </ArgumentChoice>
   <!-- PAS_COMPRESS_RESULTS BEGIN -->
-  <!-- Developer Options -->
   <!-- PAS_LOGGING BEGIN -->
   <ArgumentChoice>
     <ArgumentBooleanWithDescription>

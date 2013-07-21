@@ -5,7 +5,7 @@
 © Copyright 2013 Altair Engineering, Inc. All rights reserved.
 This code is provided “as is” without any warranty, express or implied, or
 indemnification of any kind. All other terms and conditions are as specified
-in the Altair PBS Analytics EULA.
+in the Altair PBS Application Services EULA.
 '''
 
 import os
@@ -18,88 +18,173 @@ from optparse import OptionGroup
 
 import datetime
 
-__version__ = '12.0.0'
+__version__ = '13.0.0-beta1'
+
 
 parser = OptionParser(usage='%prog <APPLICATION> [Options]',
                       version='%prog ' + __version__,
-                      description='A simple framework for creating powerful application definitions.')
+                      description='A simple framework for making powerful application definitions.')
 
-resources = OptionGroup(parser, "Resource Options",
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-resources.add_option('--statement',
-                     dest='statement',
+''' Resources '''
+
+resources = OptionGroup(parser, "Resources",
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                        'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+resources.add_option('--select-statement',
+                     dest='select_statement',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--select',
                      dest='select',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--ncpus',
                      dest='ncpus',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--pcpus',
                      dest='pcpus',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--mpiprocs',
                      dest='mpiprocs',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--ompthreads',
                      dest='ompthreads',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--mem',
                      dest='mem',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--vmem',
                      dest='vmem',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--walltime',
                      dest='walltime',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--arch',
                      dest='arch',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 resources.add_option('--place',
                      dest='place',
                      action='store_true',
                      default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+resources.add_option('--additional-resources',
+                     dest='additional_resources',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 parser.add_option_group(resources)
 
-execution = OptionGroup(parser, "Execution Options",
+
+''' Attributes '''
+
+attributes = OptionGroup(parser, "Attributes",
+                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                         'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+attributes.add_option('--depend',
+                      dest='depend',
+                      action='store_true',
+                      default=False,
+                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                      'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+attributes.add_option('--group-list',
+                      dest='group_list',
+                      action='store_true',
+                      default=False,
+                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                      'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+attributes.add_option('--additional-attributes',
+                      dest='additional_attributes',
+                      action='store_true',
+                      default=False,
+                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                      'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+parser.add_option_group(attributes)
+
+
+''' Options '''
+
+options = OptionGroup(parser, "Options",
+                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
+
+options.add_option('--queue',
+                   dest='queue',
+                   action='store_true',
+                   default=False,
+                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                   'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+options.add_option('--mail',
+                   dest='mail',
+                   action='store_true',
+                   default=False,
+                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                   'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+options.add_option('--job-arrays',
+                   dest='job_arrays',
+                   action='store_true',
+                   default=False,
+                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                   'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+parser.add_option_group(options)
+
+
+''' Execution '''
+
+execution = OptionGroup(parser, "Execution",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-execution.add_option('--site-config-versions',
-                     dest='site_config_versions',
+execution.add_option('--application',
+                     dest='application',
                      action='store_true',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -110,14 +195,8 @@ execution.add_option('--environment',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-execution.add_option('--application-name',
-                     dest='application_name',
-                     action='store_true',
-                     default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
-
-execution.add_option('--application-executable',
-                     dest='application_executable',
+execution.add_option('--executable',
+                     dest='executable',
                      action='store_true',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -136,36 +215,36 @@ execution.add_option('--arguments',
 
 parser.add_option_group(execution)
 
-file_handling = OptionGroup(parser, "File Handling Options",
+
+''' Files '''
+
+files = OptionGroup(parser, "Files",
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-file_handling.add_option('--input-file',
-                         dest='input_file',
-                         action='store_true',
-                         default=False,
-                         help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+files.add_option('--input-file',
+                 dest='input_file',
+                 action='store_true',
+                 default=False,
+                 help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-file_handling.add_option('--include-files',
-                         dest='include_files',
-                         action='store_true',
-                         default=False,
-                         help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+files.add_option('--include-files',
+                 dest='include_files',
+                 action='store_true',
+                 default=False,
+                 help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-file_handling.add_option('--pre-staging',
-                         dest='pre_staging',
-                         action='store_true',
-                         default=False,
-                         help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+files.add_option('--compress-results',
+                 dest='compress_results',
+                 action='store_true',
+                 default=False,
+                 help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-file_handling.add_option('--compress-results',
-                         dest='compress_results',
-                         action='store_true',
-                         default=False,
-                         help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+parser.add_option_group(files)
 
-parser.add_option_group(file_handling)
 
-actions = OptionGroup(parser, "Runtime Action Options",
+''' Actions '''
+
+actions = OptionGroup(parser, "Actions",
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
 actions.add_option('--send-signals',
@@ -174,19 +253,31 @@ actions.add_option('--send-signals',
                    default=False,
                    help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
+actions.add_option('--shell-commands',
+                   dest='shell_commands',
+                   action='store_true',
+                   default=False,
+                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
 parser.add_option_group(actions)
 
-developer = OptionGroup(parser, "Developer Options",
+developer = OptionGroup(parser, "Developer Tools",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-developer.add_option('--environment-submittime',
-                     dest='environment_submittime',
+developer.add_option('--logging',
+                     dest='logging',
+                     action='store_true',
+                     default=False,
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--environment-submit',
+                     dest='environment_submit',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-developer.add_option('--environment-runtime',
-                     dest='environment_runtime',
+developer.add_option('--environment-start',
+                     dest='environment_start',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -197,20 +288,14 @@ developer.add_option('--environment-actions',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-developer.add_option('--environment-exit',
-                     dest='environment_exit',
+developer.add_option('--environment-finished',
+                     dest='environment_finished',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-developer.add_option('--hook-submittime',
-                     dest='hook_submittime',
-                     action='store',
-                     default='none',
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
-
-developer.add_option('--hook-runtime',
-                     dest='hook_runtime',
+developer.add_option('--hook-start',
+                     dest='hook_start',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -221,21 +306,18 @@ developer.add_option('--hook-actions',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
-developer.add_option('--hook-exit',
-                     dest='hook_exit',
+developer.add_option('--hook-finished',
+                     dest='hook_finished',
                      action='store',
                      default='none',
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
-
-developer.add_option('--logging',
-                     dest='logging',
-                     action='store_true',
-                     default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
 parser.add_option_group(developer)
 
 (options, args) = parser.parse_args()
+
+
+''' Run PAS App Maker '''
 
 if len(args) == 1:
 
@@ -246,9 +328,9 @@ if len(args) == 1:
 
     ''' Initial App Setup '''
 
-    app_input = open('%s/app-inp.xml' % (app_config), 'r')
-    app_converter = open('%s/app-conv.xml' % (app_config), 'r')
-    app_actions = open('%s/app-actions.xml' % (app_config), 'r')
+    app_config_input = open('%s/app-inp.xml' % (app_config), 'r')
+    app_config_converter = open('%s/app-conv.xml' % (app_config), 'r')
+    app_config_actions = open('%s/app-actions.xml' % (app_config), 'r')
 
     os.system('mkdir -p %s/%s' % (app_home, app_name))
     os.system('mkdir -p %s/%s/runtime' % (app_home, app_name))
@@ -265,24 +347,26 @@ if len(args) == 1:
 
     enabled = True
 
-    for line in app_input.readlines():
+    for line in app_config_input.readlines():
+
+        ''' Special Variable Substitution '''
 
         line = re.sub('APP_NAME', app_name, line)
         line = re.sub('APP_HOME', app_home, line)
         line = re.sub('APP_CONFIG', app_config, line)
 
-        ''' Statement '''
+        ''' Select Statement '''
 
-        if re.match('.*PAS_STATEMENT BEGIN', line):
+        if re.match('.*PAS_SELECT_STATEMENT BEGIN', line):
 
-            if options.statement is True:
+            if options.select_statement is True:
                 enabled = True
             else:
                 enabled = False
 
-        if re.match('.*PAS_STATEMENT END', line):
+        if re.match('.*PAS_SELECT_STATEMENT END', line):
 
-            if options.statement is True:
+            if options.select_statement is True:
                 pass
             else:
                 enabled = True
@@ -447,18 +531,114 @@ if len(args) == 1:
             else:
                 enabled = True
 
-        ''' Site Config Versions '''
+        ''' Additional Resources '''
 
-        if re.match('.*PAS_SITE_CONFIG_VERSIONS BEGIN', line):
+        if re.match('.*PAS_ADDITIONAL_RESOURCES BEGIN', line):
 
-            if options.site_config_versions is True:
+            if options.additional_resources is True:
                 enabled = True
             else:
                 enabled = False
 
-        if re.match('.*PAS_SITE_CONFIG_VERSIONS END', line):
+        if re.match('.*PAS_ADDITIONAL_RESOURCES END', line):
 
-            if options.site_config_versions is True:
+            if options.additional_resources is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Depend '''
+
+        if re.match('.*PAS_DEPEND BEGIN', line):
+
+            if options.depend is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_DEPEND END', line):
+
+            if options.depend is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Group List '''
+
+        if re.match('.*PAS_GROUP_LIST BEGIN', line):
+
+            if options.group_list is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_GROUP_LIST END', line):
+
+            if options.group_list is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Additional Attributes '''
+
+        if re.match('.*PAS_ADDITIONAL_ATTRIBUTES BEGIN', line):
+
+            if options.additional_attributes is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_ADDITIONAL_ATTRIBUTES END', line):
+
+            if options.additional_attributes is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Queue '''
+
+        if re.match('.*PAS_QUEUE BEGIN', line):
+
+            if options.queue is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_QUEUE END', line):
+
+            if options.queue is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Mail '''
+
+        if re.match('.*PAS_MAIL BEGIN', line):
+
+            if options.mail is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_MAIL END', line):
+
+            if options.mail is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Application '''
+
+        if re.match('.*PAS_APPLICATION_NAME BEGIN', line):
+
+            if options.application is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_APPLICATION_NAME END', line):
+
+            if options.application is True:
                 pass
             else:
                 enabled = True
@@ -479,34 +659,18 @@ if len(args) == 1:
             else:
                 enabled = True
 
-        ''' Application Name '''
+        ''' Executable '''
 
-        if re.match('.*PAS_APPLICATION_NAME BEGIN', line):
+        if re.match('.*PAS_EXECUTABLE_NAME BEGIN', line):
 
-            if options.application_name is True:
+            if options.executable is True:
                 enabled = True
             else:
                 enabled = False
 
-        if re.match('.*PAS_APPLICATION_NAME END', line):
+        if re.match('.*PAS_EXECUTABLE_NAME END', line):
 
-            if options.application_name is True:
-                pass
-            else:
-                enabled = True
-
-        ''' Application Executable '''
-
-        if re.match('.*PAS_APPLICATION_EXECUTABLE BEGIN', line):
-
-            if options.application_executable is True:
-                enabled = True
-            else:
-                enabled = False
-
-        if re.match('.*PAS_APPLICATION_EXECUTABLE END', line):
-
-            if options.application_executable is True:
+            if options.executable is True:
                 pass
             else:
                 enabled = True
@@ -616,7 +780,9 @@ if len(args) == 1:
 
     enabled = True
 
-    for line in app_converter.readlines():
+    for line in app_config_converter.readlines():
+
+        ''' Special Variable Substitution '''
 
         line = re.sub('APP_NAME', app_name, line)
         line = re.sub('APP_HOME', app_home, line)
@@ -679,7 +845,9 @@ if len(args) == 1:
 
     enabled = True
 
-    for line in app_actions.readlines():
+    for line in app_config_actions.readlines():
+
+        ''' Special Variable Substitution '''
 
         line = re.sub('APP_NAME', app_name, line)
         line = re.sub('APP_HOME', app_home, line)
@@ -708,63 +876,58 @@ if len(args) == 1:
 
     ''' Generate Environments '''
 
-    if not options.environment_submittime == 'none':
+    if not options.environment_submit == 'none':
 
-        submittime_environment = open('%s/%s/submittime/submittime.environment' % (app_home, app_name), 'w')
+        environment_submit = open('%s/%s/submittime/environment.submit' % (app_home, app_name), 'w')
 
-        for variable in options.environment_submittime.split(','):
-            submittime_environment.write('%s\n' % (variable))
+        for variable in options.environment_submit.split(','):
+            environment_submit.write('%s\n' % (variable))
 
-        submittime_environment.close()
+        environment_submit.close()
 
-    if not options.environment_runtime == 'none':
+    if not options.environment_start == 'none':
 
-        runtime_environment = open('%s/%s/runtime/runtime.environment' % (app_home, app_name), 'w')
+        environment_start = open('%s/%s/runtime/environment.start' % (app_home, app_name), 'w')
 
-        for variable in options.environment_runtime.split(','):
-            runtime_environment.write('%s\n' % (variable))
+        for variable in options.environment_start.split(','):
+            environment_start.write('%s\n' % (variable))
 
-        runtime_environment.close()
+        environment_start.close()
 
     if not options.environment_actions == 'none':
 
-        actions_environment = open('%s/%s/runtime/actions.environment' % (app_home, app_name), 'w')
+        environment_actions = open('%s/%s/runtime/environment.exit' % (app_home, app_name), 'w')
 
         for variable in options.environment_actions.split(','):
-            actions_environment.write('%s\n' % (variable))
+            environment_actions.write('%s\n' % (variable))
 
-        actions_environment.close()
+        environment_actions.close()
 
-    if not options.environment_exit == 'none':
+    if not options.environment_finished == 'none':
 
-        exit_environment = open('%s/%s/runtime/exit.environment' % (app_home, app_name), 'w')
+        exit_environment = open('%s/%s/runtime/environment.exit' % (app_home, app_name), 'w')
 
-        for variable in options.environment_exit.split(','):
+        for variable in options.environment_finished.split(','):
             exit_environment.write('%s\n' % (variable))
 
         exit_environment.close()
 
     ''' Generate Hooks '''
 
-    if not options.hook_submittime == 'none':
+    if not options.hook_start == 'none':
 
-        if os.path.exists(options.hook_submittime):
-            shutil.copy2(options.hook_submittime, '%s/%s/submittime/submittime.hook' % (app_home, app_name))
-
-    if not options.hook_runtime == 'none':
-
-        if os.path.exists(options.hook_runtime):
-            shutil.copy2(options.hook_runtime, '%s/%s/runtime/runtime.hook' % (app_home, app_name))
+        if os.path.exists(options.hook_start):
+            shutil.copy2(options.hook_start, '%s/%s/runtime/hook.start' % (app_home, app_name))
 
     if not options.hook_actions == 'none':
 
         if os.path.exists(options.hook_actions):
-            shutil.copy2(options.hook_actions, '%s/%s/runtime/actions.hook' % (app_home, app_name))
+            shutil.copy2(options.hook_actions, '%s/%s/runtime/hook.actions' % (app_home, app_name))
 
-    if not options.hook_exit == 'none':
+    if not options.hook_finished == 'none':
 
-        if os.path.exists(options.hook_exit):
-            shutil.copy2(options.hook_exit, '%s/%s/runtime/exit.hook' % (app_home, app_name))
+        if os.path.exists(options.hook_finished):
+            shutil.copy2(options.hook_finished, '%s/%s/runtime/hook.finished' % (app_home, app_name))
 
     sys.exit(0)
 
@@ -773,3 +936,5 @@ else:
     sys.stderr.write('Incorrect number of arguments. Try pas-appmaker --help for more information.\n')
     sys.exit(1)
 
+sys.stdout.flush()
+sys.exit(0)

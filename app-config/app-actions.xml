@@ -2,17 +2,17 @@
 <ApplicationActions xmlns="http://schemas.altair.com/pbs/2009/01/app-actions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:schemaLocation="http://schemas.altair.com/pbs/2009/01/app-actions ../../app-actions.xsd">
   <ApplicationId>APP_NAME</ApplicationId>
   <ApplicationName>APP_NAME</ApplicationName>
+  <!-- PAS_SEND_SIGNALS BEGIN -->
   <CustomAction>
     <JobStates>
       <JobState>RUNNING</JobState>
     </JobStates>
-    <!-- PAS_SEND_SIGNALS BEGIN -->
-    <Name>SIGNALS</Name>
+    <Name>SEND_SIGNALS</Name>
     <DisplayName>Send Signals</DisplayName>
-    <Description>Send UNIX signals to the job process.</Description>
+    <Description>Send UNIX signals to your jobs process.</Description>
     <ArgumentChoice>
       <ArgumentStringEnumerated>
-        <Name>SIGNAL</Name>
+        <Name>SEND_SIGNALS</Name>
         <Description>Select which signal to send.</Description>
         <DisplayName>Signal</DisplayName>
         <InputRequired>true</InputRequired>
@@ -21,11 +21,34 @@
         <Option default="true">Terminate</Option>
       </ArgumentStringEnumerated>
     </ArgumentChoice>
-    <!-- PAS_SEND_SIGNALS END -->
     <Executable>
       <Language>PYTHON</Language>
       <Name>actions.py</Name>
     </Executable>
     <ShowOutput>true</ShowOutput>
   </CustomAction>
+  <!-- PAS_SEND_SIGNALS END -->
+  <!-- PAS_SHELL_COMMANDS BEGIN -->
+  <CustomAction>
+    <JobStates>
+      <JobState>RUNNING</JobState>
+    </JobStates>
+    <Name>SHELL_COMMANDS</Name>
+    <DisplayName>Shell Commands</DisplayName>
+    <Description>Execute a ';' separated list of shell commands in your jobs execution directory.</Description>
+    <ArgumentChoice>
+      <ArgumentString>
+        <Name>SHELL_COMMANDS</Name>
+        <Description>Run this ';' separated list of shell cmds.</Description>
+        <DisplayName>Commands</DisplayName>
+        <InputRequired>true</InputRequired>
+      </ArgumentString>
+    </ArgumentChoice>
+    <Executable>
+      <Language>PYTHON</Language>
+      <Name>actions.py</Name>
+    </Executable>
+    <ShowOutput>true</ShowOutput>
+  </CustomAction>
+  <!-- PAS_SHELL_COMMANDS END -->
 </ApplicationActions>
