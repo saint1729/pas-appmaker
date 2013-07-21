@@ -350,7 +350,7 @@ if len(args) == 1:
     app_name_converter = open('%s/%s/app-conv-%s.xml' % (app_home, app_name, app_name), 'w')
     app_name_actions = open('%s/%s/app-actions-%s.xml' % (app_home, app_name, app_name), 'w')
 
-    ''' Generate Input File '''
+    ''' Input File '''
 
     enabled = True
 
@@ -815,7 +815,7 @@ if len(args) == 1:
             if not re.search('.*<!-- .* -->.*', line):
                 app_name_input.write(line)
 
-    ''' Generate Convereter File '''
+    ''' Converter File '''
 
     enabled = True
 
@@ -896,7 +896,7 @@ if len(args) == 1:
             if not re.search('.*<!-- .* -->.*', line):
                 app_name_converter.write(line)
 
-    ''' Generate Actions File '''
+    ''' Actions File '''
 
     enabled = True
 
@@ -929,7 +929,7 @@ if len(args) == 1:
             if not re.search('.*<!-- .* -->.*', line):
                 app_name_actions.write(line)
 
-    ''' Generate Environments '''
+    ''' Environments '''
 
     if not options.environment_submit == 'none':
 
@@ -967,7 +967,7 @@ if len(args) == 1:
 
         exit_environment.close()
 
-    ''' Generate Hooks '''
+    ''' Hooks '''
 
     if not options.hook_start == 'none':
 

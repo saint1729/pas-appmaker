@@ -293,14 +293,14 @@ job.attr_additional_attrs = ','.join(a for a in attributes)
 # Account
 if 'PAS_ACCOUNT' in os.environ:
 
-    if re.search('\w+', os.environ['PAS_GROUP_LIST']):
+    if re.search('\w+', os.environ['PAS_ACCOUNT']):
 
-        job.attr_accounting_label = os.environ['ACCOUNT']
+        job.attr_accounting_label = os.environ['ACCOUNT'].strip()
 
         if logging is True:
 
             log.write('\n\tAccount = %s'
-                      % (os.environ['PAS_ACCOUNT']))
+                      % (os.environ['PAS_ACCOUNT']).strip())
 
 # Queues
 if 'PAS_QUEUE' in os.environ:
