@@ -2,14 +2,14 @@
 
 A simple framework for creating powerful application definitions.
 
-## Synopsis
+## Example
 
-`pas-appmake Appname --ncpus --mem --script --arguments --input-file --compress-results --logging`
+`pas-appmaker Appname --executable --arguments --input-file --include-files --compress-results --logging`
 
 ## Setup
 
 This section will explain how to properly setup App Maker on your system. By design, App Maker is flexible, and can be installed anywhere.
-The sub-sections below desribe how App Maker requires the location to two unique directories in order to function properly.
+The sub-sections below desribe how App Maker requires the location of two unique directories in order to function properly.
 
 ### App Home
 
