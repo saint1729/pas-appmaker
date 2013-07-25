@@ -4,7 +4,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis i
 
 ## Synopsis
 
-`pas-appmake Appname --select --ncpus --mem --script --environment --compress-results --logging`
+`pas-appmake Appname --ncpus --mem --script --arguments --input-file --compress-results --logging`
 
 ## Installation
 

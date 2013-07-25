@@ -25,6 +25,18 @@ parser = OptionParser(usage='%prog <APPLICATION> [Options]',
                       version='%prog ' + __version__,
                       description='A simple framework for making powerful application definitions.')
 
+parser.add_option("--app-home", dest="app_home",
+                  metavar="$PAS_HOME/repository/applications",
+                  default="/var/spool/pas/repository/applications",
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                  'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+parser.add_option("--app-config", dest="app_config",
+                  metavar="$PAS_HOME/conf/app-config",
+                  default="/var/spool/pas/conf/app-config",
+                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                  'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
 
 ''' Resources '''
 
@@ -329,6 +341,26 @@ parser.add_option_group(developer)
 if len(args) == 1:
 
     app_name = args[0]
+
+    ''' App Maker Environment Setup '''
+
+    if os.path.exists(options.app_home):
+        os.environ['PAS_APP_HOME'] = options.app_home
+
+    elif 'PAS_APP_HOME' in os.environ:
+        if not os.path.exists(os.environ['PAS_APP_HOME']):
+
+            sys.stderr.write('You must specify the path to your applications/ directory.\n')
+            sys.exit(1)
+
+    if os.path.exists(options.app_config):
+        os.environ['PAS_APP_CONFIG'] = options.app_config
+
+    elif 'PAS_APP_CONFIG' in os.environ:
+        if not os.path.exists(os.environ['PAS_APP_CONFIG']):
+
+            sys.stderr.write('You must specify the path to your app-config/ directory.\n')
+            sys.exit(1)
 
     app_config = os.environ['PAS_APP_CONFIG']
     app_home = os.environ['PAS_APP_HOME']
