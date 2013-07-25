@@ -33,21 +33,21 @@ or
 
 `pas-appmaker --app-config /my/private/app-config Appname --ncpus --script --arguments --logging`
 
-## Making Applications By:
+## App Maker Concepts
 
-### Form
+### byForm
 
 `pas-appmaker byForm --select --ncpus --mem --walltime --application --executable --arguments`
 
-### Statement
+### byStatement
 
 `pas-appmaker byStatement --select-statement --application --executable --arguments`
 
-### Directive
+### byDirective
 
 `pas-appmaker byDirective --application --script --arguments`
 
-### Combination
+### byCombination
 
 `pas-appmaker byCombination --select-statement --select --ncpus --mem --script --arguments`
 
