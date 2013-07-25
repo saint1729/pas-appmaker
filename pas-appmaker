@@ -352,6 +352,10 @@ if len(args) == 1:
 
             sys.stderr.write('You must specify the path to your applications/ directory.\n')
             sys.exit(1)
+    else:
+
+        sys.stderr.write('You must specify the path to your applications/ directory.\n')
+        sys.exit(1)
 
     if os.path.exists(options.app_config):
         os.environ['PAS_APP_CONFIG'] = options.app_config
@@ -361,9 +365,13 @@ if len(args) == 1:
 
             sys.stderr.write('You must specify the path to your app-config/ directory.\n')
             sys.exit(1)
+    else:
 
-    app_config = os.environ['PAS_APP_CONFIG']
+        sys.stderr.write('You must specify the path to your app-config/ directory.\n')
+        sys.exit(1)
+
     app_home = os.environ['PAS_APP_HOME']
+    app_config = os.environ['PAS_APP_CONFIG']
 
     ''' Initial App Setup '''
 

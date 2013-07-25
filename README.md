@@ -6,36 +6,32 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis i
 
 `pas-appmake Appname --ncpus --mem --script --arguments --input-file --compress-results --logging`
 
-## Installation
+## Setup
 
 Typically you add the COMMAND\_HOME variable to your pbsworks.conf file.
 This variable must be set to the full path to your /pbsa-commands/ directory.
 
-`echo "COMMAND_HOME=/opt/pbsworks/12.0/portal/scripts/pbsa-commands" >> /etc/pbsworks.conf`
+### App Home
 
-If you do not have your pbsworks.conf file in /etc, you can specify its
-location directly via the PBSWORKS\_CONF\_FILE environment variable.
+Your App Home directory is where your application definitions reside. This is where App Maker will place your newly created application definitions.
+By default App Maker assumes `/var/spool/pas/repository/applications/`. However, this is tunable using one of the two options below...
 
-`export PBSWORKS_CONF_FILE=/path/to/pbsworks.conf`
+`export PAS_APP_HOME=/var/spool/pas/repository/applications`
 
-Alternatively, you can override all of this behavior by setting the
-PBSWORKS\_SERVER\_HOME and PBSWORKS\_COMMAND\_HOME
-variables into your environment.
+or
 
-`export PBSWORKS_SERVER_HOME=/opt/pbsworks/12.0/portal`
+`pas-appmaker --app-home /my/private/applications Appname --ncpus --script --arguments --logging`
 
-and
+### App Config
 
-`export PBSWORKS_COMMAND_HOME=/opt/pbsworks/12.0/portal/scripts/pbsa-commands`
+Your App Config directory is where your application definition template files are located. These files allow you to fully customize how App Maker generates your application definitions.
+By default App Maker assumes `/var/spool/pas/conf/app-config/`. However, this is tunable using one of the two options below...
 
-It's good systems security to set proper file permissions for
-all of the pbsa-commands.
+`export PAS_APP_CONFIG=/var/spool/pas/conf/app-config`
 
-`chmod 700 /opt/pbsworks/12.0/portal/scripts/pbsa-commands/bin/*`
+or
 
-Finally, you should add the pbsa-commands to your system path.
-
-`export PATH=$PATH:/opt/pbsworks/12.0/portal/scripts/pbsa-commands/bin`
+`pas-appmaker --app-config /my/private/app-config Appname --ncpus --script --arguments --logging`
 
 ## Cookbook
 
