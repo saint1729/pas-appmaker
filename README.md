@@ -33,7 +33,25 @@ or
 
 `pas-appmaker --app-config /my/private/app-config Appname --ncpus --script --arguments --logging`
 
-## Cookbook
+## Making Applications By:
+
+### Form
+
+`pas-appmaker byForm --select --ncpus --mem --walltime --application --executable --arguments`
+
+### Statement
+
+`pas-appmaker byStatement --select-statement --application --executable --arguments`
+
+### Directive
+
+`pas-appmaker byDirective --application --script --arguments`
+
+### Combination
+
+`pas-appmaker byCombination --select-statement --select --ncpus --mem --script --arguments`
+
+## App Maker Cookbook
 
 ### Recipe 1
 
