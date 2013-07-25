@@ -18,7 +18,7 @@ By default App Maker assumes "/var/spool/pas/repository/applications/". However,
 
 `export PAS_APP_HOME=/var/spool/pas/repository/applications`
 
-or
+or at runtime...
 
 `pas-appmaker --app-home /my/private/applications Appname --ncpus --script --arguments --logging`
 
@@ -29,33 +29,30 @@ By default App Maker assumes "/var/spool/pas/conf/app-config/". However, this is
 
 `export PAS_APP_CONFIG=/var/spool/pas/conf/app-config`
 
-or
+or at runtime...
 
 `pas-appmaker --app-config /my/private/app-config Appname --ncpus --script --arguments --logging`
 
-## App Maker Examples
+## Examples
 
-App Maker was built around the idea that users typically request resources for HPC jobs in three ways. Below you will see specific examples of
-how App Maker can easily accommodate each case or any combination of the three.
+These basic examples bring focus to the three ways App Maker will allow submitting users to request job resources and attributes.
 
 ### byForm
 
-Applications submitted by form are applications that are geared towards the modern web user. For instance, in Compute Manager, applications submitted
-by form will have GUI drop downs and HTML forms which make the modern user feel more at home.
+This example is geared towards the modern Web/Mobile user who typically expects HTML form fields.
 
-`pas-appmaker byForm --select --ncpus --mem --walltime --application --executable --arguments`
+`pas-appmaker byForm --select --ncpus --mem --queue-list --application --executable --arguments`
 
 ### byStatement
 
-Applications submitted by statement are applications that are geared towards the legacy user. For instance, using Qsub, applications submitted
-by statement provide the user the ability to request resources using the familiar qsub select syntax.
+This example is geared towards advanced users who typically declare resources using a select statement.
 
-`pas-appmaker byStatement --select-statement --application --executable --arguments`
+`pas-appmaker byStatement --select-statement --additional-attributes --application --executable --arguments`
 
 ### byDirective
 
-Applications submitted by directive are applications that request their resources via the job script itself. For instnace, using Qsub, applications
-submitted by directive 
+This example is geared towards users who like to request resources and attributes using PBS directives in job scripts.
+
 `pas-appmaker byDirective --application --script --arguments`
 
 ## App Maker Cookbook
