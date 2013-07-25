@@ -1,6 +1,6 @@
 # PAS Application Maker
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.
+A simple framework for creating powerful application definitions.
 
 ## Synopsis
 
@@ -8,11 +8,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis i
 
 ## Setup
 
-This section will explain to you how to configure App Maker for your system. By design, App Maker is flexible, and can be installed anywhere.
+This section will explain how to properly setup App Maker on your system. By design, App Maker is flexible, and can be installed anywhere.
+The sub-sections below desribe how App Maker requires the location to two unique directories in order to function properly.
 
 ### App Home
 
-Your App Home directory is where your application definitions reside. This is where App Maker will place your newly created application definitions.
+Your App Home directory is where your application definitions are located. This is where App Maker will place the applications you are working on.
 By default App Maker assumes "/var/spool/pas/repository/applications/". However, this is tunable using one of the two options below...
 
 `export PAS_APP_HOME=/var/spool/pas/repository/applications`
@@ -23,8 +24,7 @@ or
 
 ### App Config
 
-Your App Config directory is where your App Maker template files are located. The power and flexibility of App Maker are largely contained within these files.
-App Config will allow you to fully customize how App Maker generates your application definitions.
+Your App Config directory is where your App Maker template files are located. App Config allows you to fully customize how App Maker generates application definitions.
 By default App Maker assumes "/var/spool/pas/conf/app-config/". However, this is tunable using one of the two options below...
 
 `export PAS_APP_CONFIG=/var/spool/pas/conf/app-config`
