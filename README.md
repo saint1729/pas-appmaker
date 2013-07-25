@@ -33,7 +33,7 @@ or at runtime...
 
 `pas-appmaker --app-config /my/private/app-config Appname --ncpus --script --arguments --logging`
 
-## Examples
+## Tutorial: Resources & Attributes
 
 These basic examples bring focus to the three ways App Maker will allow submitting users to request job resources and attributes.
 
@@ -41,7 +41,7 @@ These basic examples bring focus to the three ways App Maker will allow submitti
 
 This example is geared towards the modern Web/Mobile user who typically expects HTML form fields.
 
-`pas-appmaker byForm --select --ncpus --mem --queue-list --application --executable --arguments`
+`pas-appmaker byForm --select --ncpus --mem --queue --application --executable --arguments`
 
 ### byStatement
 
@@ -55,43 +55,28 @@ This example is geared towards users who like to request resources and attribute
 
 `pas-appmaker byDirective --application --script --arguments`
 
-## App Maker Cookbook
+## Tutorial: Executables & Job Scripts
 
-### Recipe 1
+These basic examples bring focus to the three ways App Maker will al...
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.
+### GenericExec
 
-`pas-appmake Appname --select --ncpus --mem --script --environment --compress-results --logging`
+This example assumes no default application name or executable. It will allow the submitting user to define both at submit time.
 
-### Recipe 2
+`pas-appmaker GenericExec --application --executable --arguments --environment --logging`
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.
+### GenericScript
 
-`pas-appmake Appname --select --ncpus --mem --script --environment --compress-results --logging`
+This example assumes no defaults, much like GenericExec. However, this example allows the user to provide a job script instead of an executable path.
 
-### Recipe 3
+`pas-appmaker GenericScript --application --script --arguments --environment --logging`
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.
+### GenericApp
 
-`pas-appmake Appname --select --ncpus --mem --script --environment --compress-results --logging`
+This example shows you how to assign a default executable for your application. The submitting user is able to pass arguments and environment variables to the executable.
 
-### Recipe 4
+`pas-appmaker GenericApp --environment-submit PAS_EXECUTABLE=/path/to/app.sh --arguments --environment --logging`
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.
-
-`pas-appmake Appname --select --ncpus --mem --script --environment --compress-results --logging`
-
-### Recipe 5
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.
-
-`pas-appmake Appname --select --ncpus --mem --script --environment --compress-results --logging`
-
-### Recipe 6
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.
-
-`pas-appmake Appname --select --ncpus --mem --script --environment --compress-results --logging`
 
 ## Copyright
 
