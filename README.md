@@ -33,23 +33,30 @@ or
 
 `pas-appmaker --app-config /my/private/app-config Appname --ncpus --script --arguments --logging`
 
-## App Maker Concepts
+## App Maker Examples
+
+App Maker was built around the idea that users typically request resources for HPC jobs in three ways. Below you will see specific examples of
+how App Maker can easily accommodate each case or any combination of the three.
 
 ### byForm
+
+Applications submitted by form are applications that are geared towards the modern web user. For instance, in Compute Manager, applications submitted
+by form will have GUI drop downs and HTML forms which make the modern user feel more at home.
 
 `pas-appmaker byForm --select --ncpus --mem --walltime --application --executable --arguments`
 
 ### byStatement
 
+Applications submitted by statement are applications that are geared towards the legacy user. For instance, using Qsub, applications submitted
+by statement provide the user the ability to request resources using the familiar qsub select syntax.
+
 `pas-appmaker byStatement --select-statement --application --executable --arguments`
 
 ### byDirective
 
+Applications submitted by directive are applications that request their resources via the job script itself. For instnace, using Qsub, applications
+submitted by directive 
 `pas-appmaker byDirective --application --script --arguments`
-
-### byCombination
-
-`pas-appmaker byCombination --select-statement --select --ncpus --mem --script --arguments`
 
 ## App Maker Cookbook
 
@@ -91,4 +98,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis i
 
 ## Copyright
 
-© Copyright 2013 Altair Engineering, Inc. All rights reserved.
+Â© Copyright 2013 Altair Engineering, Inc. All rights reserved.
