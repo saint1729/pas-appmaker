@@ -71,11 +71,22 @@ This example assumes no defaults, much like GenericExec. However, this example a
 
 `pas-appmaker GenericScript --application --script --arguments --environment --logging`
 
-### GenericApp
 
-This example shows you how to assign a default executable for your application. The submitting user is able to pass arguments and environment variables to the executable.
+## Tutorial: Variables & Stubstitution
 
-`pas-appmaker GenericApp --environment-submit PAS_EXECUTABLE=/path/to/app.sh --arguments --environment --logging`
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+### Variables
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+`pas-appmaker Variables --environment-submit PAS_SELECT=1,PAS_NCPUS=2,PAS_MEM=1gb --script --arguments`
+
+### Substitution
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+`pas-appmaker Substitution --ncpus --mem --executable --environment-start "PAS_ARGUMENTS=-procs PAS_NCPUS -mem PAS_MEM"`
 
 
 ## Copyright
