@@ -350,9 +350,21 @@ if len(args) == 1:
     app_name_converter = open('%s/%s/app-conv-%s.xml' % (app_home, app_name, app_name), 'w')
     app_name_actions = open('%s/%s/app-actions-%s.xml' % (app_home, app_name, app_name), 'w')
 
+    ''' Logging '''
+
+    log = open('%s/%s/build.log' % (app_home, app_name), 'w')
+
+    logging = False
+
+    if options.logging is True:
+        logging = True
+
     ''' Input File '''
 
     enabled = True
+
+    if logging is True:
+        log.write('\n\nMaking Input File\n')
 
     for line in app_config_input.readlines():
 
@@ -371,6 +383,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tSelect Statement Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_SELECT_STATEMENT END', line):
 
             if options.select_statement is True:
@@ -386,6 +401,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tSelect Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_SELECT END', line):
 
@@ -403,6 +421,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tNcpus Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_NCPUS END', line):
 
             if options.ncpus is True:
@@ -418,6 +439,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tPcpus Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_PCPUS END', line):
 
@@ -435,6 +459,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tMpiprocs: %s' % (line.strip()))
+
         if re.match('.*PAS_MPIPROCS END', line):
 
             if options.mpiprocs is True:
@@ -450,6 +477,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tOmpthreads Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_OMPTHREADS END', line):
 
@@ -467,6 +497,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tMem Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_MEM END', line):
 
             if options.mem is True:
@@ -482,6 +515,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tVmem Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_VMEM END', line):
 
@@ -499,6 +535,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tWalltime Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_WALLTIME END', line):
 
             if options.walltime is True:
@@ -514,6 +553,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tArch Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_ARCH END', line):
 
@@ -531,6 +573,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tPlace Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_PLACE END', line):
 
             if options.place is True:
@@ -546,6 +591,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tAdditional Resources Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_ADDITIONAL_RESOURCES END', line):
 
@@ -563,6 +611,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tDepend Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_DEPEND END', line):
 
             if options.depend is True:
@@ -578,6 +629,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tGroup List Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_GROUP_LIST END', line):
 
@@ -595,6 +649,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tAdditional Attributes Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_ADDITIONAL_ATTRIBUTES END', line):
 
             if options.additional_attributes is True:
@@ -610,6 +667,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tAccount Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_ACCOUNT END', line):
 
@@ -627,6 +687,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tQueue Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_QUEUE END', line):
 
             if options.queue is True:
@@ -642,6 +705,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tMail Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_MAIL END', line):
 
@@ -659,6 +725,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tJob Arrays Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_JOB_ARRAYS END', line):
 
             if options.job_arrays is True:
@@ -674,6 +743,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tApplication Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_APPLICATION_NAME END', line):
 
@@ -691,6 +763,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tEnvironment Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_ENVIRONMENT END', line):
 
             if options.environment is True:
@@ -707,6 +782,9 @@ if len(args) == 1:
             else:
                 enabled = False
 
+            if logging is True:
+                log.write('\n\tEnvironment Enabled: %s' % (line.strip()))
+
         if re.match('.*PAS_EXECUTABLE_NAME END', line):
 
             if options.executable is True:
@@ -722,6 +800,9 @@ if len(args) == 1:
                 enabled = True
             else:
                 enabled = False
+
+            if logging is True:
+                log.write('\n\tScript Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_SCRIPT END', line):
 
@@ -984,6 +1065,7 @@ if len(args) == 1:
         if os.path.exists(options.hook_finished):
             shutil.copy2(options.hook_finished, '%s/%s/runtime/hook.finished' % (app_home, app_name))
 
+    log.close()
     sys.exit(0)
 
 else:

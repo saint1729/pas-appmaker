@@ -8,6 +8,8 @@ in the Altair PBS Application Services EULA.
 '''
 
 import re
+import grp
+import pwd
 import os
 import sys
 import zipfile
@@ -224,6 +226,15 @@ if 'PAS_ARCH' in os.environ:
         log.write('\n\tArch = %s'
                   % (os.environ['PAS_ARCH'].strip()))
 
+if 'PAS_ADDITIONAL_RESOURCES' in os.environ:
+
+    resources = ('%s:%s' % (resources, os.environ['PAS_ADDITIONAL_RESOURCES'].strip()))
+
+    if logging is True:
+
+        log.write('\n\tAdditional Resources = %s'
+                  % (os.environ['PAS_ADDITIONAL_RESOURCES'].strip()))
+
 if 'PAS_PLACE' in os.environ:
 
     resources = ('%s place=%s' % (resources, os.environ['PAS_PLACE']))
@@ -234,7 +245,7 @@ if 'PAS_PLACE' in os.environ:
                   % (os.environ['PAS_PLACE'].strip()))
 
 if logging is True:
-    log.write('\n\nFinal Resource Request = %s\n' % (resources.strip()))
+    log.write('\n\tFinal Resource Request = %s\n' % (resources.strip()))
 
 job.attr_resource = resources.strip()
 
@@ -283,7 +294,7 @@ if 'PAS_ADDITIONAL_ATTRIBUTES' in os.environ:
                       % (os.environ['PAS_ADDITIONAL_ATTRIBUTES'].strip()))
 
 if logging is True:
-    log.write('\n\nFinal Attribute Request = %s\n' % (','.join(a for a in attributes)))
+    log.write('\n\tFinal Attribute Request = %s\n' % (','.join(a for a in attributes)))
 
 job.attr_additional_attrs = ','.join(a for a in attributes)
 
@@ -295,7 +306,7 @@ if 'PAS_ACCOUNT' in os.environ:
 
     if re.search('\w+', os.environ['PAS_ACCOUNT']):
 
-        job.attr_accounting_label = os.environ['ACCOUNT'].strip()
+        job.attr_accounting_label = os.environ['PAS_ACCOUNT'].strip()
 
         if logging is True:
 
@@ -312,7 +323,7 @@ if 'PAS_QUEUE' in os.environ:
         log.write('\n\tQueue = %s'
                   % (os.environ['PAS_QUEUE']))
 
-# Mail Handling (Compute Manager)
+# Mail Handling (Compute Manager User Settings)
 if 'MAIL_POINTS' in os.environ:
 
     if re.match(r"[abe]", os.environ['MAIL_POINTS']):
@@ -346,5 +357,10 @@ for key, value in os.environ.items():
         del os.environ[key]
 
 log.close()
+
+os.chown('submit.log',
+         pwd.getpwnam(os.environ['AIF_USER']).pw_uid,
+         pwd.getpwnam(os.environ['AIF_USER']).pw_gid)
+
 sys.stdout.flush()
 sys.exit(0)
