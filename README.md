@@ -92,6 +92,27 @@ In this example, you will see how you can substitute the key of an option with i
 
 `pas-appmaker Substitution --ncpus --mem --executable --environment-start "PAS_ARGUMENTS=-procs PAS_NCPUS -mem PAS_MEM"`
 
+## Tutorial: Hooks
+
+These examples demonstrate how application authors can execute scripts at various phases of the application lifecycle.
+
+### SubmitHook
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+`pas-submit SubmitHook --hook-submit /path/to/my/hook.script --ncpus --mem --logging`
+
+### StartHook
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+`pas-submit StartHook --hook-start /path/to/my/hook.script --application --executable --ncpus --mem --logging`
+
+### FinishedHook
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+`pas-submit FinishedHook --hook-finished /path/to/my/hook.script --select-statement --script --arguments`
 
 ## Copyright
 
