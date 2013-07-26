@@ -20,7 +20,7 @@ By default App Maker assumes "/var/spool/pas/repository/applications/". However,
 
 or at runtime...
 
-`pas-appmaker --app-home /my/private/applications Appname --ncpus --script --arguments --logging`
+`pas-appmaker --app-home /my/alternate/applications Appname --ncpus --script --arguments --logging`
 
 ### App Config
 
@@ -31,11 +31,13 @@ By default App Maker assumes "/var/spool/pas/conf/app-config/". However, this is
 
 or at runtime...
 
-`pas-appmaker --app-config /my/private/app-config Appname --ncpus --script --arguments --logging`
+`pas-appmaker --app-config /my/alternate/app-config Appname --ncpus --script --arguments --logging`
+
 
 ## Tutorial: Resources & Attributes
 
 These basic examples bring focus to the three ways App Maker will allow submitting users to request job resources and attributes.
+App Maker not only supports these very specific cases but any combination of these three cases as well.
 
 ### byForm
 
@@ -74,17 +76,18 @@ This example assumes no defaults, much like GenericExec. However, this example a
 
 ## Tutorial: Variables & Stubstitution
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+App Maker allows you to set the value to user options in the background by explicitly setting environment variables. You can also use the "key" to an option in the value of a variable
+and expect App Maker to substitute that "key" with its "value".
 
 ### Variables
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+In this example, you will see how easy it is to pre-define the value to App Maker options at runtime.
 
 `pas-appmaker Variables --environment-submit PAS_SELECT=1,PAS_NCPUS=2,PAS_MEM=1gb --script --arguments`
 
 ### Substitution
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+In this example, you will see how you can substitute the key of an option with its value.
 
 `pas-appmaker Substitution --ncpus --mem --executable --environment-start "PAS_ARGUMENTS=-procs PAS_NCPUS -mem PAS_MEM"`
 
