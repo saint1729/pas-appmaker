@@ -59,7 +59,8 @@ This example is geared towards users who like to request resources and attribute
 
 ## Tutorial: Executables & Job Scripts
 
-These basic examples bring focus to the three ways App Maker will al...
+The examples below demonstrate the various ways that App Maker supports defining the job executable or script.
+You will also see how easy it is to pass arguments to the job executable or script, as well as pass environment variables to the job.
 
 ### GenericExec
 
