@@ -2,9 +2,9 @@
 
 A simple framework for creating powerful application definitions.
 
-## Example
+## Synopsis
 
-`pas-appmaker Appname --executable --arguments --input-file --include-files --compress-results --logging`
+`pas-appmaker Appname --script --arguments --input-file --include-files --logging`
 
 ## Setup
 
@@ -31,8 +31,9 @@ By default App Maker assumes "/var/spool/pas/conf/app-config/". However, this is
 
 or at runtime...
 
-`pas-appmaker --app-config /my/alternate/app-config Appname --ncpus --script --arguments --logging`
-
+```bash
+pas-appmaker --app-config /my/alternate/app-config Appname --ncpus --script --arguments --logging
+```
 
 ## Tutorial: Resources & Attributes
 
@@ -43,7 +44,13 @@ App Maker not only supports these very specific cases but any combination of the
 
 This example is geared towards the modern Web/Mobile user who typically expects HTML form fields.
 
-`pas-appmaker byForm --select --ncpus --mem --queue --application --executable --arguments`
+```bash
+pas-appmaker byForm --select --ncpus --mem --place --job-arrays --script --arguments --logging
+```
+
+```bash
+pas-appmaker byForm --ncpus --mem --waltime --executable --environment --arguments --compress-results --logging
+```
 
 ### byStatement
 
