@@ -20,7 +20,9 @@ By default App Maker assumes "/var/spool/pas/repository/applications/". However,
 
 or at runtime...
 
-`pas-appmaker --app-home /my/alternate/applications Appname --ncpus --script --arguments --logging`
+```bash
+pas-appmaker Appname --app-home /my/alternate/applications Appname --ncpus --script --arguments --logging
+```
 
 ### App Config
 
@@ -32,7 +34,7 @@ By default App Maker assumes "/var/spool/pas/conf/app-config/". However, this is
 or at runtime...
 
 ```bash
-pas-appmaker --app-config /my/alternate/app-config Appname --ncpus --script --arguments --logging
+pas-appmaker Appname --app-config /my/alternate/app-config Appname --ncpus --script --arguments --logging
 ```
 
 ## Tutorial: Resources & Attributes
@@ -42,7 +44,7 @@ App Maker not only supports these very specific cases but any combination of the
 
 ### byForm
 
-This example is geared towards the modern Web/Mobile user who typically expects HTML form fields.
+Examples of how to create applications where HTML form fields are how users prefer to request resources.
 
 ```bash
 pas-appmaker byForm --select --ncpus --mem --place --job-arrays --script --arguments --logging
