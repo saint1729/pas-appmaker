@@ -9,11 +9,11 @@ A simple framework for creating powerful application definitions.
 ## Setup
 
 This section will explain how to properly setup App Maker on your system. By design, App Maker is flexible, and can be installed anywhere.
-The sub-sections below desribe how App Maker requires the location of two unique directories in order to function properly.
+The sub-sections below will explain how App Maker requires the location of two unique directories in order to function properly.
 
 ### App Home
 
-Your App Home directory is where your application definitions are located. This is where App Maker will place the applications you are working on.
+Your App Home directory is where your application definitions are stored. This is where App Maker will place the application definitions you are authoring.
 By default App Maker assumes "/var/spool/pas/repository/applications/". However, this is tunable using one of the two options below...
 
 `export PAS_APP_HOME=/var/spool/pas/repository/applications`
@@ -26,7 +26,7 @@ pas-appmaker Appname --app-home /my/alternate/applications Appname --ncpus --scr
 
 ### App Config
 
-Your App Config directory is where your App Maker template files are located. App Config allows you to fully customize how App Maker generates application definitions.
+Your App Config directory is where your App Maker template files are stored. The App Config templates allow you to fully customize how App Maker generates application definitions.
 By default App Maker assumes "/var/spool/pas/conf/app-config/". However, this is tunable using one of the two options below...
 
 `export PAS_APP_CONFIG=/var/spool/pas/conf/app-config`
@@ -39,8 +39,7 @@ pas-appmaker Appname --app-config /my/alternate/app-config Appname --ncpus --scr
 
 ## Tutorial: Resources & Attributes
 
-These basic examples bring focus to the three ways App Maker will allow submitting users to request job resources and attributes.
-App Maker not only supports these very specific cases but any combination of these three cases as well.
+Users who submit jobs to HPC systems request resources for their jobs in different ways. Some using simple HTML form fields, and some using complex qsub select syntax. Other users may have been provided job scripts where PBS directives are embedded in the job script itself.  App Maker allows application authors the ability to describe resource options to users in a variety of different ways.
 
 ### byForm
 
