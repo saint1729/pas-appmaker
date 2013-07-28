@@ -137,13 +137,17 @@ This hook will set the PAS_LOGGING option to true, and will also set a job execu
 import os
 import sys
 
+os.environ['PAS_LOGGING'] = 'true'
+
+if not 'PAS_EXECUTABLE' in os.environ:
+    os.environ['PAS_EXECUTABLE'] = '/path/to/program.bin'
+
 environment = open('environment.import', 'w')
 
-environment.write('PAS_LOGGING=true')
-environment.write('PAS_EXECUTABLE=/path/to/program.bin')
+for k, v in os.environ.items():
+    environment.write('%s=%s\n', % (k, v))
 
 environment.close()
-
 sys.exit(0)
 
 ```
