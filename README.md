@@ -52,10 +52,13 @@ Users who submit jobs to HPC systems request resources for their jobs in differe
 Examples of how to create applications where HTML form fields are how users prefer to request resources.
 
 ```bash
-pas-appmaker byForm --select --ncpus --mem --place --job-arrays --executable --arguments --logging
+pas-appmaker byForm1 --select --ncpus --mem --place --job-arrays --executable --arguments --logging
 ```
 ```bash
-pas-appmaker byForm --evironment-submit PAS_SELECT=1 --ncpus --mem --waltime --script --compress-results --logging
+pas-appmaker byForm2 --environment-submit PAS_SELECT=1 --ncpus --mem --walltime --script --compress-results --logging
+```
+```bash
+pas-appmaker byForm3 --environment-submit PAS_NCPUS=16,PAS_MEM=8gb,PAS_PLACE=pack --select --script --logging
 ```
 
 ### byStatement
