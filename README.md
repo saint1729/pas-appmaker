@@ -59,7 +59,7 @@ pas-appmaker byForm1 --select --ncpus --mem --place --application --executable -
 pas-appmaker byForm2 --environment-submit PAS_SELECT=1 --ncpus --mem --application --script --input-file --include-files --logging
 ```
 ```bash
-pas-appmaker byForm3 --environment-submit PAS_NCPUS=16,PAS_MEM=8gb,PAS_PLACE=pack --select --script --arguments --logging
+pas-appmaker byForm3 --environment-submit PAS_NCPUS=16,PAS_MEM=8gb,PAS_PLACE=pack --select --application --script --arguments --logging
 ```
 
 ### byStatement
@@ -70,7 +70,7 @@ Examples of how to create applications where advanced users, more comfortable wi
 pas-appmaker byStatement1 --select-statement --additional-attributes --application --executable --arguments --logging
 ```
 ```bash
-pas-appmaker byStatement2 --environment-submit PAS_SELECT_STATEMENT=PAS_SELECT_STATEMENT:walltime=10:10:00 --select-statement --executable --arguments --logging
+pas-appmaker byStatement2 --environment-submit PAS_SELECT_STATEMENT=select=4:ncpus=16:mem=8gb:walltime=10:10:00 --application --executable --arguments --logging
 ```
 
 ### byDirective
@@ -81,7 +81,7 @@ Examples of how to create applications where resources and attributes are define
 pas-appmaker byDirective1 --application --script --arguments --logging
 ```
 ```bash
-pas-appmaker byDirective2 --environment-submit PAS_APPLICATION=Appname,PAS_SCRIPT=/path/to/job_script.sh --arguments --logging
+pas-appmaker byDirective2 --environment-submit PAS_APPLICATION=Appname,PAS_SCRIPT=/path/to/app_name.sh --arguments --logging
 ```
 
 ## Tutorial: Advanced Concepts
