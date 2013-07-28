@@ -103,11 +103,7 @@ use IO::File;
 
 my $environment = IO::File->new('environment.import', 'w');
 
-if (defined $environment) { 
-
-    print $environment "PAS_SELECT_STATEMENT=select=1:ncpus=2:mem=1gb\n";
-}
-
+print $environment "PAS_SELECT_STATEMENT=select=1:ncpus=2:mem=1gb\n";
 undef $environment and exit(0);
 
 ```
@@ -127,8 +123,12 @@ This hook will set the PAS_LOGGING option to true, and will also set a job execu
 import os
 import sys
 
-os.environ['PAS_LOGGING'] = 'true'
-os.environ['PAS_EXECUTABLE'] = '/path/to/job_exec.bin'
+environment = open('environment.import', 'w')
+
+environment.write('PAS_LOGGING=true')
+environment.write('PAS_EXECUTABLE=/path/to/program.bin')
+
+environment.close()
 
 sys.exit(0)
 
