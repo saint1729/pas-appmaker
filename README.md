@@ -48,7 +48,6 @@ pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --ar
 App Maker allows you the ability to present options to users in a variety of ways. 
 You can also pre-define options by setting them in the submit envirionment.
 
-
 ### byForm
 
 Examples of how to create applications where HTML form fields are how users prefer to request resources.
@@ -57,7 +56,7 @@ Examples of how to create applications where HTML form fields are how users pref
 pas-appmaker byForm1 --select --ncpus --mem --place --job-arrays --executable --arguments --logging
 ```
 ```bash
-pas-appmaker byForm2 --environment-submit PAS_SELECT=1 --ncpus --mem --walltime --script --compress-results --logging
+pas-appmaker byForm2 --environment-submit PAS_SELECT=1 --ncpus --mem --walltime --script --input-file --include-files --logging
 ```
 ```bash
 pas-appmaker byForm3 --environment-submit PAS_NCPUS=16,PAS_MEM=8gb,PAS_PLACE=pack --select --script --logging
