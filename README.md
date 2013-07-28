@@ -25,7 +25,7 @@ export PAS_APP_HOME=/var/spool/pas/repository/applications
 or at runtime...
 
 ```bash
-pas-appmaker Appname --app-home /my/alternate/applications Appname --ncpus --script --arguments --logging
+pas-appmaker Appname --app-home /my/alternate/applications --ncpus --script --arguments --logging
 ```
 
 ### App Config
@@ -40,7 +40,7 @@ export PAS_APP_CONFIG=/var/spool/pas/conf/app-config
 or at runtime...
 
 ```bash
-pas-appmaker Appname --app-config /my/alternate/app-config Appname --ncpus --script --arguments --logging
+pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --arguments --logging
 ```
 
 ## Tutorial: Resources & Attributes
@@ -63,14 +63,13 @@ pas-appmaker byForm3 --environment-submit PAS_NCPUS=16,PAS_MEM=8gb,PAS_PLACE=pac
 
 ### byStatement
 
-This example is geared towards advanced users who typically declare resources using a select statement.
+Examples of how to create applications where advanced users, more comfortable with the command-line, can select resources and attributes using the familiar select and attribute syntax of qsub.
 
 ```bash
-pas-appmaker byStatement --select-statement --additional-attributes --application --executable --arguments
+pas-appmaker byStatement1 --select-statement --additional-attributes --application --executable --arguments --logging
 ```
-
 ```bash
-pas-appmaker byStatement --select-statement --additional-attributes --application --executable --arguments
+pas-appmaker byStatement2 --environment-submit PAS_SELECT_STATEMENT=PAS_SELECT_STATEMENT:walltime=10:10:00 --select-statement --executable --arguments --logging
 ```
 
 ### byDirective
