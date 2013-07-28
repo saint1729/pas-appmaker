@@ -4,7 +4,9 @@ A simple framework for creating powerful application definitions.
 
 ## Synopsis
 
-`pas-appmaker Appname --script --arguments --input-file --include-files --logging`
+```bash
+pas-appmaker Appname --script --arguments --input-file --include-files --logging
+```
 
 ## Setup
 
@@ -16,7 +18,9 @@ The sub-sections below will explain how App Maker requires the location of two u
 Your App Home directory is where your application definitions are stored. This is where App Maker will place the application definitions you are authoring.
 By default App Maker assumes "/var/spool/pas/repository/applications/". However, this is tunable using one of the two options below...
 
-`export PAS_APP_HOME=/var/spool/pas/repository/applications`
+```bash
+export PAS_APP_HOME=/var/spool/pas/repository/applications
+```
 
 or at runtime...
 
@@ -29,7 +33,9 @@ pas-appmaker Appname --app-home /my/alternate/applications Appname --ncpus --scr
 Your App Config directory is where your App Maker template files are stored. The App Config templates allow you to fully customize how App Maker generates application definitions.
 By default App Maker assumes "/var/spool/pas/conf/app-config/". However, this is tunable using one of the two options below...
 
-`export PAS_APP_CONFIG=/var/spool/pas/conf/app-config`
+```bash
+export PAS_APP_CONFIG=/var/spool/pas/conf/app-config
+```
 
 or at runtime...
 
@@ -53,11 +59,21 @@ pas-appmaker byForm --select --ncpus --mem --place --job-arrays --script --argum
 pas-appmaker byForm --ncpus --mem --waltime --executable --environment --arguments --compress-results --logging
 ```
 
+```bash
+pas-appmaker byForm --evironment-submit PAS_SELECT=1,PAS_NCPUS=2,PAS_MEM=2gb --waltime --script --environment --arguments --compress-results --logging
+```
+
 ### byStatement
 
 This example is geared towards advanced users who typically declare resources using a select statement.
 
-`pas-appmaker byStatement --select-statement --additional-attributes --application --executable --arguments`
+```bash
+pas-appmaker byStatement --select-statement --additional-attributes --application --executable --arguments
+```
+
+```bash
+pas-appmaker byStatement --select-statement --additional-attributes --application --executable --arguments
+```
 
 ### byDirective
 
