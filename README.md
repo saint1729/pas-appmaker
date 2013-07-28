@@ -94,7 +94,7 @@ App Maker allows you to modify and extend its core functionality using hooks wri
 ### Hook1
 
 Example of executing a Perl hook before the job is submitted to PBS. 
-This hook will set the PAS_SELECT_STATEMENT to the select statement you specify.
+This hook will set the PAS_SELECT_STATEMENT to the resources you specify.
 
 ```perl
 #!/usr/bin/env perl
@@ -132,7 +132,7 @@ sys.exit(0)
 
 ```
 ```bash
-pas-submit Hook2 --hook-start /path/to/my/hook.py --environment-submit PAS_APPLICATION=Appname --select --ncpus --mem --input-file --include-files --arguments
+pas-submit Hook2 --hook-start /path/to/my/hook.py --environment-submit PAS_SELECT=1 --ncpus --mem --input-file --include-files --arguments
 ```
 
 ## Copyright
