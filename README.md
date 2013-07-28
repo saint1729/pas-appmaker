@@ -40,7 +40,7 @@ or at runtime...
 pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --arguments --logging
 ```
 
-## Tutorial: Basic Concepts
+## Tutorial: Some basic concepts
 
 App Maker allows you the ability to present options to users in a variety of ways. 
 You can also pre-define options by setting them in the submit envirionment.
@@ -84,7 +84,7 @@ pas-appmaker byDirective1 --application --script --arguments --logging
 pas-appmaker byDirective2 --environment-submit PAS_APPLICATION=Appname,PAS_SCRIPT=/path/to/app_name.sh --arguments --logging
 ```
 
-## Tutorial: Advanced Concepts
+## Tutorial: More advanced concepts
 
 App Maker allows you to modify and extend its core functionality using hooks written in a language(s) you are comfortable with.
 
