@@ -89,13 +89,30 @@ pas-appmaker byDirective2 --environment-submit PAS_APPLICATION=Appname,PAS_SCRIP
 
 ## Tutorial: Advanced Concepts
 
-These examples demonstrate how application authors can execute scripts at various phases of the application lifecycle.
+App Maker allows you to extend its core functionality using hooks. 
+Your hooks can be used at specific phases of the job submission and execution lifecyle. 
+They can be written in any language executable on the server.
 
-### SubmitHook
+### Hook1
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-`pas-submit SubmitHook --hook-submit /path/to/my/hook.script --ncpus --mem --logging`
+```perl
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+my @resources = qw/select=1 ncpus=2 mem=1gb walltime=08:00:00/;
+
+$ENV{'PAS_SELECT_STATEMENT'} = join ':', @resources;
+
+exit(0);
+
+```
+```bash
+pas-submit Hook1 --hook-submit /path/to/my/hook.pl --application --executable --arguments --logging
+```
 
 ### StartHook
 
