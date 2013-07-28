@@ -32,6 +32,33 @@
     </jsdl:Source>
   </jsdl:DataStaging>
   <!-- PAS_INPUT_FILE END -->
+  <!-- PAS_MASTER_FILE BEGIN -->
+  <jsdl:DataStaging>
+    <jsdl:FileName>name($MASTER_FILE)</jsdl:FileName>
+    <jsdl:CreationFlag>overwrite</jsdl:CreationFlag>
+    <jsdl:Source>
+      <jsdl:URI>$MASTER_FILE</jsdl:URI>
+    </jsdl:Source>
+  </jsdl:DataStaging>
+  <!-- PAS_MASTER_FILE END -->
+  <!-- PAS_STARTER_FILE BEGIN -->
+  <jsdl:DataStaging>
+    <jsdl:FileName>name($STARTER_FILE)</jsdl:FileName>
+    <jsdl:CreationFlag>overwrite</jsdl:CreationFlag>
+    <jsdl:Source>
+      <jsdl:URI>$STARTER_FILE</jsdl:URI>
+    </jsdl:Source>
+  </jsdl:DataStaging>
+  <!-- PAS_STARTER_FILE END -->
+  <!-- PAS_ENGINE_FILE BEGIN -->
+  <jsdl:DataStaging>
+    <jsdl:FileName>name($ENGINE_FILE)</jsdl:FileName>
+    <jsdl:CreationFlag>overwrite</jsdl:CreationFlag>
+    <jsdl:Source>
+      <jsdl:URI>$ENGINE_FILE</jsdl:URI>
+    </jsdl:Source>
+  </jsdl:DataStaging>
+  <!-- PAS_ENGINE_FILE END -->
   <!-- PAS_INCLUDE_FILES BEGIN -->
   <jsdl:DataStaging>
     <jsdl:FileName>name($INCLUDE_FILES)</jsdl:FileName>

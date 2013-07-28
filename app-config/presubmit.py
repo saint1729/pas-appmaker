@@ -7,14 +7,12 @@ indemnification of any kind. All other terms and conditions are as specified
 in the Altair PBS Application Services EULA.
 '''
 
+import time
 import re
 import grp
 import pwd
 import os
 import sys
-import zipfile
-import time
-import datetime
 import shutil
 import subprocess
 
@@ -47,6 +45,7 @@ if 'PAS_EXECUTABLE_NAME' in os.environ:
 if 'PAS_SUBMISSION_DIRECTORY' in os.environ:
 
     elements = os.environ['PAS_SUBMISSION_DIRECTORY'].split('/', 3)
+    os.environ['PAS_USER_STAGE'] = elements[3].strip()
     os.chdir('/%s' % (elements[3]))
 
 
@@ -80,6 +79,8 @@ if os.path.exists('/etc/pas.conf'):
             application_home = ('%s/repository/applications/%s'
                                 % (value.strip(), os.environ['PAS_APPLICATION']))
 
+            os.environ['PAS_APPLICATION_HOME'] = application_home.strip()
+
             if logging is True:
                 log.write('\n\nFound Application Home: %s\n' % (application_home))
 
@@ -102,12 +103,12 @@ if os.path.exists('/etc/pas.conf'):
             else:
 
                 if logging is True:
-                    log.write('\n\nNo Environment Submit Found\n')
+                    log.write('\n\nNo Submit Environment Found\n')
 
-            ''' Environment Variable Parser '''
+            ''' Environment Variable Substitution '''
 
             if logging is True:
-                log.write('\nParsing Environment Variables\n')
+                log.write('\nSubstituting Environment Variables\n')
 
             for key, value in os.environ.items():
 
@@ -124,16 +125,49 @@ if os.path.exists('/etc/pas.conf'):
                                 value = re.sub(match, v, value)
                                 os.environ[key.strip()] = value.strip()
 
-            ''' Export All Options and Environment Variables '''
-
             if logging is True:
-                log.write('\nExported Options and Environment Variables\n')
 
                 for key, value in os.environ.items():
                     log.write('\n\t%s = %s' % (key.strip(), value.strip()))
 
     conf.close()
 
+''' Executing Submit Hook '''
+
+if os.path.exists("%s/submittime/hook.submit" % (application_home)):
+
+    if logging is True:
+        log.write('\nFound Submit Hook\n\n')
+
+    command = "%s/submittime/hook.submit" % (application_home)
+
+    hook = subprocess.Popen(command, env=os.environ, shell=False, stdout=subprocess.PIPE)
+
+    for line in hook.stdout.readlines():
+
+        if logging is True:
+            log.write(line)
+
+    hook.wait()
+
+    if os.path.exists('environment.import'):
+
+        environment_import = open('environment.import', 'r')
+
+        for variable in environment_import.readlines():
+
+            (key, value) = variable.split('=', 1)
+            os.environ[key.strip()] = value.strip()
+
+        environment_import.close()
+
+    if logging is True:
+        log.write('\n\nSubmit Hook Return Code: %s\n' % (hook.returncode))
+
+else:
+
+    if logging is True:
+        log.write('\n\nNo Submit Hook Found\n')
 
 ''' Processing Resources '''
 

@@ -246,6 +246,24 @@ files.add_option('--input-file',
                  default=False,
                  help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
 
+files.add_option('--master-file',
+                 dest='master_file',
+                 action='store_true',
+                 default=False,
+                 help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+files.add_option('--starter-file',
+                 dest='starter_file',
+                 action='store_true',
+                 default=False,
+                 help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+files.add_option('--engine-file',
+                 dest='engine_file',
+                 action='store_true',
+                 default=False,
+                 help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
 files.add_option('--include-files',
                  dest='include_files',
                  action='store_true',
@@ -309,6 +327,12 @@ developer.add_option('--environment-actions',
 
 developer.add_option('--environment-finished',
                      dest='environment_finished',
+                     action='store',
+                     default='none',
+                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
+
+developer.add_option('--hook-submit',
+                     dest='hook_submit',
                      action='store',
                      default='none',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -883,6 +907,54 @@ if len(args) == 1:
             else:
                 enabled = True
 
+        ''' Master File '''
+
+        if re.match('.*PAS_MASTER_FILE BEGIN', line):
+
+            if options.master_file is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_MASTER_FILE END', line):
+
+            if options.master_file is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Starter File '''
+
+        if re.match('.*PAS_STARTER_FILE BEGIN', line):
+
+            if options.starter_file is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_STARTER_FILE END', line):
+
+            if options.starter_file is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Engine File '''
+
+        if re.match('.*PAS_ENGINE_FILE BEGIN', line):
+
+            if options.engine_file is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_ENGINE_FILE END', line):
+
+            if options.engine_file is True:
+                pass
+            else:
+                enabled = True
+
         ''' Include Files '''
 
         if re.match('.*PAS_INCLUDE_FILES BEGIN', line):
@@ -996,6 +1068,54 @@ if len(args) == 1:
             else:
                 enabled = True
 
+        ''' Master File '''
+
+        if re.match('.*PAS_MASTER_FILE BEGIN', line):
+
+            if options.master_file is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_MASTER_FILE END', line):
+
+            if options.master_file is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Starter File '''
+
+        if re.match('.*PAS_STARTER_FILE BEGIN', line):
+
+            if options.starter_file is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_STARTER_FILE END', line):
+
+            if options.starter_file is True:
+                pass
+            else:
+                enabled = True
+
+        ''' Engine File '''
+
+        if re.match('.*PAS_ENGINE_FILE BEGIN', line):
+
+            if options.engine_file is True:
+                enabled = True
+            else:
+                enabled = False
+
+        if re.match('.*PAS_ENGINE_FILE END', line):
+
+            if options.engine_file is True:
+                pass
+            else:
+                enabled = True
+
         ''' Include Files '''
 
         if re.match('.*PAS_INCLUDE_FILES BEGIN', line):
@@ -1089,6 +1209,11 @@ if len(args) == 1:
         exit_environment.close()
 
     ''' Hooks '''
+
+    if not options.hook_submit == 'none':
+
+        if os.path.exists(options.hook_submit):
+            shutil.copy2(options.hook_submit, '%s/%s/submittime/hook.submit' % (app_home, app_name))
 
     if not options.hook_start == 'none':
 

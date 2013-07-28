@@ -328,10 +328,46 @@
                 A standalone input file or ZIP archive. This option supports the automatic detection of master, starter and engine files.
             </Description>
       <DisplayName>Input File</DisplayName>
-      <InputRequired>false</InputRequired>
+      <InputRequired>true</InputRequired>
     </ArgumentFileName>
   </ArgumentChoice>
   <!-- PAS_INPUT_FILE END -->
+  <!-- PAS_MASTER_FILE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentFileName>
+      <Name>MASTER_FILE</Name>
+      <Description>
+                A standalone master file or ZIP archive. This option supports the automatic detection of master, starter and engine files.
+            </Description>
+      <DisplayName>Master File</DisplayName>
+      <InputRequired>true</InputRequired>
+    </ArgumentFileName>
+  </ArgumentChoice>
+  <!-- PAS_MASTER_FILE END -->
+  <!-- PAS_STARTER_FILE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentFileName>
+      <Name>STARTER_FILE</Name>
+      <Description>
+                A standalone starter file or ZIP archive. This option supports the automatic detection of master, starter and engine files.
+            </Description>
+      <DisplayName>Starter File</DisplayName>
+      <InputRequired>true</InputRequired>
+    </ArgumentFileName>
+  </ArgumentChoice>
+  <!-- PAS_STARTER_FILE END -->
+  <!-- PAS_ENGINE_FILE BEGIN -->
+  <ArgumentChoice>
+    <ArgumentFileName>
+      <Name>ENGINE_FILE</Name>
+      <Description>
+                A standalone engine file or ZIP archive. This option supports the automatic detection of master, starter and engine files.
+            </Description>
+      <DisplayName>Engine File</DisplayName>
+      <InputRequired>true</InputRequired>
+    </ArgumentFileName>
+  </ArgumentChoice>
+  <!-- PAS_ENGINE_FILE END -->
   <!-- PAS_INCLUDE_FILES BEGIN -->
   <ArgumentChoice>
     <ArgumentFileNameMulti>
