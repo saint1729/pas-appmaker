@@ -33,9 +33,6 @@ By default App Maker assumes "/var/spool/pas/conf/app-config/". However, this is
 ```bash
 export PAS_APP_CONFIG=/var/spool/pas/conf/app-config
 ```
-
-or at runtime...
-
 ```
 pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --arguments --logging
 ```
@@ -47,7 +44,7 @@ You can also pre-define options by setting them explicitly before the job is sub
 
 ### byForm
 
-Examples of how to create applications where HTML form fields are how users prefer to request resources.
+A few examples of how to create applications where HTML form fields are how you would prefer users to request their resources.
 
 ```
 pas-appmaker byForm1 --select --ncpus --mem --place --application --executable --arguments --logging
@@ -61,7 +58,7 @@ pas-appmaker byForm3 --environment-submit PAS_NCPUS=16,PAS_MEM=8gb,PAS_PLACE=pac
 
 ### byStatement
 
-Examples of how to create applications where advanced users, more comfortable with the command-line, can select resources and attributes using the familiar select and attribute syntax of qsub.
+A few examples of how to create applications where advanced users, more comfortable with the command-line, could select resources and attributes using the familiar select and attribute syntax of qsub.
 
 ```
 pas-appmaker byStatement1 --select-statement --additional-attributes --application --executable --arguments --logging
@@ -75,7 +72,7 @@ pas-appmaker byStatement3 --environment-submit PAS_SELECT_STATEMENT=PAS_SELECT_S
 
 ### byDirective
 
-Examples of how to create applications where resources and attributes are defined as PBS directives in a job script.
+A couple of examples that demonstrate how to create applications where resources and attributes are requested inside the job script.
 
 ```
 pas-appmaker byDirective1 --application --script --arguments --logging
