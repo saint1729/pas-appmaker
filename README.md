@@ -93,8 +93,8 @@ App Maker allows you to modify and extend its core functionality using hooks wri
 
 ### Hook1
 
-Example executing a Perl hook when the job has been submitted. 
-The hook will set the PAS_SELECT_STATEMENT before the job gets submitted.
+Example of executing a Perl hook before the job is submitted to PBS. 
+This hook will set the PAS_SELECT_STATEMENT to the select statement you specify.
 
 ```perl
 #!/usr/bin/env perl
@@ -115,8 +115,8 @@ pas-submit Hook1 --hook-submit /path/to/my/hook.pl --application --executable --
 
 ### Hook2
 
-Example executing a Python hook before the job starts. 
-The hook changes the PAS_LOGGING option to true, and sets the PAS_EXECUTABLE option.
+Example of executing a Python hook before the job starts. 
+This hook will set the PAS_LOGGING option to true, and will set the PAS_EXECUTABLE option.
 
 ```python
 #!/usr/bin/env python
