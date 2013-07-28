@@ -134,7 +134,7 @@ sys.exit(0)
 
 ```
 ```bash
-pas-submit Hook2 --hook-start /path/to/my/hook.py --application --arguments
+pas-submit Hook2 --hook-start /path/to/my/hook.py --environment-submit PAS_APPLICATION=Appname --select --ncpus --mem --input-file --include-files --arguments
 ```
 
 ## Copyright
