@@ -114,7 +114,7 @@ my $environment = IO::File->new('environment.import', 'w');
 if (defined $environment) { 
 
     for my $variable (keys %ENV) {
-        print $environment "$ENV{$variable}=$variable\n";
+        print $environment "$variable=$ENV{$variable}\n";
     }
 }
 
