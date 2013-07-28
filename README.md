@@ -116,7 +116,7 @@ pas-submit Hook1 --hook-submit /path/to/my/hook.pl --application --executable --
 ### Hook2
 
 Example of executing a Python hook before the job starts. 
-This hook will set the PAS_LOGGING option to true, and will set the PAS_EXECUTABLE option.
+This hook will set the PAS_LOGGING option to true, and will also set a job executable with the PAS_EXECUTABLE option.
 
 ```python
 #!/usr/bin/env python
