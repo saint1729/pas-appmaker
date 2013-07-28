@@ -132,6 +132,252 @@ sys.exit(0)
 pas-submit Hook2 --hook-start /path/to/my/hook.py --environment-submit PAS_SELECT=1 --ncpus --mem --input-file --include-files --arguments
 ```
 
+## Reference
+
+```
+Usage: pas-appmaker <APPLICATION> [Options]
+
+A simple framework for making powerful application definitions.
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  --app-home=$PAS_HOME/repository/applications
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+  --app-config=$PAS_HOME/conf/app-config
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+
+  Resources:
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+    sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl
+    ac faucibus.
+
+    --select-statement  Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --select            Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --ncpus             Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --pcpus             Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --mpiprocs          Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --ompthreads        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --mem               Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --vmem              Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --walltime          Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --arch              Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --place             Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --additional-resources
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+
+  Attributes:
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+    sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl
+    ac faucibus.
+
+    --depend            Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --group-list        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --additional-attributes
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+
+  Options:
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+    sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl
+    ac faucibus. Curabitur et augue vehicula, elementum lacus ornare,
+    adipiscing massa. Maecenas ut massa posuere, consequat felis quis,
+    interdum orci.
+
+    --account           Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --queue             Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --mail              Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+    --job-arrays        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus.
+
+  Execution:
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+    sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl
+    ac faucibus. Curabitur et augue vehicula, elementum lacus ornare,
+    adipiscing massa. Maecenas ut massa posuere, consequat felis quis,
+    interdum orci.
+
+    --application       Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --environment       Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --executable        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --script            Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --arguments         Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+
+  Files:
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+    sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl
+    ac faucibus. Curabitur et augue vehicula, elementum lacus ornare,
+    adipiscing massa. Maecenas ut massa posuere, consequat felis quis,
+    interdum orci.
+
+    --input-file        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --include-files     Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --compress-results  Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+
+  Actions:
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+    sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl
+    ac faucibus. Curabitur et augue vehicula, elementum lacus ornare,
+    adipiscing massa. Maecenas ut massa posuere, consequat felis quis,
+    interdum orci.
+
+    --send-signals      Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --shell-commands    Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+
+  Developer Tools:
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+    sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl
+    ac faucibus. Curabitur et augue vehicula, elementum lacus ornare,
+    adipiscing massa. Maecenas ut massa posuere, consequat felis quis,
+    interdum orci.
+
+    --logging           Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --environment-submit=ENVIRONMENT_SUBMIT
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --environment-start=ENVIRONMENT_START
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --environment-actions=ENVIRONMENT_ACTIONS
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --environment-finished=ENVIRONMENT_FINISHED
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --hook-start=HOOK_START
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --hook-actions=HOOK_ACTIONS
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --hook-finished=HOOK_FINISHED
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+```
+
 ## Copyright
 
 © Copyright 2013 Altair Engineering, Inc. All rights reserved.
