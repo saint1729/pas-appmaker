@@ -43,9 +43,10 @@ or at runtime...
 pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --arguments --logging
 ```
 
-## Tutorial: Resources & Attributes
+## Tutorial: Basic Concepts
 
-Users who submit jobs to HPC systems request resources for their jobs in different ways. Some using simple HTML form fields, and some using complex qsub select syntax. Other users may have been provided job scripts where PBS directives are embedded in the job script itself.  App Maker allows application authors the ability to describe resource options to users in a variety of different ways.
+App Maker has a very simple and extensible syntax for making application definitions.
+App Maker allows application authors the ability to describe resource options to users in a variety of different ways.
 
 ### byForm
 
