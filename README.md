@@ -159,6 +159,22 @@ sys.exit(0)
 pas-submit Hook2 --hook-start /path/to/my/hook.py --environment-submit PAS_SELECT=1 --ncpus --mem --input-file --include-files --arguments
 ```
 
+## Tutorial: Bringing it all together
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+### OptiStruct
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+### RADIOSS
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+### Abaqus
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
 ## Reference
 
 ```
