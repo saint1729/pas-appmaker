@@ -72,6 +72,9 @@ pas-appmaker byStatement1 --select-statement --additional-attributes --applicati
 ```bash
 pas-appmaker byStatement2 --environment-submit PAS_SELECT_STATEMENT=select=4:ncpus=16:mem=8gb:walltime=10:10:00 --application --executable --arguments --logging
 ```
+```bash
+pas-appmaker byStatement3 --environment-submit PAS_SELECT_STATEMENT=PAS_SELECT_STATEMENT:walltime=10:10:00 --select-statement --application --executable --arguments --logging
+```
 
 ### byDirective
 
