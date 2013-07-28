@@ -95,7 +95,8 @@ They can be written in any language executable on the server.
 
 ### Hook1
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Example executing a Perl hook when the job has been submitted. 
+The hook will set the PAS_SELECT_STATEMENT before the job gets submitted.
 
 ```perl
 #!/usr/bin/env perl
@@ -114,17 +115,27 @@ exit(0);
 pas-submit Hook1 --hook-submit /path/to/my/hook.pl --application --executable --arguments --logging
 ```
 
-### StartHook
+### Hook2
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Example executing a Python hook before the job starts. 
+The hook changes the PAS_LOGGING option to true, and sets the PAS_EXECUTABLE option.
 
-`pas-submit StartHook --hook-start /path/to/my/hook.script --application --executable --ncpus --mem --logging`
+```python
+#!/usr/bin/env python
+#coding: utf-8
 
-### FinishedHook
+import os
+import sys
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+os.environ['PAS_LOGGING'] = 'true'
+os.environ['PAS_EXECUTABLE'] = '/path/to/job_exec.bin'
 
-`pas-submit FinishedHook --hook-finished /path/to/my/hook.script --select-statement --script --arguments`
+sys.exit(0)
+
+```
+```bash
+pas-submit Hook2 --hook-start /path/to/my/hook.py --application --arguments
+```
 
 ## Copyright
 
