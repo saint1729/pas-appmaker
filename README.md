@@ -43,7 +43,7 @@ pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --ar
 ## Tutorial: Some basic concepts
 
 App Maker allows you to present options to users in a variety of ways. 
-You can also pre-define options by setting them explicitly before the job us submitted.
+You can also pre-define options by setting them explicitly before the job is submitted to PBS.
 
 ### byForm
 
