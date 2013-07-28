@@ -88,7 +88,7 @@ pas-appmaker byDirective2 --environment-submit PAS_APPLICATION=Appname,PAS_SCRIP
 
 App Maker allows you to modify and extend its core functionality using hooks written in a language(s) you are comfortable with.
 
-### Hook1
+### SubmitHook
 
 Example of executing a Perl hook before the job is submitted to PBS. 
 This hook will set the PAS_SELECT_STATEMENT to the resources you specify.
@@ -124,10 +124,10 @@ undef $environment and exit(0);
 
 ```
 ```
-pas-submit Hook1 --hook-submit /path/to/my/hook.pl --application --executable --arguments --logging
+pas-submit SubmitHook --hook-submit /path/to/my/hook.pl --application --executable --arguments --logging
 ```
 
-### Hook2
+### StartHook
 
 Example of executing a Python hook before the job starts. 
 This hook will set the PAS_LOGGING option to true, and will also set a job executable with the PAS_EXECUTABLE option.
@@ -156,8 +156,12 @@ sys.exit(0)
 
 ```
 ```
-pas-submit Hook2 --hook-start /path/to/my/hook.py --environment-submit PAS_SELECT=1 --ncpus --mem --input-file --include-files --arguments
+pas-submit StartHook --hook-start /path/to/my/hook.py --environment-submit PAS_SELECT=1 --ncpus --mem --input-file --include-files --arguments
 ```
+
+### FinishedHook
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 ## Tutorial: Bringing it all together
 
