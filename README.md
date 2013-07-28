@@ -109,6 +109,8 @@ if (not defined $ENV{'PAS_ADDITIONAL_ATTRIBUTES'}) {
     $ENV{'PAS_ADDITIONAL_ATTRIBUTES'} = 'group_list=hpcteam@cluster';
 }
 
+### Export any environment changes to App Maker and exit.
+
 my $environment = IO::File->new('environment.import', 'w');
 
 if (defined $environment) { 
@@ -141,6 +143,8 @@ os.environ['PAS_LOGGING'] = 'true'
 
 if not 'PAS_EXECUTABLE' in os.environ:
     os.environ['PAS_EXECUTABLE'] = '/path/to/program.bin'
+
+### Export any environment changes to App Maker and exit.
 
 environment = open('environment.import', 'w')
 
