@@ -4,7 +4,7 @@ An easy to use framework for making powerful application definitions.
 
 ## Synopsis
 
-```bash
+```
 pas-appmaker Appname --script --arguments --input-file --include-files --logging
 ```
 
@@ -18,13 +18,10 @@ The sub-sections below will explain how App Maker requires the location of two u
 The App Home directory is where your application definitions are stored. This is where App Maker will place the application definitions you are authoring.
 By default App Maker assumes "/var/spool/pas/repository/applications/". However, this is tunable using one of the two options below...
 
-```bash
+```
 export PAS_APP_HOME=/var/spool/pas/repository/applications
 ```
-
-or at runtime...
-
-```bash
+```
 pas-appmaker Appname --app-home /my/alternate/applications --ncpus --script --arguments --logging
 ```
 
@@ -39,7 +36,7 @@ export PAS_APP_CONFIG=/var/spool/pas/conf/app-config
 
 or at runtime...
 
-```bash
+```
 pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --arguments --logging
 ```
 
@@ -52,13 +49,13 @@ You can also pre-define options by setting them in the submit envirionment.
 
 Examples of how to create applications where HTML form fields are how users prefer to request resources.
 
-```bash
+```
 pas-appmaker byForm1 --select --ncpus --mem --place --application --executable --arguments --logging
 ```
-```bash
+```
 pas-appmaker byForm2 --environment-submit PAS_SELECT=1 --ncpus --mem --application --script --input-file --include-files --logging
 ```
-```bash
+```
 pas-appmaker byForm3 --environment-submit PAS_NCPUS=16,PAS_MEM=8gb,PAS_PLACE=pack --select --application --script --arguments --logging
 ```
 
@@ -66,13 +63,13 @@ pas-appmaker byForm3 --environment-submit PAS_NCPUS=16,PAS_MEM=8gb,PAS_PLACE=pac
 
 Examples of how to create applications where advanced users, more comfortable with the command-line, can select resources and attributes using the familiar select and attribute syntax of qsub.
 
-```bash
+```
 pas-appmaker byStatement1 --select-statement --additional-attributes --application --executable --arguments --logging
 ```
-```bash
+```
 pas-appmaker byStatement2 --environment-submit PAS_SELECT_STATEMENT=select=4:ncpus=16:mem=8gb:walltime=10:10:00 --application --executable --arguments --logging
 ```
-```bash
+```
 pas-appmaker byStatement3 --environment-submit PAS_SELECT_STATEMENT=PAS_SELECT_STATEMENT:walltime=10:10:00 --select-statement --application --executable --arguments --logging
 ```
 
@@ -80,10 +77,10 @@ pas-appmaker byStatement3 --environment-submit PAS_SELECT_STATEMENT=PAS_SELECT_S
 
 Examples of how to create applications where resources and attributes are defined as PBS directives in a job script.
 
-```bash
+```
 pas-appmaker byDirective1 --application --script --arguments --logging
 ```
-```bash
+```
 pas-appmaker byDirective2 --environment-submit PAS_APPLICATION=Appname,PAS_SCRIPT=/path/to/app_name.sh --arguments --logging
 ```
 
@@ -109,7 +106,7 @@ $ENV{'PAS_SELECT_STATEMENT'} = join ':', @resources;
 exit(0);
 
 ```
-```bash
+```
 pas-submit Hook1 --hook-submit /path/to/my/hook.pl --application --executable --arguments --logging
 ```
 
@@ -131,7 +128,7 @@ os.environ['PAS_EXECUTABLE'] = '/path/to/job_exec.bin'
 sys.exit(0)
 
 ```
-```bash
+```
 pas-submit Hook2 --hook-start /path/to/my/hook.py --environment-submit PAS_SELECT=1 --ncpus --mem --input-file --include-files --arguments
 ```
 
