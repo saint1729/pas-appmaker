@@ -89,9 +89,7 @@ pas-appmaker byDirective2 --environment-submit PAS_APPLICATION=Appname,PAS_SCRIP
 
 ## Tutorial: Advanced Concepts
 
-App Maker allows you to extend its core functionality using hooks. 
-Your hooks can be used at specific phases of the job submission and execution lifecyle. 
-They can be written in any language executable on the server.
+App Maker allows you to modify and extend its core functionality using hooks written in a language(s) you are comfortable with.
 
 ### Hook1
 
