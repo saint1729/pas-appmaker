@@ -1,6 +1,6 @@
 # PAS Application Maker
 
-An easy to use framework for creating powerful application definitions.
+An easy to use framework for making powerful application definitions.
 
 ## Synopsis
 
