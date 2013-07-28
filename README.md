@@ -1,6 +1,6 @@
 # PAS Application Maker
 
-A simple framework for creating powerful application definitions.
+An easy to use framework for creating powerful application definitions.
 
 ## Synopsis
 
@@ -15,7 +15,7 @@ The sub-sections below will explain how App Maker requires the location of two u
 
 ### App Home
 
-Your App Home directory is where your application definitions are stored. This is where App Maker will place the application definitions you are authoring.
+The App Home directory is where your application definitions are stored. This is where App Maker will place the application definitions you are authoring.
 By default App Maker assumes "/var/spool/pas/repository/applications/". However, this is tunable using one of the two options below...
 
 ```bash
@@ -30,7 +30,7 @@ pas-appmaker Appname --app-home /my/alternate/applications --ncpus --script --ar
 
 ### App Config
 
-Your App Config directory is where your App Maker template files are stored. The App Config templates allow you to fully customize how App Maker generates application definitions.
+The App Config directory is where your App Maker template files are stored. The App Config templates allow you to fully customize how App Maker generates application definitions.
 By default App Maker assumes "/var/spool/pas/conf/app-config/". However, this is tunable using one of the two options below...
 
 ```bash
@@ -45,8 +45,9 @@ pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --ar
 
 ## Tutorial: Basic Concepts
 
-App Maker has a very simple and extensible syntax for making application definitions.
-App Maker allows application authors the ability to describe resource options to users in a variety of different ways.
+App Maker allows you the ability to present options to users in a variety of ways. 
+You can also pre-define options by setting them in the submit envirionment.
+
 
 ### byForm
 
@@ -75,46 +76,16 @@ pas-appmaker byStatement2 --environment-submit PAS_SELECT_STATEMENT=PAS_SELECT_S
 
 ### byDirective
 
-This example is geared towards users who like to request resources and attributes using PBS directives in job scripts.
+Examples of how to create applications where resources and attributes are defined as PBS directives in a job script.
 
-`pas-appmaker byDirective --application --script --arguments`
+```bash
+pas-appmaker byDirective1 --application --script --arguments --logging
+```
+```bash
+pas-appmaker byDirective2 --environment-submit PAS_APPLICATION=Appname,PAS_SCRIPT=/path/to/job_script.sh --arguments --logging
+```
 
-## Tutorial: Executables & Job Scripts
-
-The examples below demonstrate the various ways that App Maker supports defining the job executable or script.
-You will also see how easy it is to pass arguments to the job executable or script, as well as pass environment variables to the job.
-
-### GenericExec
-
-This example assumes no default application name or executable. It will allow the submitting user to define both at submit time.
-
-`pas-appmaker GenericExec --application --executable --arguments --environment --logging`
-
-### GenericScript
-
-This example assumes no defaults, much like GenericExec. However, this example allows the user to provide a job script instead of an executable path.
-
-`pas-appmaker GenericScript --application --script --arguments --environment --logging`
-
-
-## Tutorial: Variables & Stubstitution
-
-App Maker allows you to set the value to user options in the background by explicitly setting environment variables. You can also use the "key" to an option in the value of a variable
-and expect App Maker to substitute that "key" with its "value".
-
-### Variables
-
-In this example, you will see how easy it is to pre-define the value to App Maker options at runtime.
-
-`pas-appmaker Variables --environment-submit PAS_SELECT=1,PAS_NCPUS=2,PAS_MEM=1gb --script --arguments`
-
-### Substitution
-
-In this example, you will see how you can substitute the key of an option with its value.
-
-`pas-appmaker Substitution --ncpus --mem --executable --environment-start "PAS_ARGUMENTS=-procs PAS_NCPUS -mem PAS_MEM"`
-
-## Tutorial: Hooks
+## Tutorial: Advanced Concepts
 
 These examples demonstrate how application authors can execute scripts at various phases of the application lifecycle.
 
