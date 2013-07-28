@@ -101,9 +101,23 @@ use warnings;
 
 use IO::File;
 
+if (not defined $ENV{'PAS_SELECT_STATEMENT'}) {
+    $ENV{'PAS_SELECT_STATEMENT'} = 'select=1:ncpus=1:mem=1gb';
+}
+
+if (not defined $ENV{'PAS_ADDITIONAL_ATTRIBUTES'}) {
+    $ENV{'PAS_ADDITIONAL_ATTRIBUTES'} = 'group_list=hpcteam@cluster';
+}
+
 my $environment = IO::File->new('environment.import', 'w');
 
-print $environment "PAS_SELECT_STATEMENT=select=1:ncpus=2:mem=1gb\n";
+if (defined $environment) { 
+
+    for my $variable (keys %ENV) {
+        print $environment "$ENV{$variable}=$variable\n";
+    }
+}
+
 undef $environment and exit(0);
 
 ```
