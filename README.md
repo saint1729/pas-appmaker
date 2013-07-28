@@ -94,16 +94,21 @@ Example of executing a Perl hook before the job is submitted to PBS.
 This hook will set the PAS_SELECT_STATEMENT to the resources you specify.
 
 ```perl
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 use strict;
 use warnings;
 
-my @resources = qw/select=1 ncpus=2 mem=1gb walltime=08:00:00/;
+use IO::File;
 
-$ENV{'PAS_SELECT_STATEMENT'} = join ':', @resources;
+my $environment = IO::File->new('environment.import', 'w');
 
-exit(0);
+if (defined $environment) { 
+
+    print $environment "PAS_SELECT_STATEMENT=select=1:ncpus=2:mem=1gb\n";
+}
+
+undef $environment and exit(0);
 
 ```
 ```
@@ -281,6 +286,24 @@ Options:
                         vehicula, elementum lacus ornare, adipiscing massa.
                         Maecenas ut massa posuere, consequat felis quis,
                         interdum orci.
+    --master-file       Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --starter-file      Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --engine-file       Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
     --include-files     Lorem ipsum dolor sit amet, consectetur adipiscing
                         elit. In sollicitudin felis id lobortis dictum. Nullam
                         elementum rhoncus nisl ac faucibus. Curabitur et augue
@@ -349,6 +372,13 @@ Options:
                         Maecenas ut massa posuere, consequat felis quis,
                         interdum orci.
     --environment-finished=ENVIRONMENT_FINISHED
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. In sollicitudin felis id lobortis dictum. Nullam
+                        elementum rhoncus nisl ac faucibus. Curabitur et augue
+                        vehicula, elementum lacus ornare, adipiscing massa.
+                        Maecenas ut massa posuere, consequat felis quis,
+                        interdum orci.
+    --hook-submit=HOOK_SUBMIT
                         Lorem ipsum dolor sit amet, consectetur adipiscing
                         elit. In sollicitudin felis id lobortis dictum. Nullam
                         elementum rhoncus nisl ac faucibus. Curabitur et augue
