@@ -122,7 +122,7 @@
       <Value>1</Value>
     </ArgumentInt>
   </ArgumentChoice>
-  <!-- PAS_MEM END -->
+  <!-- PAS_VMEM END -->
   <!-- PAS_WALLTIME BEGIN -->
   <ArgumentChoice>
     <ArgumentString>
