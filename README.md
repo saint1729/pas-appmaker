@@ -10,14 +10,12 @@ pas-appmaker Appname --script --arguments --input-file --include-files --logging
 
 ## Setup
 
-By design, App Maker is flexible, and can be installed anywhere.
-The sub-sections below will explain how App Maker requires the location of two unique directories in order to function properly.
+By design, App Maker is flexible, and can be installed anywhere!
 
 ### App Home
 
-The App Home directory is where your application definitions are stored. 
+The App Home directory is where your application definitions are located. 
 By default App Maker assumes "/var/spool/pas/repository/applications/".
-However, this is tunable using one of the two options below...
 
 ```
 export PAS_APP_HOME=/var/spool/pas/repository/applications
@@ -28,9 +26,8 @@ pas-appmaker Appname --app-home /my/alternate/applications --ncpus --script --ar
 
 ### App Config
 
-The App Config directory is where your App Maker template files are stored.
+The App Config directory is where your App Maker template files are located.
 By default App Maker assumes "/var/spool/pas/conf/app-config/".
-However, this is tunable using one of the two options below...
 
 ```bash
 export PAS_APP_CONFIG=/var/spool/pas/conf/app-config

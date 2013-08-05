@@ -18,7 +18,7 @@ from optparse import OptionGroup
 
 import datetime
 
-__version__ = '13.0.0-beta1'
+__version__ = '13.0.0-prototype1'
 
 
 parser = OptionParser(usage='%prog <APPLICATION> [Options]',
@@ -1229,6 +1229,13 @@ if len(args) == 1:
 
         if os.path.exists(options.hook_finished):
             shutil.copy2(options.hook_finished, '%s/%s/runtime/hook.finished' % (app_home, app_name))
+
+    ''' Remove PAS Time Stamp File '''
+
+    # I'll handle this better in another release...
+
+    if os.path.exists('/var/spool/pas/repository/time_stamp.txt'):
+        os.remove('/var/spool/pas/repository/time_stamp.txt')
 
     log.close()
     sys.exit(0)

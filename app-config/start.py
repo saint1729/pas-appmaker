@@ -15,7 +15,7 @@ import datatime
 import shutil
 import shlex
 
-__version__ = '13.0.0-beta1'
+__version__ = '13.0.0-prototype1'
 
 
 ''' Logging '''
@@ -29,7 +29,7 @@ if 'PAS_LOGGING' in os.environ:
     if os.environ['PAS_LOGGING'] == 'true':
         logging = True
 
-''' Exporting Start Environment '''
+''' Importing Start Environment '''
 
 if os.path.exists('environment.start'):
 
@@ -109,6 +109,10 @@ else:
 
     if logging is True:
         log.write('\n\nNo Start Hook Found\n')
+
+os.system('/bin/sleep 1000')
+
+log.close()
 
 sys.stdout.flush()
 sys.exit(0)
