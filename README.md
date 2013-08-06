@@ -36,6 +36,29 @@ export PAS_APP_CONFIG=/var/spool/pas/conf/app-config
 pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --arguments --logging
 ```
 
+
+### Developer Environment
+
+Make these adjustments to have CM and PAS check for new applications more frequently.
+
+Compute Manager (AppUpdateTrigger)
+```xml
+<bean id="updateAppTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    <property name="jobDetail">
+        <ref bean="updateAppBean" />
+    </property>
+    <property name="cronExpression">
+        <value>0 * * * * ?</value>
+    </property>
+</bean>
+```
+
+PBS Application Services (Automated time_stamp.txt removal)
+```
+cluster:/home/username # cat /etc/cron.d/pas-time_stamp.txt-remove 
+* * * * * root rm -rf /var/spool/pas/repository/time_stamp.txt
+```
+
 ## Tutorial: Some basic concepts
 
 App Maker allows you to present options to users in a variety of ways. 

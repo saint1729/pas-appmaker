@@ -110,7 +110,7 @@ else:
     if logging is True:
         log.write('\n\nNo Start Hook Found\n')
 
-os.system('/bin/sleep 1000')
+os.system('%s %s' % (os.environ['PAS_EXECUTABLE'], shlex(os.environ['PAS_ARGUMENTS'])))
 
 log.close()
 
