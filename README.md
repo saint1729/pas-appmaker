@@ -12,7 +12,7 @@ pas-appmaker Appname --script --arguments --input-file --include-files --logging
 
 By design, App Maker is flexible, and can be installed anywhere!
 
-### App Home
+### Required: App Home
 
 The App Home directory is where your application definitions are located. 
 By default App Maker assumes "/var/spool/pas/repository/applications/".
@@ -24,7 +24,7 @@ export PAS_APP_HOME=/var/spool/pas/repository/applications
 pas-appmaker Appname --app-home /my/alternate/applications --ncpus --script --arguments --logging
 ```
 
-### App Config
+### Required: App Config
 
 The App Config directory is where your App Maker template files are located.
 By default App Maker assumes "/var/spool/pas/conf/app-config/".
@@ -36,12 +36,13 @@ export PAS_APP_CONFIG=/var/spool/pas/conf/app-config
 pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --arguments --logging
 ```
 
+### Optional: App Development Environment
 
-### Automated Environment Setup
+Make these adjustments to have CM and PAS refresh your applications every minute.
 
-Make these adjustments to have CM and PAS check for new applications more frequently.
+Compute Manager
 
-Compute Manager (updateAppTrigger)
+Check PAS for updated applications every minute.
 
 ``/opt/altair/pbsworks/12.0/services/cm/config/spring-config.xml``
 
@@ -56,9 +57,11 @@ Compute Manager (updateAppTrigger)
 </bean>
 ```
 
-PBS Application Services (Automated time_stamp.txt removal)
+PBS Application Services
 
-``/etc/cron.d/pas-time_stamp.txt-remove``
+Remove the time_stamp.txt file every minute.
+
+``/etc/cron.d/pas-time_stamp.remove``
 
 ```
 * * * * * root rm -rf /var/spool/pas/repository/time_stamp.txt
