@@ -17,7 +17,7 @@
       <Description>Provide qsub select statement.</Description>
       <DisplayName>Select Statement</DisplayName>
       <InputRequired>true</InputRequired>
-      <Value>select=1:ncpus=2:mem=1gb</Value>
+      <Value>select=1</Value>
     </ArgumentString>
   </ArgumentChoice>
   <!-- PAS_SELECT_STATEMENT END -->
