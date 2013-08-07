@@ -26,9 +26,9 @@ By default App Maker assumes "/var/spool/pas/repository/applications/".
 ### Required: App Config
 
 The App Config directory is where your App Maker template files are located.
-By default App Maker assumes "/var/spool/pas/conf/app-config/".
+By default App Maker assumes "/var/spool/pas/repository/pas-appmaker/app-config/".
 
-    export PAS_APP_CONFIG=/var/spool/pas/conf/app-config
+    export PAS_APP_CONFIG=/var/spool/pas/repository/pas-appmaker/app-config
     
     or
     
@@ -92,7 +92,7 @@ An example of how to create an application where advanced users, more comfortabl
 
 ### byDirective
 
-An example that demonstrates how to create an application where resources are requested from inside the job script.
+An example that demonstrates how to create an application where resources and attributes are requested from inside the job script.
 
     pas-appmaker byDirective --application --script --arguments --logging
 
@@ -116,7 +116,7 @@ A few examples of how App Maker can easily create application definitions for co
 
 ## Tutorial: Some advanced concepts
 
-App Maker allows you to modify and extend its core functionality using hooks written in a language(s) you are comfortable with.
+App Maker allows you to modify and extend its core functionality using hooks written in any language.
 
 ### SubmitHook
 
@@ -192,7 +192,7 @@ Command
 
 ## Downloads
 
-You can download hourly developer snapshots at anytime.
+You can download daily developer snapshots from our ftp.
 
     ftp://ftp.altair.com/pub/outgoing/pas-appmaker
 
