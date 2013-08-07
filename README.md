@@ -9,7 +9,7 @@ An easy to use framework for making powerful application definitions.
 ## Setup
 
 This section is for administrators who are deploying App Maker in their environment for the first time.
-If App Maker is already deployed and configured on this system please skip ahead to the Tutorials section.
+If App Maker is already setup on your system, and you are a application author, please skip ahead to the Tutorials section.
 
 ### Required: App Home
 
