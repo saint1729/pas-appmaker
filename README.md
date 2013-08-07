@@ -4,9 +4,7 @@ An easy to use framework for making powerful application definitions.
 
 ## Synopsis
 
-```
-pas-appmaker Appname --script --arguments --input-file --include-files --logging
-```
+    pas-appmaker Appname --script --arguments --input-file --include-files --logging
 
 ## Setup
 
@@ -17,24 +15,20 @@ By design, App Maker is flexible, and can be installed anywhere!
 The App Home directory is where your application definitions are located. 
 By default App Maker assumes "/var/spool/pas/repository/applications/".
 
-```
-export PAS_APP_HOME=/var/spool/pas/repository/applications
-```
-```
-pas-appmaker Appname --app-home /my/alternate/applications --ncpus --script --arguments --logging
-```
+    export PAS_APP_HOME=/var/spool/pas/repository/applications
+
+    pas-appmaker Appname --app-home /my/alternate/applications --ncpus --script --arguments --logging
+
 
 ### Required: App Config
 
 The App Config directory is where your App Maker template files are located.
 By default App Maker assumes "/var/spool/pas/conf/app-config/".
 
-```bash
-export PAS_APP_CONFIG=/var/spool/pas/conf/app-config
-```
-```
-pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --arguments --logging
-```
+    export PAS_APP_CONFIG=/var/spool/pas/conf/app-config
+
+    pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --arguments --logging
+
 
 ### Optional: App Development Environment
 
@@ -46,7 +40,7 @@ Check PAS for updated applications every minute.
 
 ``/opt/altair/pbsworks/12.0/services/cm/config/spring-config.xml``
 
-```xml
+```
 <bean id="updateAppTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
     <property name="jobDetail">
         <ref bean="updateAppBean" />
@@ -120,7 +114,7 @@ App Maker allows you to modify and extend its core functionality using hooks wri
 Example of executing a Perl hook before the job is submitted to PBS. 
 This hook will set the PAS_SELECT_STATEMENT to the resources you specify.
 
-```perl
+```
 #!/usr/bin/perl
 
 use strict;
@@ -159,7 +153,7 @@ pas-submit SubmitHook --hook-submit /path/to/my/hook.pl --application --executab
 Example of executing a Python hook before the job starts. 
 This hook will set the PAS_LOGGING option to true, and will also set a job executable with the PAS_EXECUTABLE option.
 
-```python
+```
 #!/usr/bin/env python
 #coding: utf-8
 
