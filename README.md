@@ -2,13 +2,14 @@
 
 An easy to use framework for making powerful application definitions.
 
-## Synopsis
+## Help
 
-    pas-appmaker Appname --script --arguments --input-file --include-files --logging
+    pas-appmaker --help
 
 ## Setup
 
-By design, App Maker is flexible, and can be installed anywhere!
+This section is for administrators who are deploying App Maker in their environment for the first time.
+If App Maker is already deployed and configured on this system please skip ahead to the Tutorials section.
 
 ### Required: App Home
 
@@ -57,10 +58,21 @@ PBS Application Services
 
 Remove the time_stamp.txt file every minute.
 
-    vim /etc/cron.d/pas-time_stamp.remove
+    vim /etc/cron.d/pas-timestamp-remove
 
     * * * * * root rm -rf /var/spool/pas/repository/time_stamp.txt
 
+### Optional: App Updates
+
+You can easily download and deploy automatic updates.
+
+    vim /etc/cron.daily/pas-appmaker-update
+    
+    #!/bin/sh
+    
+    cd /var/spool/pas/repository
+    wget ftp://ftp.altair.com/pub/outgoing/pas-appmaker/pas-appmaker-`date +%F`.tar.gz
+    tar -xvf pas-appmaker-`date +%F`.tar.gz
 
 ## Tutorial: Some basic concepts
 
@@ -142,7 +154,7 @@ Hook
 
 Command
 
-    pas-submit SubmitHook --application --executable --arguments --logging --hook-submit /path/to/my/hook.pl 
+    pas-appmaker SubmitHook --application --executable --arguments --logging --hook-submit /path/to/my/hook.pl 
 
 
 ### StartHook
@@ -175,7 +187,7 @@ Hook
 
 Command
 
-    pas-submit StartHook --application --ncpus --mem --script --input-file --include-files --arguments --logging --environment-submit PAS_SELECT=1 --hook-start /path/to/my/hook.py 
+    pas-appmaker StartHook --application --ncpus --mem --script --input-file --include-files --arguments --logging --environment-submit PAS_SELECT=1 --hook-start /path/to/my/hook.py 
 
 
 ## Downloads
