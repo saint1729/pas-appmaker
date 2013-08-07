@@ -64,7 +64,7 @@ Remove the time_stamp.txt file every minute.
 
 ### Optional: App Updates
 
-You can easily download and deploy automatic updates.
+You can easily download and deploy daily App Maker updates from the ftp.
 
     vim /etc/cron.daily/pas-appmaker-update
     
@@ -192,7 +192,7 @@ Command
 
 ## Downloads
 
-You can download daily developer snapshots from our ftp.
+You can download daily App Maker updates from the ftp.
 
     ftp://ftp.altair.com/pub/outgoing/pas-appmaker
 

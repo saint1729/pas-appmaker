@@ -1237,7 +1237,8 @@ if len(args) == 1:
     # I'll handle this better in another release...
 
     if os.path.exists('/var/spool/pas/repository/time_stamp.txt'):
-        os.remove('/var/spool/pas/repository/time_stamp.txt')
+        if os.access('/var/spool/pas/repository/time_stamp.txt'):
+            os.remove('/var/spool/pas/repository/time_stamp.txt')
 
     log.close()
     sys.exit(0)
