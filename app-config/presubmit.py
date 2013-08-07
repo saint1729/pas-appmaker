@@ -176,6 +176,24 @@ if logging is True:
 
 resources = ('software=%s' % (os.environ['PAS_APPLICATION'].strip()))
 
+if 'PAS_WALLTIME' in os.environ:
+
+    resources = ('%s walltime=%s' % (resources, os.environ['PAS_WALLTIME'].strip()))
+
+    if logging is True:
+
+        log.write('\n\tWalltime = %s'
+                  % (os.environ['PAS_WALLTIME'].strip()))
+
+if 'PAS_PLACE' in os.environ:
+
+    resources = ('%s place=%s' % (resources, os.environ['PAS_PLACE']))
+
+    if logging is True:
+
+        log.write('\n\tPlace = %s'
+                  % (os.environ['PAS_PLACE'].strip()))
+
 if 'PAS_SELECT_STATEMENT' in os.environ:
 
     resources = ('%s %s' % (resources, os.environ['PAS_SELECT_STATEMENT'].strip()))
@@ -242,15 +260,6 @@ if 'PAS_VMEM' in os.environ:
         log.write('\n\tVmem = %s'
                   % (os.environ['PAS_VMEM'].strip()))
 
-if 'PAS_WALLTIME' in os.environ:
-
-    resources = ('%s:walltime=%s' % (resources, os.environ['PAS_WALLTIME'].strip()))
-
-    if logging is True:
-
-        log.write('\n\tWalltime = %s'
-                  % (os.environ['PAS_WALLTIME'].strip()))
-
 if 'PAS_ARCH' in os.environ:
 
     resources = ('%s:arch=%s' % (resources, os.environ['PAS_ARCH'].strip()))
@@ -268,15 +277,6 @@ if 'PAS_ADDITIONAL_RESOURCES' in os.environ:
 
         log.write('\n\tAdditional Resources = %s'
                   % (os.environ['PAS_ADDITIONAL_RESOURCES'].strip()))
-
-if 'PAS_PLACE' in os.environ:
-
-    resources = ('%s place=%s' % (resources, os.environ['PAS_PLACE']))
-
-    if logging is True:
-
-        log.write('\n\tPlace = %s'
-                  % (os.environ['PAS_PLACE'].strip()))
 
 if logging is True:
     log.write('\n\tFinal Resource Request = %s\n' % (resources.strip()))

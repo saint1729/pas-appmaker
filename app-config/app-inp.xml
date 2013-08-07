@@ -101,26 +101,24 @@
   <!-- PAS_OMPTHREADS END -->
   <!-- PAS_MEM BEGIN -->
   <ArgumentChoice>
-    <ArgumentInt>
+    <ArgumentString>
       <Name>MEM</Name>
-      <Description>The physical memory to request in gigabytes.</Description>
-      <DisplayName>Physical Memory (GB)</DisplayName>
+      <Description>The physical memory to request. You will need to specify the unit type.</Description>
+      <DisplayName>Physical Memory</DisplayName>
       <InputRequired>true</InputRequired>
-      <LowerBound>1</LowerBound>
-      <Value>1</Value>
-    </ArgumentInt>
+      <Value>1gb</Value>
+    </ArgumentString>
   </ArgumentChoice>
   <!-- PAS_MEM END -->
   <!-- PAS_VMEM BEGIN -->
   <ArgumentChoice>
-    <ArgumentInt>
+    <ArgumentString>
       <Name>VMEM</Name>
-      <Description>The virtual memory to use.</Description>
+      <Description>The virtual memory to use. You will need to specify the unit type.</Description>
       <DisplayName>Virtual Memory</DisplayName>
       <InputRequired>false</InputRequired>
-      <LowerBound>1</LowerBound>
-      <Value>1</Value>
-    </ArgumentInt>
+      <Value>100mb</Value>
+    </ArgumentString>
   </ArgumentChoice>
   <!-- PAS_VMEM END -->
   <!-- PAS_WALLTIME BEGIN -->
