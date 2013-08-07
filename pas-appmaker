@@ -18,7 +18,7 @@ from optparse import OptionGroup
 
 import datetime
 
-__version__ = '13.0.0-prototype1'
+__version__ = '13.0.0'
 
 
 parser = OptionParser(usage='%prog <APPLICATION> [Options]',
@@ -26,14 +26,12 @@ parser = OptionParser(usage='%prog <APPLICATION> [Options]',
                       description='A simple framework for making powerful application definitions.')
 
 parser.add_option("--app-home", dest="app_home",
-                  metavar="$PAS_HOME/repository/applications",
-                  default="/var/spool/pas/repository/applications",
+                  metavar="/my/private/applications",
                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
                   'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 parser.add_option("--app-config", dest="app_config",
-                  metavar="$PAS_HOME/conf/app-config",
-                  default="/var/spool/pas/conf/app-config",
+                  metavar="/my/private/app-config",
                   help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
                   'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
@@ -360,13 +358,13 @@ parser.add_option_group(developer)
 (options, args) = parser.parse_args()
 
 
-''' Run PAS App Maker '''
+''' Run App Maker '''
 
 if len(args) == 1:
 
     app_name = args[0]
 
-    ''' App Maker Environment Setup '''
+    ''' App Environment Setup '''
 
     if 'PAS_APP_HOME' in os.environ:
         if not os.path.exists(os.environ['PAS_APP_HOME']):
@@ -374,13 +372,15 @@ if len(args) == 1:
             sys.stderr.write('You must specify the path to your applications/ directory.\n')
             sys.exit(1)
 
-    elif os.path.exists(options.app_home):
-        os.environ['PAS_APP_HOME'] = options.app_home
+    if options.app_home:
 
-    else:
+        if os.path.exists(options.app_home):
+            if os.access(options.app_home):
+                os.environ['PAS_APP_HOME'] = options.app_home
+        else:
 
-        sys.stderr.write('You must specify the path to your applications/ directory.\n')
-        sys.exit(1)
+            sys.stderr.write('You must specify the path to your applications/ directory.\n')
+            sys.exit(1)
 
     if 'PAS_APP_CONFIG' in os.environ:
         if not os.path.exists(os.environ['PAS_APP_CONFIG']):
@@ -388,13 +388,15 @@ if len(args) == 1:
             sys.stderr.write('You must specify the path to your app-config/ directory.\n')
             sys.exit(1)
 
-    elif os.path.exists(options.app_config):
-        os.environ['PAS_APP_CONFIG'] = options.app_config
+    if options.app_config:
 
-    else:
+        if os.path.exists(options.app_config):
+            if os.access(options.app_config):
+                os.environ['PAS_APP_CONFIG'] = options.app_config
+        else:
 
-        sys.stderr.write('You must specify the path to your app-config/ directory.\n')
-        sys.exit(1)
+            sys.stderr.write('You must specify the path to your app-config/ directory.\n')
+            sys.exit(1)
 
     app_home = os.environ['PAS_APP_HOME']
     app_config = os.environ['PAS_APP_CONFIG']
@@ -1233,8 +1235,6 @@ if len(args) == 1:
             shutil.copy2(options.hook_finished, '%s/%s/runtime/hook.finished' % (app_home, app_name))
 
     ''' Remove PAS Time Stamp File '''
-
-    # I'll handle this better in another release...
 
     if os.path.exists('/var/spool/pas/repository/time_stamp.txt'):
         if os.access('/var/spool/pas/repository/time_stamp.txt'):

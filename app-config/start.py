@@ -15,7 +15,7 @@ import datatime
 import shutil
 import shlex
 
-__version__ = '13.0.0-prototype1'
+__version__ = '13.0.0'
 
 
 ''' Logging '''

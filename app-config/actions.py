@@ -12,7 +12,7 @@ import sys
 import signal
 import subprocess
 
-__version__ = '13.0.0-beta1'
+__version__ = '13.0.0'
 
 
 ''' Logging '''

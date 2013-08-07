@@ -16,7 +16,7 @@ import sys
 import shutil
 import subprocess
 
-__version__ = '13.0.0-prototype1'
+__version__ = '13.0.0'
 
 
 ''' Exporting All Options to Environment '''
