@@ -37,11 +37,14 @@ pas-appmaker Appname --app-config /my/alternate/app-config --ncpus --script --ar
 ```
 
 
-### Developer Environment
+### Automated Environment Setup
 
 Make these adjustments to have CM and PAS check for new applications more frequently.
 
-Compute Manager (AppUpdateTrigger)
+Compute Manager (updateAppTrigger)
+
+``/opt/altair/pbsworks/12.0/services/cm/config/spring-config.xml``
+
 ```xml
 <bean id="updateAppTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
     <property name="jobDetail">
@@ -54,8 +57,10 @@ Compute Manager (AppUpdateTrigger)
 ```
 
 PBS Application Services (Automated time_stamp.txt removal)
+
+``/etc/cron.d/pas-time_stamp.txt-remove``
+
 ```
-cluster:/home/username # cat /etc/cron.d/pas-time_stamp.txt-remove 
 * * * * * root rm -rf /var/spool/pas/repository/time_stamp.txt
 ```
 
