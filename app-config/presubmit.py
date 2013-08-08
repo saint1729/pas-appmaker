@@ -34,8 +34,8 @@ for variable in job.attr_export_env_to_job.split(','):
     (key, value) = variable.split('=', 1)
     os.environ[key.strip()] = value.strip()
 
-if 'PAS_APPLICATION_NAME' in os.environ:
-    os.environ['PAS_APPLICATION'] = os.environ['PAS_APPLICATION_NAME']
+if 'PAS_SOFTWARE' in os.environ:
+    os.environ['PAS_APPLICATION'] = os.environ['PAS_SOFTWARE']
 
 if 'PAS_EXECUTABLE_NAME' in os.environ:
     os.environ['PAS_EXECUTABLE'] = os.environ['PAS_EXECUTABLE_NAME']
@@ -174,7 +174,16 @@ else:
 if logging is True:
     log.write('\n\nProcessing Resource Requests\n')
 
-resources = ('software=%s' % (os.environ['PAS_APPLICATION'].strip()))
+resources = ''
+
+if 'PAS_SOFTWARE' in os.environ:
+
+    resources = ('software=%s' % (os.environ['PAS_SOFTWARE'].strip()))
+
+    if logging is True:
+
+        log.write('\n\tSoftware = %s'
+                  % (os.environ['PAS_SOFTWARE'].strip()))
 
 if 'PAS_WALLTIME' in os.environ:
 
@@ -194,12 +203,12 @@ if 'PAS_PLACE' in os.environ:
         log.write('\n\tPlace = %s'
                   % (os.environ['PAS_PLACE'].strip()))
 
-if 'PAS_SELECT_STATEMENT' in os.environ:
+if 'PAS_RESOURCES' in os.environ:
 
-    resources = ('%s %s' % (resources, os.environ['PAS_SELECT_STATEMENT'].strip()))
+    resources = ('%s %s' % (resources, os.environ['PAS_RESOURCES'].strip()))
 
     if logging is True:
-        log.write('\n\tSelect Statement = %s' % (os.environ['PAS_SELECT_STATEMENT'].strip()))
+        log.write('\n\tResources = %s' % (os.environ['PAS_RESOURCES'].strip()))
 
 if 'PAS_SELECT' in os.environ:
 
@@ -269,15 +278,6 @@ if 'PAS_ARCH' in os.environ:
         log.write('\n\tArch = %s'
                   % (os.environ['PAS_ARCH'].strip()))
 
-if 'PAS_ADDITIONAL_RESOURCES' in os.environ:
-
-    resources = ('%s:%s' % (resources, os.environ['PAS_ADDITIONAL_RESOURCES'].strip()))
-
-    if logging is True:
-
-        log.write('\n\tAdditional Resources = %s'
-                  % (os.environ['PAS_ADDITIONAL_RESOURCES'].strip()))
-
 if logging is True:
     log.write('\n\tFinal Resource Request = %s\n' % (resources.strip()))
 
@@ -290,6 +290,18 @@ if logging is True:
     log.write('\n\nProcessing Attributes\n')
 
 attributes = []
+
+if 'PAS_ATTRIBUTES' in os.environ:
+
+    if re.search('\w+', os.environ['PAS_ATTRIBUTES']):
+
+        for attribute in os.environ['PAS_ATTRIBUTES'].split(','):
+            attributes.append(attribute)
+
+        if logging is True:
+
+            log.write('\n\tAttributes = %s'
+                      % (os.environ['PAS_ATTRIBUTES'].strip()))
 
 if 'PAS_DEPEND' in os.environ:
 
@@ -314,18 +326,6 @@ if 'PAS_GROUP_LIST' in os.environ:
 
             log.write('\n\tGroup List = %s'
                       % (os.environ['PAS_GROUP_LIST'].strip()))
-
-if 'PAS_ADDITIONAL_ATTRIBUTES' in os.environ:
-
-    if re.search('\w+', os.environ['PAS_ADDITIONAL_ATTRIBUTES']):
-
-        for attribute in os.environ['PAS_ADDITIONAL_ATTRIBUTES'].split(','):
-            attributes.append(attribute)
-
-        if logging is True:
-
-            log.write('\n\tAdditional Attributes = %s'
-                      % (os.environ['PAS_ADDITIONAL_ATTRIBUTES'].strip()))
 
 if logging is True:
     log.write('\n\tFinal Attribute Request = %s\n' % (','.join(a for a in attributes)))

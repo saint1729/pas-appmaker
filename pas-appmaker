@@ -42,8 +42,8 @@ resources = OptionGroup(parser, "Resources",
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
                         'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
-resources.add_option('--select-statement',
-                     dest='select_statement',
+resources.add_option('--resources',
+                     dest='resources',
                      action='store_true',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
@@ -119,13 +119,6 @@ resources.add_option('--place',
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
                      'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
-resources.add_option('--additional-resources',
-                     dest='additional_resources',
-                     action='store_true',
-                     default=False,
-                     help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                     'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
-
 parser.add_option_group(resources)
 
 
@@ -134,6 +127,13 @@ parser.add_option_group(resources)
 attributes = OptionGroup(parser, "Attributes",
                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
                          'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
+
+attributes.add_option('--attributes',
+                      dest='attributes',
+                      action='store_true',
+                      default=False,
+                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                      'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
 
 attributes.add_option('--depend',
                       dest='depend',
@@ -144,13 +144,6 @@ attributes.add_option('--depend',
 
 attributes.add_option('--group-list',
                       dest='group_list',
-                      action='store_true',
-                      default=False,
-                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                      'In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus.')
-
-attributes.add_option('--additional-attributes',
-                      dest='additional_attributes',
                       action='store_true',
                       default=False,
                       help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
@@ -200,8 +193,8 @@ parser.add_option_group(options)
 execution = OptionGroup(parser, "Execution",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.")
 
-execution.add_option('--application',
-                     dest='application',
+execution.add_option('--software',
+                     dest='software',
                      action='store_true',
                      default=False,
                      help='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sollicitudin felis id lobortis dictum. Nullam elementum rhoncus nisl ac faucibus. Curabitur et augue vehicula, elementum lacus ornare, adipiscing massa. Maecenas ut massa posuere, consequat felis quis, interdum orci.')
@@ -442,21 +435,21 @@ if len(args) == 1:
         line = re.sub('APP_HOME', app_home, line)
         line = re.sub('APP_CONFIG', app_config, line)
 
-        ''' Select Statement '''
+        ''' Resources '''
 
-        if re.match('.*PAS_SELECT_STATEMENT BEGIN', line):
+        if re.match('.*PAS_RESOURCES BEGIN', line):
 
-            if options.select_statement is True:
+            if options.resources is True:
                 enabled = True
             else:
                 enabled = False
 
             if logging is True:
-                log.write('\n\tSelect Statement Enabled: %s' % (line.strip()))
+                log.write('\n\tResources Enabled: %s' % (line.strip()))
 
-        if re.match('.*PAS_SELECT_STATEMENT END', line):
+        if re.match('.*PAS_RESOURCES END', line):
 
-            if options.select_statement is True:
+            if options.resources is True:
                 pass
             else:
                 enabled = True
@@ -651,21 +644,21 @@ if len(args) == 1:
             else:
                 enabled = True
 
-        ''' Additional Resources '''
+        ''' Attributes '''
 
-        if re.match('.*PAS_ADDITIONAL_RESOURCES BEGIN', line):
+        if re.match('.*PAS_ATTRIBUTES BEGIN', line):
 
-            if options.additional_resources is True:
+            if options.attributes is True:
                 enabled = True
             else:
                 enabled = False
 
             if logging is True:
-                log.write('\n\tAdditional Resources Enabled: %s' % (line.strip()))
+                log.write('\n\tAttributes Enabled: %s' % (line.strip()))
 
-        if re.match('.*PAS_ADDITIONAL_RESOURCES END', line):
+        if re.match('.*PAS_ATTRIBUTES END', line):
 
-            if options.additional_resources is True:
+            if options.attributes is True:
                 pass
             else:
                 enabled = True
@@ -704,25 +697,6 @@ if len(args) == 1:
         if re.match('.*PAS_GROUP_LIST END', line):
 
             if options.group_list is True:
-                pass
-            else:
-                enabled = True
-
-        ''' Additional Attributes '''
-
-        if re.match('.*PAS_ADDITIONAL_ATTRIBUTES BEGIN', line):
-
-            if options.additional_attributes is True:
-                enabled = True
-            else:
-                enabled = False
-
-            if logging is True:
-                log.write('\n\tAdditional Attributes Enabled: %s' % (line.strip()))
-
-        if re.match('.*PAS_ADDITIONAL_ATTRIBUTES END', line):
-
-            if options.additional_attributes is True:
                 pass
             else:
                 enabled = True
@@ -803,21 +777,21 @@ if len(args) == 1:
             else:
                 enabled = True
 
-        ''' Application '''
+        ''' Software '''
 
-        if re.match('.*PAS_APPLICATION_NAME BEGIN', line):
+        if re.match('.*PAS_SOFTWARE BEGIN', line):
 
-            if options.application is True:
+            if options.software is True:
                 enabled = True
             else:
                 enabled = False
 
             if logging is True:
-                log.write('\n\tApplication Enabled: %s' % (line.strip()))
+                log.write('\n\tSoftware Enabled: %s' % (line.strip()))
 
-        if re.match('.*PAS_APPLICATION_NAME END', line):
+        if re.match('.*PAS_SOFTWARE END', line):
 
-            if options.application is True:
+            if options.software is True:
                 pass
             else:
                 enabled = True
@@ -851,7 +825,7 @@ if len(args) == 1:
                 enabled = False
 
             if logging is True:
-                log.write('\n\tEnvironment Enabled: %s' % (line.strip()))
+                log.write('\n\tExecutable Enabled: %s' % (line.strip()))
 
         if re.match('.*PAS_EXECUTABLE_NAME END', line):
 
@@ -1237,7 +1211,7 @@ if len(args) == 1:
     ''' Remove PAS Time Stamp File '''
 
     if os.path.exists('/var/spool/pas/repository/time_stamp.txt'):
-        if os.access('/var/spool/pas/repository/time_stamp.txt'):
+        if os.access('/var/spool/pas/repository/time_stamp.txt', os.W_OK):
             os.remove('/var/spool/pas/repository/time_stamp.txt')
 
     log.close()

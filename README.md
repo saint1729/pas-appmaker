@@ -82,19 +82,19 @@ App Maker allows you to present resources, atrributes and other job options to u
 
 An example of how to create an application where HTML form fields are how you would prefer users to request their resources.
 
-    pas-appmaker byForm --select --ncpus --mem --place --application --executable --arguments --logging
+    pas-appmaker byForm --select --ncpus --mem --place --software --executable --arguments --logging
 
 ### byStatement
 
 An example of how to create an application where advanced users, more comfortable with the command-line, can request resources and attributes using the familiar select and attribute syntax of qsub.
 
-    pas-appmaker byStatement --select-statement --additional-attributes --application --executable --arguments --logging
+    pas-appmaker byStatement --resources --attributes --software --executable --arguments --logging
 
 ### byDirective
 
 An example that demonstrates how to create an application where resources and attributes are requested from inside the job script.
 
-    pas-appmaker byDirective --application --script --arguments --logging
+    pas-appmaker byDirective --software --script --arguments --logging
 
 
 ## Tutorial: Making real-world applications
@@ -131,12 +131,12 @@ Hook
 
     use IO::File;
 
-    if (not defined $ENV{'PAS_SELECT_STATEMENT'}) {
-        $ENV{'PAS_SELECT_STATEMENT'} = 'select=1:ncpus=1:mem=1gb';
+    if (not defined $ENV{'PAS_RESOURCES'}) {
+        $ENV{'PAS_RESOURCES'} = 'select=1:ncpus=1:mem=1gb';
     }
     
-    if (not defined $ENV{'PAS_ADDITIONAL_ATTRIBUTES'}) {
-        $ENV{'PAS_ADDITIONAL_ATTRIBUTES'} = 'group_list=hpcteam@cluster';
+    if (not defined $ENV{'PAS_ATTRIBUTES'}) {
+        $ENV{'PAS_ATTRIBUTES'} = 'group_list=hpcteam@cluster';
     }
 
     ### Export any environment changes to App Maker and exit.
@@ -154,7 +154,7 @@ Hook
 
 Command
 
-    pas-appmaker SubmitHook --application --executable --arguments --logging --hook-submit /path/to/my/hook.pl 
+    pas-appmaker SubmitHook --software --executable --arguments --logging --hook-submit /path/to/my/hook.pl 
 
 
 ### StartHook
@@ -187,7 +187,7 @@ Hook
 
 Command
 
-    pas-appmaker StartHook --application --ncpus --mem --script --input-file --include-files --arguments --logging --environment-submit PAS_SELECT=1 --hook-start /path/to/my/hook.py 
+    pas-appmaker StartHook --software --ncpus --mem --script --input-file --include-files --arguments --logging --environment-submit PAS_SELECT=1 --hook-start /path/to/my/hook.py 
 
 
 ## Download
